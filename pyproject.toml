@@ -1,0 +1,23 @@
+[project]
+name = "marine-microplastics"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "cartopy>=0.26.0",
+    "catboost>=1.2.10",
+    "ipykernel>=7.4.0",
+    "jupyter>=1.1.1",
+    "jupytext>=1.19.5",
+    "lightgbm>=4.7.0",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.6",
+    "scikit-learn>=1.9.1",
+    "shap>=0.52.0",
+    "statsmodels>=0.15.0",
+    "xgboost>=3.4.1",
+]
+
+[tool.jupytext]
+formats = "ipynb,py:percent"

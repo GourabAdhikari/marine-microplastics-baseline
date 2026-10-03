@@ -1,0 +1,758 @@
+# ---
+# jupyter:
+#   jupytext:
+#     formats: ipynb,py:percent
+#   kernelspec:
+#     display_name: Python 3
+#     language: python
+#     name: python3
+# ---
+
+# %% [markdown]
+# # Marine microplastic concentration prediction
+#
+# Arnab Chakraborty (230102016), Gourab Adhikari (230102003)
+#
+# This notebook predicts microplastic concentration in sea water (pieces/m3) from where, when and how a
+# sample was taken, using the NOAA NCEI Marine Microplastics database. The headline question is whether a
+# model generalises to a study it has never seen, so every model is scored under three splits:
+#
+# - **Random** 5-fold CV. Near-duplicate samples from one cruise land on both sides of the split.
+# - **Grouped** 5-fold CV with the study as the group. No study appears in both train and test.
+#
+# A "study" here is a publication (DOI). Most publications map to one NCEI accession, but one publication
+# was archived as two accessions with overlapping cruises, and grouping by accession would split it.
+# - **Chronological** holdout. Train on samples before 2015, test on 2015 onwards.
+
+# %%
+import json
+from collections.abc import Callable
+from pathlib import Path
+
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+import shap
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+from catboost import CatBoostRegressor
+from lightgbm import LGBMRegressor
+from matplotlib.colors import LinearSegmentedColormap
+from sklearn.base import clone
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import GroupKFold, KFold
+from sklearn.neighbors import BallTree, KNeighborsRegressor
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from xgboost import XGBClassifier, XGBRegressor
+
+DATA = Path("data/MP_data_S2N_Nyadjro_SD2023.xlsx")
+ARTIFACTS = Path("artifacts")
+ARTIFACTS.mkdir(exist_ok=True)
+SEED = 0
+
+BLUE, ORANGE, AQUA = "#2a78d6", "#eb6834", "#1baf7a"
+INK, INK_MUTED, GRID = "#0b0b0b", "#52514e", "#e6e5e1"
+SEQUENTIAL = LinearSegmentedColormap.from_list(
+    "blue", ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"]
+)
+plt.rcParams.update({
+    "figure.dpi": 110,
+    "figure.facecolor": "#fcfcfb",
+    "axes.facecolor": "#fcfcfb",
+    "axes.edgecolor": INK_MUTED,
+    "axes.labelcolor": INK,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": True,
+    "grid.color": GRID,
+    "grid.linewidth": 0.6,
+    "axes.axisbelow": True,
+    "xtick.color": INK_MUTED,
+    "ytick.color": INK_MUTED,
+    "lines.linewidth": 2,
+    "legend.frameon": False,
+    "font.size": 10,
+})
+pd.set_option("display.precision", 3)
+
+# %% [markdown]
+# ## 1. The raw workbook
+#
+# The workbook has a data dictionary sheet and one data sheet with 22,530 records. Column names are
+# shortened below. Fields that are missing in more than 95% of rows (bottom depth, sediment depth,
+# transect number and so on) are not carried forward.
+
+# %%
+raw = pd.read_excel(DATA, sheet_name="Microplastics_AllData")
+data = raw.rename(columns={
+    "Date (MM/DD/YYYY)": "date",
+    "Latitude (degree)": "lat",
+    "Longitude(degree)": "lon",
+    "Location-Oceans": "ocean",
+    "Medium": "medium",
+    "Water Sample Depth (m)": "depth",
+    "Sampling Method": "method",
+    "Mesh size (mm)": "mesh",
+    "Microplastics measurement": "conc",
+    "Unit": "unit",
+    "NCEI Accession No": "accession",
+    "DOI": "doi",
+    "ORGANIZATION": "organization",
+})[["date", "lat", "lon", "ocean", "medium", "depth", "method", "mesh", "conc", "unit", "accession", "doi", "organization"]]
+
+print(f"{len(raw):,} records, {raw['NCEI Accession No'].nunique()} accessions, {raw['ORGANIZATION'].nunique()} organisations")
+raw.isna().mean().sort_values(ascending=False).rename("missing").to_frame().T
+
+# %% [markdown]
+# The concentration column mixes three incompatible units, one per kind of medium. They cannot be converted
+# into each other, so only the water records reported in pieces/m3 are modelled.
+
+# %%
+data.groupby(["medium", "unit"], dropna=False).agg(
+    records=("conc", "size"),
+    with_value=("conc", "count"),
+    accessions=("accession", "nunique"),
+    median=("conc", "median"),
+)
+
+# %% [markdown]
+# 671 beach records are reported in pieces/m3 too, but they measure a volume of sand, not sea water.
+# They are dropped, which leaves **ocean water in pieces/m3** as the modelling set.
+
+# %%
+fig, axes = plt.subplots(1, 2, figsize=(12, 3.4), gridspec_kw={"width_ratios": [1.3, 1]})
+per_year = data.groupby(data.date.dt.year).size()
+axes[0].bar(per_year.index, per_year.values, color=BLUE, width=0.8)
+axes[0].set(title="Records per year, all media", xlabel="Year", ylabel="Records")
+per_accession = data.accession.value_counts().to_numpy()
+axes[1].bar(np.arange(len(per_accession)), per_accession, color=BLUE, width=0.8)
+axes[1].set(title="Records per accession, sorted", xlabel="Accession rank", ylabel="Records (log scale)", yscale="log")
+fig.tight_layout()
+
+# %% [markdown]
+# A handful of studies dominate. The largest accession (Sea Education Association, 1986 to 2008) holds
+# 6,135 records on its own.
+
+# %% [markdown]
+# ## 2. The modelling set
+
+# %%
+METHOD_FAMILY = {
+    "neuston net": "surface net",
+    "manta net": "surface net",
+    "plankton net": "surface net",
+    "avani net": "surface net",
+    "intake seawater pump": "pump",
+    "surface water intake": "pump",
+}
+C = 1e-3  # offset for the log target, roughly the smallest non-zero concentration (6.8e-4)
+
+water = data[(data.medium == "Ocean water") & (data.unit == "pieces/m3")].reset_index(drop=True)
+method = water.method.str.lower().str.replace("-", " ")
+family = method.map(METHOD_FAMILY).fillna("bulk water")
+month = water.date.dt.month
+df = water.assign(
+    method=method,
+    method_family=family,
+    fam_pump=(family == "pump").astype(float),
+    fam_bulk=(family == "bulk water").astype(float),
+    year=water.date.dt.year,
+    month_sin=np.sin(2 * np.pi * month / 12),
+    month_cos=np.cos(2 * np.pi * month / 12),
+    log_mesh=np.log10(water.mesh),
+    log_depth=np.log1p(water.depth),
+    study=water.doi,
+    y=np.log10(water.conc + C),
+)
+print(f"{len(df):,} records, {df.accession.nunique()} accessions, {df.study.nunique()} publications, {df.organization.nunique()} organisations")
+df.groupby(["method_family", "method"]).agg(
+    records=("y", "size"), accessions=("accession", "nunique"), median_conc=("conc", "median")
+).sort_values(["method_family", "records"], ascending=[True, False])
+
+# %% [markdown]
+# Sampling methods are grouped into three families. Surface nets are towed at the surface and catch
+# particles larger than the mesh (mostly 0.33 mm). Bulk water samples (bottles, buckets, grab samples)
+# are filtered through much finer meshes and report concentrations orders of magnitude higher. Pumps sit
+# in between. CatBoost also gets the raw method name to check whether the grouping loses anything.
+
+# %%
+fig = plt.figure(figsize=(12, 5.2))
+ax = fig.add_subplot(projection=ccrs.Robinson())
+ax.set_global()
+ax.add_feature(cfeature.LAND, color="#e6e5e1")
+ax.coastlines(linewidth=0.4, color=INK_MUTED)
+order = df.sort_values("y")
+points = ax.scatter(order.lon, order.lat, c=order.y, cmap=SEQUENTIAL, s=6, transform=ccrs.PlateCarree())
+fig.colorbar(points, ax=ax, shrink=0.7, label="log10(pieces/m3 + 0.001)")
+ax.set_title("Observed concentration, ocean water samples")
+
+# %% [markdown]
+# Sampling is concentrated in the North Atlantic and North Pacific. The Southern Ocean has 27 records and
+# the Indian Ocean under 500, so anything the models say about those basins is an extrapolation.
+
+# %% [markdown]
+# ### 2.1 Choosing the target transform
+#
+# The synopsis proposed `log1p`. That turns out to be a poor fit for this data. 75% of the concentrations
+# are below 0.1 pieces/m3, and for small x, `log1p(x) ≈ x`, so `log1p` leaves the bulk of the
+# distribution untransformed. A sample at 0.001 and one at 0.05 differ by a factor of 50 but end up
+# 0.05 apart, while the few samples above 1,000 still dominate the variance.
+#
+# `log10(conc + 0.001)` spreads the data over its real range. The offset 0.001 pieces/m3 is close to the
+# smallest non-zero value, so it acts as a detection floor. Zeros map to -3. Errors on this scale read
+# directly as orders of magnitude, which is the natural unit for a quantity spanning eight of them.
+
+# %%
+fig, axes = plt.subplots(1, 3, figsize=(12, 3.2))
+axes[0].hist(df.conc, bins=60, color=BLUE)
+axes[0].set(title="Raw concentration", xlabel="pieces/m3", ylabel="Records", yscale="log")
+axes[1].hist(np.log1p(df.conc), bins=60, color=BLUE)
+axes[1].set(title="log1p(conc)", xlabel="log1p(pieces/m3)")
+axes[2].hist(df.y, bins=60, color=BLUE)
+axes[2].set(title="log10(conc + 0.001)", xlabel="log10(pieces/m3 + 0.001)")
+fig.tight_layout()
+print(f"share below 0.1 pieces/m3: {(df.conc < 0.1).mean():.0%}, share of zeros: {(df.conc == 0).mean():.0%}")
+
+# %% [markdown]
+# ### 2.2 How much does study identity explain?
+#
+# Before fitting anything, it helps to know how much of the variance is between studies rather than
+# within them. An intercept-only mixed model gives the intraclass correlation (ICC): the share of
+# target variance that sits in the study-level random intercept. The ICC describes how clustered the data
+# is. It does not say why.
+
+# %%
+null_mixed = smf.mixedlm("y ~ 1", df, groups=df.study).fit()
+between = float(null_mixed.cov_re.iloc[0, 0])
+icc = between / (between + null_mixed.scale)
+print(f"ICC for study: {icc:.2f}")
+
+study_medians = df.groupby("study").agg(median=("conc", "median"), method=("method_family", "first"), n=("y", "size"))
+fig, ax = plt.subplots(figsize=(12, 3.4))
+families = {"surface net": BLUE, "bulk water": ORANGE, "pump": AQUA}
+ranked = study_medians.sort_values("median").reset_index()
+for name, color in families.items():
+    part = ranked[ranked.method == name]
+    ax.scatter(part.index, part["median"] + C, color=color, s=24, label=name)
+ax.set(yscale="log", xlabel="Study, ranked by median", ylabel="Median pieces/m3 + 0.001",
+       title="Median concentration per study spans seven orders of magnitude")
+ax.legend(title="Sampling family")
+fig.tight_layout()
+
+# %% [markdown]
+# Most of the variance sits between studies. Some of that is physics (fine-mesh bulk samples catch small
+# fibres that 0.33 mm nets miss), some is where and when each study sampled, and some is study-level
+# practice that no field in the dataset records. The data cannot separate these cleanly, because each study
+# tends to use one protocol in one region over a few years.
+
+# %% [markdown]
+# ## 3. Features and validation
+#
+# Features: latitude, longitude, year, month (as sine and cosine so December sits next to January), sampling
+# family, log mesh size and log water depth. Medium is constant after filtering, so it is not a feature.
+# Missing mesh size (0.1%) and depth (4%) are imputed with the training-fold median.
+
+# %%
+NUMERIC = ["lat", "lon", "year", "month_sin", "month_cos", "log_mesh", "log_depth"]
+CATEGORICAL = ["method_family"]
+FEATURES = NUMERIC + CATEGORICAL
+CUTOFF = 2015
+
+SPLITS = {
+    "random": list(KFold(5, shuffle=True, random_state=SEED).split(df)),
+    "grouped": list(GroupKFold(5).split(df, groups=df.study)),
+    "chrono": [(np.flatnonzero(df.year < CUTOFF), np.flatnonzero(df.year >= CUTOFF))],
+}
+for scheme, folds in SPLITS.items():
+    sizes = [len(test) for _, test in folds]
+    print(f"{scheme:>8}: {len(folds)} fold(s), test sizes {sizes}")
+pre, post = df[df.year < CUTOFF], df[df.year >= CUTOFF]
+seen = post.study.isin(pre.study)
+print(f"chrono: {pre.study.nunique()} studies before {CUTOFF}, {post.study.nunique()} after, "
+      f"{post[seen].study.nunique()} in both. {seen.sum():,} of {len(post):,} test rows come from studies seen in training")
+
+# %% [markdown]
+# Grouped folds are uneven because one study holds 39% of the rows. The chronological test set mixes two
+# things: most of its studies are new, but a large share of its rows come from long-running studies that
+# also appear before 2015. Its results are therefore also broken down by seen and unseen studies.
+#
+# Every model is a function that takes a training frame and returns a predictor. Each model gets the
+# same folds.
+
+# %%
+Predictor = Callable[[pd.DataFrame], np.ndarray]
+Model = Callable[[pd.DataFrame], Predictor]
+
+
+def preprocessor() -> ColumnTransformer:
+    return ColumnTransformer([
+        ("num", make_pipeline(SimpleImputer(strategy="median"), StandardScaler()), NUMERIC),
+        ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), CATEGORICAL),
+    ])
+
+
+def clip_to_range(train: pd.DataFrame) -> Callable[[pd.DataFrame], pd.DataFrame]:
+    """Clips numeric features to the training range, so models that extrapolate (linear, splines) stay flat
+    outside it. Trees already behave this way."""
+    low, high = train[NUMERIC].min(), train[NUMERIC].max()
+    return lambda frame: frame.assign(**{c: frame[c].clip(low[c], high[c]) for c in NUMERIC})
+
+
+def sklearn_model(estimator) -> Model:
+    def fit(train: pd.DataFrame) -> Predictor:
+        clip = clip_to_range(train)
+        pipe = make_pipeline(preprocessor(), clone(estimator)).fit(train[FEATURES], train.y)
+        return lambda test: pipe.predict(clip(test)[FEATURES])
+    return fit
+
+
+def fit_study_mean(train: pd.DataFrame) -> Predictor:
+    """Predicts the training mean of the sample's own study. Falls back to the global mean for unseen studies."""
+    means = train.groupby("study").y.mean()
+    return lambda test: test.study.map(means).fillna(train.y.mean()).to_numpy()
+
+
+def fit_knn(train: pd.DataFrame) -> Predictor:
+    """Inverse-distance weighted average of the 15 nearest samples on the sphere. Location only."""
+    knn = KNeighborsRegressor(n_neighbors=15, weights="distance", metric="haversine", algorithm="ball_tree")
+    knn.fit(np.radians(train[["lat", "lon"]]), train.y)
+    return lambda test: knn.predict(np.radians(test[["lat", "lon"]]))
+
+
+MIXED_TERMS = ["cr(lat, df=6, constraints='center')", "cr(lon, df=6, constraints='center')",
+               "cr(year, df=4, constraints='center')", "month_sin", "month_cos", "log_mesh", "log_depth"]
+
+
+def fit_mixed(train: pd.DataFrame) -> Predictor:
+    """Additive mixed model: natural cubic splines of lat, lon and year plus a random intercept per study.
+
+    Studies seen in training get their estimated random intercept added; unseen studies get the
+    population-level prediction.
+    """
+    medians = train[NUMERIC].median()
+    clip = clip_to_range(train)
+
+    def prepare(frame: pd.DataFrame) -> pd.DataFrame:
+        return clip(frame.fillna({c: medians[c] for c in NUMERIC}))
+
+    families = [c for c in ("fam_pump", "fam_bulk") if train[c].nunique() > 1]
+    formula = "y ~ " + " + ".join(MIXED_TERMS + families)
+    result = smf.mixedlm(formula, prepare(train), groups=train.study).fit(method="lbfgs")
+    offsets = pd.Series({g: v.iloc[0] for g, v in result.random_effects.items()})
+
+    def predict(test: pd.DataFrame) -> np.ndarray:
+        return np.asarray(result.predict(prepare(test))) + test.study.map(offsets).fillna(0).to_numpy()
+    return predict
+
+
+BOOSTER_DEFAULTS = dict(n_estimators=500, learning_rate=0.05, random_state=SEED, n_jobs=4)
+CATBOOST_FEATURES = FEATURES + ["method"]
+
+
+def train_catboost(train: pd.DataFrame, features: list[str] = CATBOOST_FEATURES, **params) -> CatBoostRegressor:
+    cats = train[features].select_dtypes(exclude="number").columns.tolist()
+    model = CatBoostRegressor(
+        **{"iterations": 500, "learning_rate": 0.05, "random_seed": SEED, "thread_count": 4, "verbose": 0} | params
+    )
+    return model.fit(train[features], train.y, cat_features=cats)
+
+
+def fit_catboost(train: pd.DataFrame, features: list[str] = CATBOOST_FEATURES, **params) -> Predictor:
+    model = train_catboost(train, features, **params)
+    return lambda test: model.predict(test[features])
+
+
+def fit_hurdle(train: pd.DataFrame) -> Predictor:
+    """Two-part XGBoost: P(conc > 0) times the positive-part regression, plus P(conc = 0) times the zero level."""
+    positive = train[train.conc > 0]
+    classifier = make_pipeline(preprocessor(), XGBClassifier(**BOOSTER_DEFAULTS)).fit(train[FEATURES], train.conc > 0)
+    regressor = make_pipeline(preprocessor(), XGBRegressor(**BOOSTER_DEFAULTS)).fit(positive[FEATURES], positive.y)
+
+    def predict(test: pd.DataFrame) -> np.ndarray:
+        p = classifier.predict_proba(test[FEATURES])[:, 1]
+        return p * regressor.predict(test[FEATURES]) + (1 - p) * np.log10(C)
+    return predict
+
+
+MODELS: dict[str, Model] = {
+    "Study mean only": fit_study_mean,
+    "Linear regression": sklearn_model(LinearRegression()),
+    "Additive mixed model": fit_mixed,
+    "Spatial kNN": fit_knn,
+    "Random forest": sklearn_model(RandomForestRegressor(n_estimators=300, min_samples_leaf=3, n_jobs=4, random_state=SEED)),
+    "XGBoost": sklearn_model(XGBRegressor(**BOOSTER_DEFAULTS, max_depth=6)),
+    "LightGBM": sklearn_model(LGBMRegressor(**BOOSTER_DEFAULTS, verbose=-1)),
+    "CatBoost": fit_catboost,
+    "XGBoost hurdle": fit_hurdle,
+}
+
+# %% [markdown]
+# "Study mean only" is a reference point, not a candidate. It knows nothing except which study a sample
+# came from. Under random CV it shows how far study identity alone gets you. Under grouped CV it collapses
+# to the global mean. The spatial kNN baseline asks whether a model beats "average the nearest samples".
+
+# %% [markdown]
+# ### 3.1 Metrics
+#
+# The primary metrics are on the log10 scale: R², MAE and RMSE, plus the share of predictions within one
+# log10 unit of the truth. Because of the 0.001 offset, "within one log unit" is measured on
+# `conc + 0.001`, so a true zero and a prediction of 0.009 count as a match.
+#
+# "Study MAE" averages the MAE of each study, so a small study counts as much as the 6,000-row one. That is
+# the closer match to "how wrong will the model be on the next study".
+#
+# Raw-scale MAE and RMSE use `10**pred - 0.001`. A back-transformed log prediction is not an estimate of the
+# raw mean, and raw RMSE is dominated by a handful of samples above 1,000 pieces/m3, so raw metrics are
+# secondary.
+
+# %%
+def metrics(y: np.ndarray, pred: np.ndarray) -> dict[str, float]:
+    err = pred - y
+    raw_err = np.clip(10**pred - C, 0, None) - (10**y - C)
+    return {
+        "R2": 1 - np.sum(err**2) / np.sum((y - y.mean()) ** 2),
+        "MAE": np.mean(np.abs(err)),
+        "RMSE": np.sqrt(np.mean(err**2)),
+        "within 1 log": np.mean(np.abs(err) <= 1),
+        "raw MAE": np.mean(np.abs(raw_err)),
+        "raw RMSE": np.sqrt(np.mean(raw_err**2)),
+    }
+
+
+def score(pred: pd.Series) -> dict[str, float]:
+    """Metrics for a series of out-of-fold predictions indexed like df. NaN entries are skipped."""
+    pred = pred.dropna()
+    y = df.y.loc[pred.index]
+    study_mae = (pred - y).abs().groupby(df.study.loc[pred.index]).mean().mean()
+    return metrics(y.to_numpy(), pred.to_numpy()) | {"study MAE": study_mae}
+
+
+def out_of_fold(model: Model, scheme: str) -> pd.Series:
+    pred = pd.Series(np.nan, index=df.index)
+    for train_idx, test_idx in SPLITS[scheme]:
+        pred.iloc[test_idx] = model(df.iloc[train_idx])(df.iloc[test_idx])
+    return pred
+
+
+SHOWN = ["R2", "MAE", "study MAE", "within 1 log"]
+
+# %% [markdown]
+# ## 4. Model comparison
+
+# %%
+predictions = {(name, scheme): out_of_fold(model, scheme) for name, model in MODELS.items() for scheme in SPLITS}
+results = pd.DataFrame(
+    [{"model": name, "scheme": scheme} | score(pred) for (name, scheme), pred in predictions.items()]
+).set_index(["model", "scheme"])
+results.to_csv(ARTIFACTS / "model_comparison.csv")
+results[SHOWN].unstack("scheme").reindex(MODELS).swaplevel(axis=1)[["random", "grouped", "chrono"]]
+
+# %%
+fig, ax = plt.subplots(figsize=(9, 4.2))
+names = list(MODELS)
+rows = np.arange(len(names))
+for offset, (scheme, color) in zip((-0.22, 0, 0.22), [("random", BLUE), ("grouped", ORANGE), ("chrono", AQUA)]):
+    values = [results.loc[(n, scheme), "R2"] for n in names]
+    ax.scatter(np.clip(values, -1, None), rows + offset, color=color, s=40, label=scheme, zorder=3)
+ax.axvline(0, color=INK_MUTED, linewidth=1)
+ax.set_yticks(rows, names)
+ax.invert_yaxis()
+ax.set(xlabel="R² on log10 scale (clipped at -1)", title="Out-of-fold R² by validation scheme", xlim=(-1.05, 1))
+ax.legend(title="Split", loc="lower right")
+fig.tight_layout()
+
+# %% [markdown]
+# The grouped R² above is pooled: all out-of-fold predictions scored together. Per-fold R² is shown below.
+# Each fold holds out different studies, and each fold's R² uses its own variance as the denominator, so
+# the fold mean is not the same quantity as the pooled score. Pooled R² is the headline. The per-fold
+# spread shows how much it depends on which studies are held out.
+
+# %%
+pd.DataFrame(
+    {name: [score(predictions[name, "grouped"].iloc[t])["R2"] for _, t in SPLITS["grouped"]] for name in MODELS},
+    index=[f"fold {i + 1}" for i in range(5)],
+).T.assign(**{"fold mean": lambda t: t.mean(axis=1), "pooled": results.xs("grouped", level="scheme").R2})
+
+# %% [markdown]
+# Chronological holdout, split by whether the test row's study also has samples before 2015.
+
+# %%
+seen_study = df.study.isin(df.loc[df.year < CUTOFF, "study"])
+pd.DataFrame({
+    name: {
+        (group, metric): score(predictions[name, "chrono"].where(mask))[metric]
+        for group, mask in [("seen study", seen_study), ("unseen study", ~seen_study)]
+        for metric in ("R2", "MAE")
+    }
+    for name in MODELS
+}).T
+
+# %% [markdown]
+# ## 5. Which features carry information that transfers?
+#
+# CatBoost is refit with different feature sets under random and grouped CV. Location and time only,
+# sampling protocol only, all features, all features with the sampling family in place of the raw method
+# name, and all features plus the study ID as a categorical feature. Adding the study ID can only help when
+# the test study was seen in training, so the gap it opens between random and grouped CV shows how much of
+# the random-split score is study recognition.
+
+# %%
+LOCATION_TIME = ["lat", "lon", "year", "month_sin", "month_cos"]
+PROTOCOL = ["log_mesh", "log_depth", "method_family", "method"]
+ABLATIONS = {
+    "location and time only": LOCATION_TIME,
+    "sampling protocol only": PROTOCOL,
+    "all features": CATBOOST_FEATURES,
+    "all features, family not raw method": FEATURES,
+    "all features + study ID": CATBOOST_FEATURES + ["study"],
+}
+pd.DataFrame({
+    (name, scheme): score(out_of_fold(lambda t, f=features: fit_catboost(t, f), scheme))
+    for name, features in ABLATIONS.items()
+    for scheme in ("random", "grouped")
+}).T[SHOWN].unstack()
+
+# %% [markdown]
+# ## 6. Genetic algorithm hyperparameter search
+#
+# CatBoost is tuned because it has the best grouped-CV score. The search only sees data from before 2015
+# and scores candidates with 4-fold grouped CV on those years. The tuned parameters are then scored on the
+# 2015-onwards holdout. That holdout is not a pristine test set: section 4 already looked at it, and the
+# choice of CatBoost used grouped CV over all years. Treat the holdout numbers as exploratory.
+#
+# Each individual is a vector of genes in [0, 1], decoded into CatBoost parameters below. Fitness is the
+# RMSE of the pooled out-of-fold predictions, so every sample counts equally, matching how the other
+# scores are reported. Each generation keeps the two best individuals unchanged
+# (elitism) and fills the rest with children: parents are picked by 3-way tournament, genes are blended
+# with random weights, and each gene mutates with probability 0.2. A random search with the same number of
+# evaluations is the control. Without it, there is no evidence that the GA adds anything.
+
+# %%
+SPACE = {  # name: (low, high, scale)
+    "depth": (3, 8, "int"),
+    "learning_rate": (0.01, 0.3, "log"),
+    "iterations": (200, 1000, "int"),
+    "l2_leaf_reg": (0.1, 30, "log"),
+    "random_strength": (0.1, 10, "log"),
+    "subsample": (0.5, 1.0, "linear"),
+    "rsm": (0.5, 1.0, "linear"),
+}
+dev = df[df.year < CUTOFF]
+holdout = df[df.year >= CUTOFF]
+DEV_FOLDS = list(GroupKFold(4).split(dev, groups=dev.study))
+
+
+def decode(genes: np.ndarray) -> dict[str, float | int | str]:
+    params: dict[str, float | int | str] = {"bootstrap_type": "Bernoulli"}
+    for gene, (name, (low, high, scale)) in zip(genes, SPACE.items()):
+        if scale == "log":
+            params[name] = float(low * (high / low) ** gene)
+        else:
+            value = low + gene * (high - low)
+            params[name] = round(value) if scale == "int" else float(value)
+    return params
+
+
+def cv_rmse(params: dict) -> float:
+    pred = np.empty(len(dev))
+    for train_idx, test_idx in DEV_FOLDS:
+        pred[test_idx] = fit_catboost(dev.iloc[train_idx], **params)(dev.iloc[test_idx])
+    return float(np.sqrt(np.mean((pred - dev.y.to_numpy()) ** 2)))
+
+
+def evaluated(genes: np.ndarray, generation: int) -> dict:
+    params = decode(genes)
+    return {"generation": generation, "genes": genes.tolist(), "params": params, "rmse": cv_rmse(params)}
+
+
+def tournament(population: np.ndarray, fitness: np.ndarray, rng: np.random.Generator, k: int = 3) -> np.ndarray:
+    contenders = rng.choice(len(population), k, replace=False)
+    return population[contenders[np.argmin(fitness[contenders])]]
+
+
+def genetic_search(rng: np.random.Generator, size: int = 12, generations: int = 10, elite: int = 2,
+                   mutation: float = 0.2) -> list[dict]:
+    history = [evaluated(g, 0) for g in rng.random((size, len(SPACE)))]
+    population = np.array([h["genes"] for h in history])
+    fitness = np.array([h["rmse"] for h in history])
+    for generation in range(1, generations):
+        keep = np.argsort(fitness)[:elite]
+        children, child_fitness = list(population[keep]), list(fitness[keep])
+        while len(children) < size:
+            a, b = tournament(population, fitness, rng), tournament(population, fitness, rng)
+            weights = rng.random(len(SPACE))
+            child = weights * a + (1 - weights) * b
+            child += (rng.random(len(SPACE)) < mutation) * rng.normal(0, 0.15, len(SPACE))
+            history.append(evaluated(np.clip(child, 0, 1), generation))
+            children.append(np.array(history[-1]["genes"]))
+            child_fitness.append(history[-1]["rmse"])
+        population, fitness = np.array(children), np.array(child_fitness)
+    return history
+
+
+def random_search(rng: np.random.Generator, evaluations: int) -> list[dict]:
+    return [evaluated(rng.random(len(SPACE)), 0) for _ in range(evaluations)]
+
+
+GA_SETTINGS = dict(size=12, generations=10, elite=2, mutation=0.2)
+SEARCH_CONFIG = json.loads(json.dumps({
+    "space": SPACE, "ga": GA_SETTINGS, "seed": SEED, "dev_rows": len(dev), "dev_studies": dev.study.nunique(),
+}))
+
+
+def cached(path: Path, compute: Callable[[], list[dict]]) -> list[dict]:
+    """Runs a slow search once and reuses the saved result for as long as SEARCH_CONFIG is unchanged."""
+    if path.exists() and (saved := json.loads(path.read_text()))["config"] == SEARCH_CONFIG:
+        return saved["history"]
+    history = compute()
+    path.write_text(json.dumps({"config": SEARCH_CONFIG, "history": history}, indent=1))
+    return history
+
+
+ga_history = cached(ARTIFACTS / "ga_search.json", lambda: genetic_search(np.random.default_rng(SEED), **GA_SETTINGS))
+rs_history = cached(ARTIFACTS / "random_search.json",
+                    lambda: random_search(np.random.default_rng(SEED + 1), len(ga_history)))
+default_rmse = cv_rmse({})
+print(f"{len(ga_history)} evaluations per search. Default CatBoost dev RMSE: {default_rmse:.3f}")
+
+# %%
+fig, axes = plt.subplots(1, 2, figsize=(12, 3.8))
+for history, label, color in [(ga_history, "Genetic algorithm", BLUE), (rs_history, "Random search", ORANGE)]:
+    axes[0].plot(np.minimum.accumulate([h["rmse"] for h in history]), color=color, label=label)
+axes[0].axhline(default_rmse, color=INK_MUTED, linewidth=1, linestyle="--", label="Default parameters")
+axes[0].set(title="Best dev RMSE found so far", xlabel="Evaluations", ylabel="Grouped CV RMSE (log10)")
+axes[0].legend()
+
+ga_frame = pd.DataFrame([h["params"] | {"generation": h["generation"], "rmse": h["rmse"]} for h in ga_history])
+points = axes[1].scatter(ga_frame.learning_rate, ga_frame.depth + np.random.default_rng(0).uniform(-0.15, 0.15, len(ga_frame)),
+                         c=ga_frame.generation, cmap=SEQUENTIAL, s=28, edgecolor="#fcfcfb", linewidth=0.8)
+fig.colorbar(points, ax=axes[1], label="Generation")
+axes[1].set(xscale="log", title="Where the GA sampled, by generation", xlabel="Learning rate", ylabel="Tree depth")
+fig.tight_layout()
+
+# %%
+def best(history: list[dict]) -> dict:
+    return min(history, key=lambda h: h["rmse"])
+
+
+candidates = {
+    "Default": {"params": {}, "rmse": default_rmse},
+    "Random search": best(rs_history),
+    "Genetic algorithm": best(ga_history),
+}
+chosen = min(candidates, key=lambda name: candidates[name]["rmse"])
+print(f"Lowest dev RMSE: {chosen}. Its parameters are used for the final model.")
+display(pd.DataFrame({name: c["params"] for name, c in candidates.items()}).T.drop(columns="bootstrap_type"))
+pd.DataFrame({
+    name: {"dev CV RMSE": c["rmse"]} | metrics(holdout.y.to_numpy(), fit_catboost(dev, **c["params"])(holdout))
+    for name, c in candidates.items()
+}).T[["dev CV RMSE", "R2", "MAE", "RMSE", "within 1 log"]]
+
+# %% [markdown]
+# ## 7. SHAP explanations
+#
+# CatBoost with the parameters that scored best in development is refit on every water record and explained
+# with exact TreeSHAP values. Categorical features are shown as integer codes in the beeswarm. SHAP explains
+# what this fitted model does. It does not show that a feature causes higher concentrations.
+
+# %%
+final = train_catboost(df, **candidates[chosen]["params"])
+X = df[CATBOOST_FEATURES]
+shap_values = shap.TreeExplainer(final)(X)
+codes = X.assign(**{c: X[c].astype("category").cat.codes for c in ("method_family", "method")})
+shap.summary_plot(shap_values.values, codes, max_display=10, show=False)
+plt.title(f"SHAP values, CatBoost ({chosen} parameters), all records")
+plt.tight_layout()
+
+# %%
+contributions = pd.DataFrame(shap_values.values, columns=CATBOOST_FEATURES, index=df.index)
+fig, axes = plt.subplots(1, 3, figsize=(13, 3.6), sharey=True)
+for ax, feature, label in zip(axes, ["lat", "year", "log_mesh"], ["Latitude", "Year", "log10 mesh size (mm)"]):
+    for name, color in families.items():
+        part = df.method_family == name
+        ax.scatter(df.loc[part, feature], contributions.loc[part, feature], color=color, s=5, alpha=0.5, label=name)
+    ax.axhline(0, color=INK_MUTED, linewidth=1)
+    ax.set(xlabel=label, title=f"SHAP dependence: {label}")
+axes[0].set_ylabel("SHAP value (log10 units)")
+axes[0].legend(title="Sampling family", markerscale=3)
+fig.tight_layout()
+
+# %% [markdown]
+# The single highest prediction, broken down feature by feature:
+
+# %%
+top = int(np.argmax(final.predict(X)))
+shap.plots.waterfall(shap_values[top], show=False)
+plt.title(f"Accession {df.accession[top]}, {df.method[top]}, {df.date[top]:%Y-%m}")
+plt.tight_layout()
+
+# %% [markdown]
+# ### 7.1 SHAP against the study offsets from the mixed model
+#
+# The intercept-only mixed model from section 2.2 estimates one offset per study: how far that study sits
+# above or below the global mean. Below, each point is a study. The x axis is its offset. The y axis is the
+# average SHAP contribution of one feature group across that study's samples.
+#
+# This is descriptive. It shows which inputs the fitted model routes study-level differences through. It
+# cannot separate geography from study recognition, because coordinates and dates can pick out a cruise
+# as easily as mesh size can, and a model fitted to these outcomes will track the study offsets by
+# construction. The grouped-CV ablations in section 5 are the test of what transfers to new studies.
+
+# %%
+offsets = pd.Series({g: v.iloc[0] for g, v in null_mixed.random_effects.items()})
+GROUPS = {
+    "Location and time (lat, lon, year, month)": ["lat", "lon", "year", "month_sin", "month_cos"],
+    "Sampling protocol (mesh, depth, method)": ["log_mesh", "log_depth", "method_family", "method"],
+}
+per_study = pd.DataFrame({name: contributions[cols].sum(axis=1) for name, cols in GROUPS.items()}).groupby(df.study).mean()
+per_study["offset"] = offsets
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 4), sharex=True, sharey=True)
+for ax, name in zip(axes, GROUPS):
+    slope = np.polyfit(per_study.offset, per_study[name], 1)[0]
+    r = per_study.offset.corr(per_study[name])
+    ax.scatter(per_study.offset, per_study[name], color=BLUE, s=28, edgecolor="#fcfcfb", linewidth=0.8)
+    ax.axline((0, 0), slope=1, color=INK_MUTED, linewidth=1, linestyle="--")
+    ax.set(title=f"{name}\nr = {r:.2f}, slope = {slope:.2f}", xlabel="Study offset from mixed model (log10)")
+axes[0].set_ylabel("Mean SHAP contribution per study")
+fig.tight_layout()
+
+# %% [markdown]
+# ## 8. Predicted surface concentration map
+#
+# This map is an exploratory model scenario, not a validated concentration map. The final model predicts
+# every 2° cell for one standard sample: a manta net with a 0.333 mm mesh at the surface in 2015. The
+# twelve monthly predictions are averaged on the log scale. Fixing the protocol inputs does not remove
+# confounding the model learned in training, and grouped CV showed weak transfer to new studies, so the
+# map should not be read as locating accumulation zones. Cells more than 500 km from any surface-net
+# observation are blanked, because the model has no comparable data there.
+
+# %%
+lat_centres, lon_centres = np.arange(-79, 90, 2.0), np.arange(-179, 180, 2.0)
+lat_grid, lon_grid = np.meshgrid(lat_centres, lon_centres, indexing="ij")
+cells = pd.DataFrame({"lat": lat_grid.ravel(), "lon": lon_grid.ravel()}).assign(
+    year=2015, log_mesh=np.log10(0.333), log_depth=0.0, method_family="surface net", method="manta net"
+)
+monthly = [
+    final.predict(cells.assign(month_sin=np.sin(2 * np.pi * m / 12), month_cos=np.cos(2 * np.pi * m / 12))[CATBOOST_FEATURES])
+    for m in range(1, 13)
+]
+surface = np.mean(monthly, axis=0)
+surface_nets = df[df.method_family == "surface net"]
+distance_km = BallTree(np.radians(surface_nets[["lat", "lon"]]), metric="haversine").query(np.radians(cells[["lat", "lon"]]))[0][:, 0] * 6371
+surface[distance_km > 500] = np.nan
+
+fig = plt.figure(figsize=(12, 5.2))
+ax = fig.add_subplot(projection=ccrs.Robinson())
+ax.set_global()
+mesh = ax.pcolormesh(np.arange(-180, 181, 2.0), np.arange(-80, 91, 2.0), surface.reshape(lat_grid.shape),
+                     cmap=SEQUENTIAL, transform=ccrs.PlateCarree())
+ax.add_feature(cfeature.LAND, color="#e6e5e1", zorder=2)
+ax.coastlines(linewidth=0.4, color=INK_MUTED, zorder=3)
+fig.colorbar(mesh, ax=ax, shrink=0.7, label="Predicted log10(pieces/m3 + 0.001)")
+ax.set_title("Model scenario (exploratory): standard manta net sample, 2015")
