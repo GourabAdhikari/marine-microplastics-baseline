@@ -493,6 +493,28 @@ pd.DataFrame({
 }).T
 
 # %% [markdown]
+# What the comparison shows:
+#
+# - **Random CV flatters every model.** The tree ensembles reach R² ≈ 0.74 on random folds and land around
+#   zero on new studies. Even "study mean only", which knows nothing but the study label, gets 0.58 on
+#   random folds.
+# - **Under grouped CV, CatBoost and LightGBM are the only models clearly above zero** (pooled R² 0.25 and
+#   0.21). Every model has a negative fold mean, so on a typical held-out block of studies, predicting the
+#   training mean would beat them. Roughly 70% of grouped predictions still land within one order of
+#   magnitude, against about 92% on random folds.
+# - **The chronological holdout is close to R² = 0 for every tree model.** On rows from studies seen before
+#   2015 the trees keep some skill (R² 0.11 to 0.26). On unseen studies they fall to about -0.5.
+# - **Linear regression and the mixed model fail for specific reasons.** Before 2015, every bulk-water
+#   sample comes from one study with one mesh size (0.45 µm), so the bulk-water flag and mesh size are
+#   collinear. OLS fits large offsetting coefficients that explode on the chronological holdout, where new
+#   bulk-water studies use other meshes. The mixed model
+#   puts most of each study's level into its random intercept, so for an unseen study it predicts an
+#   "average study" and misses the very low SEA neuston studies (folds 1 and 2) badly. This says these two
+#   fits are unstable on this data. It does not show that linear or additive models are worse in general.
+# - **Spatial kNN** is close to the trees on random folds and well below them on new studies. That is what
+#   you would expect if nearby samples mostly come from the same cruise.
+
+# %% [markdown]
 # ## 5. Which features carry information that transfers?
 #
 # CatBoost is refit with different feature sets under random and grouped CV. Location and time only,
@@ -516,6 +538,14 @@ pd.DataFrame({
     for name, features in ABLATIONS.items()
     for scheme in ("random", "grouped")
 }).T[SHOWN].unstack()
+
+# %% [markdown]
+# Location and time alone reach R² 0.68 on random folds and drop below zero on new studies. On random
+# folds, coordinates and dates pick out the cruise a sample came from, which is also why adding the study
+# ID changes nothing there: the model can already tell. Sampling protocol alone transfers a little (grouped
+# R² 0.07). The full feature set transfers best (0.25 to 0.27), so location and protocol carry some
+# information jointly that neither carries alone. Grouping the 14 raw methods into three families does not
+# lose anything. It scores slightly higher than the raw names.
 
 # %% [markdown]
 # ## 6. Genetic algorithm hyperparameter search
@@ -633,6 +663,8 @@ points = axes[1].scatter(ga_frame.learning_rate, ga_frame.depth + np.random.defa
                          c=ga_frame.generation, cmap=SEQUENTIAL, s=28, edgecolor="#fcfcfb", linewidth=0.8)
 fig.colorbar(points, ax=axes[1], label="Generation")
 axes[1].set(xscale="log", title="Where the GA sampled, by generation", xlabel="Learning rate", ylabel="Tree depth")
+axes[1].set_xticks([0.01, 0.03, 0.1, 0.3], ["0.01", "0.03", "0.1", "0.3"], minor=False)
+axes[1].set_xticks([], minor=True)
 fig.tight_layout()
 
 # %%
@@ -652,6 +684,15 @@ pd.DataFrame({
     name: {"dev CV RMSE": c["rmse"]} | metrics(holdout.y.to_numpy(), fit_catboost(dev, **c["params"])(holdout))
     for name, c in candidates.items()
 }).T[["dev CV RMSE", "R2", "MAE", "RMSE", "within 1 log"]]
+
+# %% [markdown]
+# The GA found a better development score than random search with the same 102 evaluations (RMSE 0.883
+# against 0.907, default 0.977), and its best configurations settle in a band around depth 6 with a
+# moderate learning rate. That improvement barely reaches the holdout. All three configurations sit near
+# R² = 0 there, and the GA's main gain is a higher share of predictions within one order of magnitude.
+# This is one run with one seed, so it does not show the GA is better than random search in general.
+# The lesson here is that tuning cannot fix a gap that comes from the data: the model is limited by what
+# transfers between studies, not by its hyperparameters.
 
 # %% [markdown]
 # ## 7. SHAP explanations
@@ -683,6 +724,17 @@ axes[0].legend(title="Sampling family", markerscale=3)
 fig.tight_layout()
 
 # %% [markdown]
+# Sampling method, latitude and mesh size carry the largest contributions. The latitude curve peaks between
+# about 20° and 45° N, where the North Atlantic and North Pacific subtropical gyres are. That is where
+# floating plastic is known to accumulate, and also where the largest studies sampled. The year curve
+# rises by roughly one order of magnitude from the 1970s to the 2010s. That is harder to read: Law et al.
+# (2010), the largest study in this data, found no clear trend in its own North Atlantic series, so the
+# rise may come from newer studies using different methods rather than from more plastic.
+#
+# The mesh curve is the warning sign. Finer meshes should catch more particles, yet the finest mesh in the
+# data (0.45 µm) gets a negative contribution. Nearly all of those samples are grab samples from a single
+# study with very low counts, so the model has learned that study, not the physics of mesh size.
+#
 # The single highest prediction, broken down feature by feature:
 
 # %%
@@ -690,6 +742,7 @@ top = int(np.argmax(final.predict(X)))
 shap.plots.waterfall(shap_values[top], show=False)
 plt.title(f"Accession {df.accession[top]}, {df.method[top]}, {df.date[top]:%Y-%m}")
 plt.tight_layout()
+plt.show()
 
 # %% [markdown]
 # ### 7.1 SHAP against the study offsets from the mixed model
@@ -721,6 +774,18 @@ for ax, name in zip(axes, GROUPS):
     ax.set(title=f"{name}\nr = {r:.2f}, slope = {slope:.2f}", xlabel="Study offset from mixed model (log10)")
 axes[0].set_ylabel("Mean SHAP contribution per study")
 fig.tight_layout()
+plt.show()
+
+# %% [markdown]
+# The highest prediction belongs to a "surface water intake" sample. That method has 5 rows in the whole
+# dataset, all from one study, and the method and family labels together add over three orders of
+# magnitude. This is
+# study recognition in its plainest form.
+#
+# Across studies, the sampling-protocol features follow the study offsets closely (r ≈ 0.9) and absorb
+# most of their size. Location and time follow them more loosely and with a much smaller slope. So the
+# fitted model routes most between-study differences through mesh size, depth and method. As said above,
+# this describes the model, it does not prove the protocol effects are physical.
 
 # %% [markdown]
 # ## 8. Predicted surface concentration map
@@ -756,3 +821,58 @@ ax.add_feature(cfeature.LAND, color="#e6e5e1", zorder=2)
 ax.coastlines(linewidth=0.4, color=INK_MUTED, zorder=3)
 fig.colorbar(mesh, ax=ax, shrink=0.7, label="Predicted log10(pieces/m3 + 0.001)")
 ax.set_title("Model scenario (exploratory): standard manta net sample, 2015")
+plt.show()
+
+# %% [markdown]
+# The horizontal banding comes from the trees splitting on latitude. The high band between 20° and 45° N
+# and the high Mediterranean values agree with published accumulation patterns, but those are also the
+# areas sampled most densely by the studies with the highest counts, so the map cannot tell the two apart.
+
+# %% [markdown]
+# ## 9. Conclusions
+#
+# 1. **Random-split accuracy is mostly study recognition.** Tree ensembles reach R² ≈ 0.74 on random folds.
+#    With whole studies held out, the best model (CatBoost) reaches a pooled R² of 0.25, every model has a
+#    negative fold mean, and on the 2015-onwards holdout every model is near zero. Study identity alone
+#    explains 72% of the target variance (ICC), and on random folds the study label adds nothing to
+#    location and date, because those already identify the cruise.
+# 2. **Some information does transfer.** Under grouped CV, about two thirds of CatBoost's predictions are within
+#    one order of magnitude of the measurement, and the full feature set beats both location-and-time and
+#    protocol features on their own.
+# 3. **The ranking of models depends on the split.** Random forest, XGBoost and the hurdle model are level
+#    with CatBoost and LightGBM on random folds and fall behind on new studies. The OLS and mixed-model
+#    fits are unstable on this data, for reasons traced to collinear sampling fields and unseen study
+#    offsets.
+# 4. **Tuning does not close the gap.** The genetic algorithm beat an equal-budget random search on the
+#    development folds (RMSE 0.883 against 0.907) and moved the holdout score very little.
+# 5. **SHAP shows study artifacts directly.** The negative effect of the finest mesh and the
+#    three-orders-of-magnitude effect of a 5-row method label are properties of individual studies, not of
+#    the ocean.
+#
+# The practical message for anyone publishing a model on aggregated microplastic data is to report grouped
+# validation. A random-split R² mostly measures recognition of studies the model has already seen.
+#
+# ### Changes from the synopsis
+#
+# - The target is `log10(conc + 0.001)`, not `log1p`, because `log1p` leaves 75% of the data almost
+#   untransformed (section 2.1).
+# - The modelling set is the 15,534 ocean-water records, not all 16,205 pieces/m3 records. The 671 beach
+#   records in pieces/m3 measure sand.
+# - Studies are grouped by publication (DOI) rather than accession. One publication was archived as two
+#   accessions.
+# - Medium is not a feature, because only ocean water remains after filtering.
+# - The GAMM is approximated with statsmodels `MixedLM` with natural cubic spline bases and a random
+#   intercept per study. Its smoothness is fixed by the basis size, not estimated by penalised likelihood as
+#   in R's `mgcv`.
+# - Added beyond the synopsis: a study-mean reference, a spatial kNN baseline, LightGBM, an XGBoost hurdle
+#   model for the zeros, a random-search control for the GA, feature-group ablations, and a seen/unseen
+#   breakdown of the chronological holdout.
+#
+# ### Next steps
+#
+# - Add oceanographic covariates (sea surface temperature, surface currents, distance to river mouths and
+#   coasts) by joining on latitude, longitude and date. These are the most plausible source of signal that
+#   transfers between studies.
+# - Use sampled water volume or tow length if they can be recovered from the source papers. Zeros from a
+#   short tow and zeros from a long one mean different things.
+# - Model the sediment (pieces/kg) and beach records separately, as the synopsis planned.
