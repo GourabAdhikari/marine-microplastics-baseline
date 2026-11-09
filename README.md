@@ -3,9 +3,12 @@
 Semester project by Arnab Chakraborty and Gourab Adhikari. `microplastics.ipynb` predicts microplastic
 concentration in sea water from the NOAA NCEI Marine Microplastics database. It compares nine models
 under random, study-grouped and chronological validation, tunes CatBoost with a genetic algorithm and
-explains the result with SHAP.
+explains the result with SHAP. The data is the NCEI export in `data/noaa_microplastics.csv`.
 
 ## Running
+
+The GAMM runs in R through `gamm.R`, so R with the `mgcv` package must be on the path. On Fedora,
+`sudo dnf install R-core` includes it.
 
 ```sh
 uv sync

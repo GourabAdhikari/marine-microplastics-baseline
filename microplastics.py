@@ -20,14 +20,19 @@
 # - **Random** 5-fold CV. Near-duplicate samples from one cruise land on both sides of the split.
 # - **Grouped** 5-fold CV with the study as the group. No study appears in both train and test.
 #
-# A "study" here is a publication (DOI). Most publications map to one NCEI accession, but one publication
-# was archived as two accessions with overlapping cruises, and grouping by accession would split it.
 # - **Chronological** holdout. Train on samples before 2015, test on 2015 onwards.
+#
+# A "study" is a set of records linked by publication (DOI) or NCEI accession. Most studies are one
+# publication in one accession. One publication was archived as two accessions with overlapping cruises,
+# and one accession holds a published Oceaneye survey plus its later unpublished data, so grouping by
+# either field alone would split a study across train and test.
 
 # %%
 import json
+import subprocess
 from collections.abc import Callable
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
@@ -50,7 +55,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from xgboost import XGBClassifier, XGBRegressor
 
-DATA = Path("data/MP_data_S2N_Nyadjro_SD2023.xlsx")
+DATA = Path("data/noaa_microplastics.csv")
+GAMM_SCRIPT = Path("gamm.R")
 ARTIFACTS = Path("artifacts")
 ARTIFACTS.mkdir(exist_ok=True)
 SEED = 0
@@ -81,36 +87,39 @@ plt.rcParams.update({
 pd.set_option("display.precision", 3)
 
 # %% [markdown]
-# ## 1. The raw workbook
+# ## 1. The raw data
 #
-# The workbook has a data dictionary sheet and one data sheet with 22,530 records. Column names are
-# shortened below. Fields that are missing in more than 95% of rows (bottom depth, sediment depth,
-# transect number and so on) are not carried forward.
+# The NCEI export has 29,076 records and 35 columns, with samples from 1972 to 2026. Column names are
+# shortened below. Fields that are mostly missing (bottom depth, sediment depth, transect number and so
+# on) are not carried forward.
 
 # %%
-raw = pd.read_excel(DATA, sheet_name="Microplastics_AllData")
+raw = pd.read_csv(DATA, low_memory=False)
 data = raw.rename(columns={
-    "Date (MM/DD/YYYY)": "date",
+    "Sample Date": "date",
     "Latitude (degree)": "lat",
-    "Longitude(degree)": "lon",
-    "Location-Oceans": "ocean",
-    "Medium": "medium",
+    "Longitude (degree)": "lon",
+    "Ocean": "ocean",
+    "Marine Setting": "medium",
     "Water Sample Depth (m)": "depth",
     "Sampling Method": "method",
-    "Mesh size (mm)": "mesh",
-    "Microplastics measurement": "conc",
+    "Mesh Size (mm)": "mesh",
+    "Microplastics Measurement": "conc",
     "Unit": "unit",
-    "NCEI Accession No": "accession",
+    "NCEI Accession Number": "accession",
     "DOI": "doi",
-    "ORGANIZATION": "organization",
+    "Organization": "organization",
 })[["date", "lat", "lon", "ocean", "medium", "depth", "method", "mesh", "conc", "unit", "accession", "doi", "organization"]]
+data["date"] = pd.to_datetime(data.date, format="%m/%d/%Y %I:%M:%S %p")
 
-print(f"{len(raw):,} records, {raw['NCEI Accession No'].nunique()} accessions, {raw['ORGANIZATION'].nunique()} organisations")
+print(f"{len(raw):,} records, {data.accession.nunique()} accessions, {data.organization.nunique()} organisations")
 raw.isna().mean().sort_values(ascending=False).rename("missing").to_frame().T
 
 # %% [markdown]
-# The concentration column mixes three incompatible units, one per kind of medium. They cannot be converted
-# into each other, so only the water records reported in pieces/m3 are modelled.
+# The concentration column mixes incompatible units: pieces/m3 for water and beach sand, pieces/kg for
+# sediment, and pellets per 10 minutes of searching for the Nurdle Patrol records, which have no value in
+# this column at all. They cannot be converted into each other, so only the water records reported in
+# pieces/m3 are modelled.
 
 # %%
 data.groupby(["medium", "unit"], dropna=False).agg(
@@ -121,8 +130,19 @@ data.groupby(["medium", "unit"], dropna=False).agg(
 )
 
 # %% [markdown]
-# 671 beach records are reported in pieces/m3 too, but they measure a volume of sand, not sea water.
+# 893 beach records are reported in pieces/m3 too, but they measure a volume of sand, not sea water.
 # They are dropped, which leaves **ocean water in pieces/m3** as the modelling set.
+#
+# Two studies are stored on the wrong scale. The database holds 1,389 of the one-litre grab samples from
+# Barrows et al. (2018), who report a mean of 11.8 particles per litre, or 11,800 pieces/m3. The database
+# mean for those samples is 0.0128 pieces/m3, so the litre-to-m3 conversion divided by 1,000 instead of
+# multiplying. The Niskin bottle samples from Dehm et al. (2020) have the same error: the paper reports
+# 1.6 to 2.0 pieces per litre, the database mean is 0.0018 pieces/m3. Both are multiplied by 10^6 below.
+#
+# The other litre-scale study, McEachern et al. (2019), matches its paper (mean 0.94 per litre, maximum
+# 7.0). The 33 bongo net samples from Arteaga et al. (2024) have a median of 2,860 pieces/m3, far above
+# other nets, but the paper's abstract mixes units and the full text is paywalled, so they are left as
+# they are.
 
 # %%
 fig, axes = plt.subplots(1, 2, figsize=(12, 3.4), gridspec_kw={"width_ratios": [1.3, 1]})
@@ -147,12 +167,27 @@ METHOD_FAMILY = {
     "manta net": "surface net",
     "plankton net": "surface net",
     "avani net": "surface net",
+    "bongo net": "surface net",
+    "pump": "pump",
     "intake seawater pump": "pump",
     "surface water intake": "pump",
+}
+def linked_groups(a: pd.Series, b: pd.Series) -> pd.Series:
+    """Labels rows linked through shared values of a or b, directly or via a chain, with one group."""
+    group = a.astype(str)
+    while not (merged := group.groupby(b).transform("min").groupby(a).transform("min")).equals(group):
+        group = merged
+    return group
+
+
+UNIT_FIXES = {  # see section 1
+    "https://doi.org/10.1016/j.envpol.2018.02.062": 1e6,  # Barrows et al. 2018
+    "https://doi.org/10.1016/j.marpolbul.2020.111239": 1e6,  # Dehm et al. 2020
 }
 C = 1e-3  # offset for the log target, roughly the smallest non-zero concentration (6.8e-4)
 
 water = data[(data.medium == "Ocean water") & (data.unit == "pieces/m3")].reset_index(drop=True)
+water["conc"] *= water.doi.map(UNIT_FIXES).fillna(1)
 method = water.method.str.lower().str.replace("-", " ")
 family = method.map(METHOD_FAMILY).fillna("bulk water")
 month = water.date.dt.month
@@ -166,10 +201,10 @@ df = water.assign(
     month_cos=np.cos(2 * np.pi * month / 12),
     log_mesh=np.log10(water.mesh),
     log_depth=np.log1p(water.depth),
-    study=water.doi,
+    study=linked_groups(water.doi, water.accession),
     y=np.log10(water.conc + C),
 )
-print(f"{len(df):,} records, {df.accession.nunique()} accessions, {df.study.nunique()} publications, {df.organization.nunique()} organisations")
+print(f"{len(df):,} records, {df.accession.nunique()} accessions, {df.doi.nunique()} publications, {df.study.nunique()} studies, {df.organization.nunique()} organisations")
 df.groupby(["method_family", "method"]).agg(
     records=("y", "size"), accessions=("accession", "nunique"), median_conc=("conc", "median")
 ).sort_values(["method_family", "records"], ascending=[True, False])
@@ -193,12 +228,12 @@ ax.set_title("Observed concentration, ocean water samples")
 
 # %% [markdown]
 # Sampling is concentrated in the North Atlantic and North Pacific. The Southern Ocean has 27 records and
-# the Indian Ocean under 500, so anything the models say about those basins is an extrapolation.
+# the Indian Ocean 528, so anything the models say about those basins is an extrapolation.
 
 # %% [markdown]
 # ### 2.1 Choosing the target transform
 #
-# The synopsis proposed `log1p`. That turns out to be a poor fit for this data. 75% of the concentrations
+# The synopsis proposed `log1p`. That turns out to be a poor fit for this data. 64% of the concentrations
 # are below 0.1 pieces/m3, and for small x, `log1p(x) ≈ x`, so `log1p` leaves the bulk of the
 # distribution untransformed. A sample at 0.001 and one at 0.05 differ by a factor of 50 but end up
 # 0.05 apart, while the few samples above 1,000 still dominate the variance.
@@ -255,7 +290,7 @@ fig.tight_layout()
 #
 # Features: latitude, longitude, year, month (as sine and cosine so December sits next to January), sampling
 # family, log mesh size and log water depth. Medium is constant after filtering, so it is not a feature.
-# Missing mesh size (0.1%) and depth (4%) are imputed with the training-fold median.
+# Missing depth (0.3% of rows) is imputed with the training-fold median.
 
 # %%
 NUMERIC = ["lat", "lon", "year", "month_sin", "month_cos", "log_mesh", "log_depth"]
@@ -277,7 +312,7 @@ print(f"chrono: {pre.study.nunique()} studies before {CUTOFF}, {post.study.nuniq
       f"{post[seen].study.nunique()} in both. {seen.sum():,} of {len(post):,} test rows come from studies seen in training")
 
 # %% [markdown]
-# Grouped folds are uneven because one study holds 39% of the rows. The chronological test set mixes two
+# Grouped folds are uneven because one study holds 36% of the rows. The chronological test set mixes two
 # things: most of its studies are new, but a large share of its rows come from long-running studies that
 # also appear before 2015. Its results are therefore also broken down by seen and unseen studies.
 #
@@ -324,29 +359,27 @@ def fit_knn(train: pd.DataFrame) -> Predictor:
     return lambda test: knn.predict(np.radians(test[["lat", "lon"]]))
 
 
-MIXED_TERMS = ["cr(lat, df=6, constraints='center')", "cr(lon, df=6, constraints='center')",
-               "cr(year, df=4, constraints='center')", "month_sin", "month_cos", "log_mesh", "log_depth"]
+GAMM_COLUMNS = NUMERIC + ["fam_pump", "fam_bulk", "study"]
 
 
-def fit_mixed(train: pd.DataFrame) -> Predictor:
-    """Additive mixed model: natural cubic splines of lat, lon and year plus a random intercept per study.
-
-    Studies seen in training get their estimated random intercept added; unseen studies get the
-    population-level prediction.
-    """
+def fit_gamm(train: pd.DataFrame) -> Predictor:
+    """GAMM fitted by R's mgcv through `gamm.R`. Studies seen in training get their random effect added;
+    unseen studies get the population-level prediction."""
     medians = train[NUMERIC].median()
     clip = clip_to_range(train)
 
     def prepare(frame: pd.DataFrame) -> pd.DataFrame:
-        return clip(frame.fillna({c: medians[c] for c in NUMERIC}))
-
-    families = [c for c in ("fam_pump", "fam_bulk") if train[c].nunique() > 1]
-    formula = "y ~ " + " + ".join(MIXED_TERMS + families)
-    result = smf.mixedlm(formula, prepare(train), groups=train.study).fit(method="lbfgs")
-    offsets = pd.Series({g: v.iloc[0] for g, v in result.random_effects.items()})
+        return clip(frame.fillna({c: medians[c] for c in NUMERIC}))[GAMM_COLUMNS]
 
     def predict(test: pd.DataFrame) -> np.ndarray:
-        return np.asarray(result.predict(prepare(test))) + test.study.map(offsets).fillna(0).to_numpy()
+        with TemporaryDirectory() as tmp:
+            train_csv, test_csv, out_csv = (Path(tmp) / name for name in ("train.csv", "test.csv", "pred.csv"))
+            prepare(train).assign(y=train.y).to_csv(train_csv, index=False)
+            prepare(test).to_csv(test_csv, index=False)
+            run = subprocess.run(["Rscript", GAMM_SCRIPT, train_csv, test_csv, out_csv], capture_output=True, text=True)
+            if run.returncode:
+                raise RuntimeError(run.stderr)
+            return pd.read_csv(out_csv).pred.to_numpy()
     return predict
 
 
@@ -382,7 +415,7 @@ def fit_hurdle(train: pd.DataFrame) -> Predictor:
 MODELS: dict[str, Model] = {
     "Study mean only": fit_study_mean,
     "Linear regression": sklearn_model(LinearRegression()),
-    "Additive mixed model": fit_mixed,
+    "GAMM (mgcv)": fit_gamm,
     "Spatial kNN": fit_knn,
     "Random forest": sklearn_model(RandomForestRegressor(n_estimators=300, min_samples_leaf=3, n_jobs=4, random_state=SEED)),
     "XGBoost": sklearn_model(XGBRegressor(**BOOSTER_DEFAULTS, max_depth=6)),
@@ -495,24 +528,32 @@ pd.DataFrame({
 # %% [markdown]
 # What the comparison shows:
 #
-# - **Random CV flatters every model.** The tree ensembles reach R² ≈ 0.74 on random folds and land around
-#   zero on new studies. Even "study mean only", which knows nothing but the study label, gets 0.58 on
-#   random folds.
-# - **Under grouped CV, CatBoost and LightGBM are the only models clearly above zero** (pooled R² 0.25 and
-#   0.21). Every model has a negative fold mean, so on a typical held-out block of studies, predicting the
-#   training mean would beat them. Roughly 70% of grouped predictions still land within one order of
-#   magnitude, against about 92% on random folds.
-# - **The chronological holdout is close to R² = 0 for every tree model.** On rows from studies seen before
-#   2015 the trees keep some skill (R² 0.11 to 0.26). On unseen studies they fall to about -0.5.
-# - **Linear regression and the mixed model fail for specific reasons.** Before 2015, every bulk-water
-#   sample comes from one study with one mesh size (0.45 µm), so the bulk-water flag and mesh size are
-#   collinear. OLS fits large offsetting coefficients that explode on the chronological holdout, where new
-#   bulk-water studies use other meshes. The mixed model
-#   puts most of each study's level into its random intercept, so for an unseen study it predicts an
-#   "average study" and misses the very low SEA neuston studies (folds 1 and 2) badly. This says these two
-#   fits are unstable on this data. It does not show that linear or additive models are worse in general.
-# - **Spatial kNN** is close to the trees on random folds and well below them on new studies. That is what
-#   you would expect if nearby samples mostly come from the same cruise.
+# - **Random folds score far higher than new studies.** The tree ensembles reach R² 0.75 to 0.77 on random
+#   folds and 0.30 to 0.44 on unseen studies. "Study mean only", which knows nothing but the study label,
+#   gets 0.67 on random folds. Part of the gap is the model recognising studies it has seen. Part is that a
+#   new study can differ in ways no feature records. The gap alone cannot separate the two.
+# - **On unseen studies, pooled R² is 0.47 for LightGBM**, 0.46 for the hurdle model, 0.44 for CatBoost,
+#   0.41 for random forest and linear regression and 0.33 for XGBoost. Much of this comes from telling
+#   sampling families apart: bulk water samples sit about four orders of magnitude above surface nets.
+#   Per fold the picture is weaker. A fold's R² compares against that fold's own mean, which no model could
+#   know in advance, and no model has a fold mean above zero. The closest are CatBoost (-0.03) and LightGBM
+#   (-0.07). About two thirds of tree predictions on new studies land within one order of magnitude,
+#   against 85 to 88% on random folds.
+# - **On the chronological holdout, the trees reach R² 0.09 to 0.26.** On rows from studies that also
+#   sampled before 2015 they reach 0.30 to 0.34. On studies that start in 2015 or later only random forest
+#   stays above zero (0.12).
+# - **Linear regression and the GAMM fail for specific reasons.** Before 2015 the only bulk-water study is
+#   Barrows et al., with one filter size (0.45 µm), so the bulk-water flag and mesh size are collinear.
+#   Linear regression fits large offsetting coefficients that explode on the chronological holdout, where
+#   new bulk-water studies use other meshes. It does well on grouped folds, where both are seen in
+#   training. The GAMM puts each study's level into its random intercept. Each study uses one protocol, so
+#   protocol effects can only be estimated from the little variation inside studies, and for an unseen
+#   study the GAMM predicts an average study at that location. That misses the very low SEA neuston
+#   studies in folds 1 and 2 badly. This says these two fits are unstable on this data. It does not show
+#   that linear or additive models are worse in general.
+# - **Spatial kNN** does worst on new studies (R² -1.95), below even the global mean. Its nearest
+#   neighbours belong to other studies with other protocols. When the SEA studies are held out, the
+#   nearest samples come from studies that report higher counts.
 
 # %% [markdown]
 # ## 5. Which features carry information that transfers?
@@ -520,8 +561,7 @@ pd.DataFrame({
 # CatBoost is refit with different feature sets under random and grouped CV. Location and time only,
 # sampling protocol only, all features, all features with the sampling family in place of the raw method
 # name, and all features plus the study ID as a categorical feature. Adding the study ID can only help when
-# the test study was seen in training, so the gap it opens between random and grouped CV shows how much of
-# the random-split score is study recognition.
+# the test study was seen in training.
 
 # %%
 LOCATION_TIME = ["lat", "lon", "year", "month_sin", "month_cos"]
@@ -540,12 +580,11 @@ pd.DataFrame({
 }).T[SHOWN].unstack()
 
 # %% [markdown]
-# Location and time alone reach R² 0.68 on random folds and drop below zero on new studies. On random
-# folds, coordinates and dates pick out the cruise a sample came from, which is also why adding the study
-# ID changes nothing there: the model can already tell. Sampling protocol alone transfers a little (grouped
-# R² 0.07). The full feature set transfers best (0.25 to 0.27), so location and protocol carry some
-# information jointly that neither carries alone. Grouping the 14 raw methods into three families does not
-# lose anything. It scores slightly higher than the raw names.
+# Most of what transfers to new studies comes from the sampling protocol. Protocol features alone reach a
+# grouped R² of 0.40, and all features together reach 0.44. Location and time alone reach 0.72 on random
+# folds but fall below zero on new studies. On random folds, coordinates and dates pick out the cruise a
+# sample came from, which is also why adding the study ID changes nothing there: the model can already
+# tell. Grouping the 17 raw methods into three families loses nothing.
 
 # %% [markdown]
 # ## 6. Genetic algorithm hyperparameter search
@@ -631,7 +670,7 @@ def random_search(rng: np.random.Generator, evaluations: int) -> list[dict]:
 
 GA_SETTINGS = dict(size=12, generations=10, elite=2, mutation=0.2)
 SEARCH_CONFIG = json.loads(json.dumps({
-    "space": SPACE, "ga": GA_SETTINGS, "seed": SEED, "dev_rows": len(dev), "dev_studies": dev.study.nunique(),
+    "space": SPACE, "ga": GA_SETTINGS, "seed": SEED, "dev_data": str(pd.util.hash_pandas_object(dev[CATBOOST_FEATURES + ["y", "study"]]).sum()),
 }))
 
 
@@ -686,12 +725,12 @@ pd.DataFrame({
 }).T[["dev CV RMSE", "R2", "MAE", "RMSE", "within 1 log"]]
 
 # %% [markdown]
-# The GA found a better development score than random search with the same 102 evaluations (RMSE 0.883
-# against 0.907, default 0.977), and its best configurations settle in a band around depth 6 with a
-# moderate learning rate. That improvement barely reaches the holdout. All three configurations sit near
-# R² = 0 there, and the GA's main gain is a higher share of predictions within one order of magnitude.
-# This is one run with one seed, so it does not show the GA is better than random search in general.
-# The lesson here is that tuning cannot fix a gap that comes from the data: the model is limited by what
+# The GA found a better development score than random search with the same 102 evaluations (RMSE 1.30
+# against 1.35, default 1.49), and its later generations settle on depth 5 with a learning rate around
+# 0.05. That improvement does not reach the holdout. The default parameters score R² 0.17 there, the GA's
+# 0.16 and random search's 0.12, and their shares within one order of magnitude differ by under two
+# points. This is one run with one seed, so it does not show the GA is better than random
+# search in general. Tuning cannot fix a gap that comes from the data: the model is limited by what
 # transfers between studies, not by its hyperparameters.
 
 # %% [markdown]
@@ -724,16 +763,17 @@ axes[0].legend(title="Sampling family", markerscale=3)
 fig.tight_layout()
 
 # %% [markdown]
-# Sampling method, latitude and mesh size carry the largest contributions. The latitude curve peaks between
-# about 20° and 45° N, where the North Atlantic and North Pacific subtropical gyres are. That is where
-# floating plastic is known to accumulate, and also where the largest studies sampled. The year curve
-# rises by roughly one order of magnitude from the 1970s to the 2010s. That is harder to read: Law et al.
-# (2010), the largest study in this data, found no clear trend in its own North Atlantic series, so the
-# rise may come from newer studies using different methods rather than from more plastic.
+# Sampling method, sampling family and mesh size carry the largest contributions, followed by latitude and
+# year. The latitude curve peaks between about 20° and 45° N, where the North Atlantic and North Pacific
+# subtropical gyres are. That is where floating plastic is known to accumulate, and also where the largest
+# studies sampled. The year curve is flat until about 2005 and then rises by roughly half an order of
+# magnitude. That is harder to read: Law et al. (2010), the largest study in this data, found no clear
+# trend in its own North Atlantic series, so the rise may come from newer studies using different methods
+# rather than from more plastic.
 #
-# The mesh curve is the warning sign. Finer meshes should catch more particles, yet the finest mesh in the
-# data (0.45 µm) gets a negative contribution. Nearly all of those samples are grab samples from a single
-# study with very low counts, so the model has learned that study, not the physics of mesh size.
+# The finest meshes get the largest positive contributions, which matches the physics: finer filters catch
+# more small particles. Before the Barrows unit fix in section 1, the same plot showed the opposite. The
+# 0.45 µm samples come from only two studies, though, so this curve is still mostly those studies.
 #
 # The single highest prediction, broken down feature by feature:
 
@@ -777,15 +817,16 @@ fig.tight_layout()
 plt.show()
 
 # %% [markdown]
-# The highest prediction belongs to a "surface water intake" sample. That method has 5 rows in the whole
-# dataset, all from one study, and the method and family labels together add over three orders of
-# magnitude. This is
-# study recognition in its plainest form.
+# The highest prediction is a Barrows et al. grab sample from the North Pacific, at about 5,500 pieces/m3.
+# The bulk-water family, the 0.45 µm filter and the grab-sample method together add almost four orders of
+# magnitude. No other study used this method, so these contributions say "this is a Barrows sample" as
+# much as anything about grab samples.
 #
-# Across studies, the sampling-protocol features follow the study offsets closely (r ≈ 0.9) and absorb
-# most of their size. Location and time follow them more loosely and with a much smaller slope. So the
-# fitted model routes most between-study differences through mesh size, depth and method. As said above,
-# this describes the model, it does not prove the protocol effects are physical.
+# Across studies, the sampling-protocol features follow the study offsets closely (r = 0.91, slope 0.81)
+# and absorb most of their size. Location and time follow them more loosely (r = 0.44) and with a much
+# smaller slope (0.11). So the fitted model routes most between-study differences through mesh size, depth
+# and method. As said above, this describes the model, it does not prove the protocol effects are
+# physical.
 
 # %% [markdown]
 # ## 8. Predicted surface concentration map
@@ -831,39 +872,43 @@ plt.show()
 # %% [markdown]
 # ## 9. Conclusions
 #
-# 1. **Random-split accuracy is mostly study recognition.** Tree ensembles reach R² ≈ 0.74 on random folds.
-#    With whole studies held out, the best model (CatBoost) reaches a pooled R² of 0.25, every model has a
-#    negative fold mean, and on the 2015-onwards holdout every model is near zero. Study identity alone
-#    explains 72% of the target variance (ICC), and on random folds the study label adds nothing to
-#    location and date, because those already identify the cruise.
-# 2. **Some information does transfer.** Under grouped CV, about two thirds of CatBoost's predictions are within
-#    one order of magnitude of the measurement, and the full feature set beats both location-and-time and
-#    protocol features on their own.
-# 3. **The ranking of models depends on the split.** Random forest, XGBoost and the hurdle model are level
-#    with CatBoost and LightGBM on random folds and fall behind on new studies. The OLS and mixed-model
-#    fits are unstable on this data, for reasons traced to collinear sampling fields and unseen study
-#    offsets.
+# 1. **Random-split scores overstate how well the models handle new studies.** Tree ensembles reach
+#    R² 0.75 to 0.77 on random folds. With whole studies held out, the best models (LightGBM, the hurdle
+#    model and CatBoost) reach a pooled R² of 0.44 to 0.47, no model has a fold mean above zero, and on the
+#    2015-onwards holdout every model is between -1.7 and 0.26. Study identity alone explains 63% of the
+#    target variance (ICC), and on random folds the study label adds nothing to location and date,
+#    because those already identify the cruise.
+# 2. **What transfers is mostly the sampling protocol.** Protocol features alone reach a grouped R² of
+#    0.40, and adding location and time lifts it to 0.44. Location and time alone fall below zero on new
+#    studies. About two thirds of tree predictions on new studies are within one order of magnitude.
+# 3. **The ranking of models depends on the split.** On random folds the trees are level and the GAMM is
+#    close behind. On new studies LightGBM, the hurdle model, CatBoost, random forest and linear regression
+#    are close together, while the GAMM and spatial kNN fall below the global mean. Linear regression fails
+#    on the chronological holdout because the pre-2015 sampling fields are collinear.
 # 4. **Tuning does not close the gap.** The genetic algorithm beat an equal-budget random search on the
-#    development folds (RMSE 0.883 against 0.907) and moved the holdout score very little.
-# 5. **SHAP shows study artifacts directly.** The negative effect of the finest mesh and the
-#    three-orders-of-magnitude effect of a 5-row method label are properties of individual studies, not of
-#    the ocean.
+#    development folds (RMSE 1.30 against 1.35) and did not improve the holdout over default parameters.
+# 5. **Data quality matters more than model choice here.** Two studies in the NCEI export are stored
+#    10^6 too low because of a unit conversion error. Before Barrows et al. was fixed, the best grouped R²
+#    was -0.05 and SHAP gave the finest meshes a negative effect.
 #
 # The practical message for anyone publishing a model on aggregated microplastic data is to report grouped
 # validation. A random-split R² mostly measures recognition of studies the model has already seen.
 #
 # ### Changes from the synopsis
 #
-# - The target is `log10(conc + 0.001)`, not `log1p`, because `log1p` leaves 75% of the data almost
+# - The data is the current NCEI export (16,988 ocean-water records, 72 studies, samples to 2024), not the
+#   2023 data descriptor release. It adds 14 accessions.
+# - The target is `log10(conc + 0.001)`, not `log1p`, because `log1p` leaves 65% of the data almost
 #   untransformed (section 2.1).
-# - The modelling set is the 15,534 ocean-water records, not all 16,205 pieces/m3 records. The 671 beach
+# - The modelling set is the ocean-water records only, not every record in pieces/m3. The 893 beach
 #   records in pieces/m3 measure sand.
-# - Studies are grouped by publication (DOI) rather than accession. One publication was archived as two
-#   accessions.
+# - The Barrows et al. (2018) and Dehm et al. (2020) values are rescaled by 10^6 to fix a unit conversion
+#   error (section 1).
+# - Studies are grouped by publication and accession together, so neither a publication split across two
+#   accessions nor an accession holding two publications ends up on both sides of a split.
 # - Medium is not a feature, because only ocean water remains after filtering.
-# - The GAMM is approximated with statsmodels `MixedLM` with natural cubic spline bases and a random
-#   intercept per study. Its smoothness is fixed by the basis size, not estimated by penalised likelihood as
-#   in R's `mgcv`.
+# - The GAMM is fitted with R's `mgcv` (`gamm.R`): a spherical spline over latitude and longitude, a
+#   smooth of year, linear protocol terms and a random effect per study.
 # - Added beyond the synopsis: a study-mean reference, a spatial kNN baseline, LightGBM, an XGBoost hurdle
 #   model for the zeros, a random-search control for the GA, feature-group ablations, and a seen/unseen
 #   breakdown of the chronological holdout.
