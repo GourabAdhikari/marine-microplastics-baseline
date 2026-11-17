@@ -1,0 +1,57 @@
+{
+  "input_hashes": {
+    "reproduction_outputs/out_of_fold_predictions.csv": "f35e85d5d6b4291e846806a554b2f09000fc459357667e7b0ff0720a68ea512c",
+    "reproduction_outputs/summary.json": "2dd7fedf7d308a28a8d18a433b0404c4ca111a9ad79a4ee4d75d0ab0efdfb54e",
+    "reproduction_outputs/fold_metrics.csv": "53a89427c800addc5e93c39519002890b5642e555ec675211da8dd6d1041500d",
+    "reproduction_outputs/model_parameters.json": "f7562e973bb969c8c366fdbed5289fb3376ba7cc4a8230d1dd14e75eb2a18e1b",
+    "reproduction_outputs/unit_adjustments.json": "fedf38beb74a639b7123fdd19d1172c28df0a8128f9bb173942f39ad35819550",
+    "reproduction_outputs/input_hashes.json": "976f2255e8241c4d97415f620d546c0a26a69e973b11296e3c32cfde7ec23147",
+    "optimization_outputs/optimized_oof_predictions.csv": "6bca068021726017c8581223ef98f2ae89017965cc03a8851ff10919776816bf",
+    "optimization_outputs/optimization_summary.json": "38f41a2ffff0c2dee4a280a507b262c04354d0411b7a356f1f15cf82969945ba",
+    "optimization_outputs/frozen_splits.json": "10f044d0565ad56642c3df9821a54f89b28abde54b2b5b8af5ae61cb09169d8f",
+    "optimization_outputs/candidate_registry.json": "e27c505b2902d621fe186724839197c6615eb87062c99b0a80f18bef09c7c2b8",
+    "optimization_outputs/checkpoint_identity.json": "87dcc2fad0f20a97d9046beaab81bb3b5e2f4ca55abcb3de045fa151cdc51caf",
+    "optimization_outputs/paired_per_study_metrics.csv": "d996166a1f5009ccfed59ff038292b3e24d0a3e4aa3936cf3f284b9a7723785c",
+    "optimization_outputs/outer_selections.csv": "bee4634be93fad68a213eda6e762feab944cf31d42a0b735039130f4d524b0fd",
+    "optimization_outputs/reproduction_and_integrity_checks.json": "344a5ec0dd005f3f221970f469e9a72643174a97c05d1a0306d724b3bf89032a",
+    "optimization_outputs/fit_log.jsonl": "97f1fb15578c0b057c604c6a0cc3e90d3e05fa948a24dcbd915655490ea2f18f",
+    "optimization_outputs/source/experiment.py": "dcc0da6a23f0371c9c70dc78b8e73f7c3655dfcac5397cb5a43f5a8015e3e32a",
+    "microplastics.py": "134637a2e969cbc586c80c795b95e0b9416372471d95245a28b256e549d5d76b",
+    "microplastics.ipynb": "d267f0b15c224eabd1b0971b854a6cb156a85bcbeaa744c04bb0b269402def83",
+    "data/noaa_microplastics.csv": "5c4634c7c419f8a2c4b03adac4081e869bc59b650d86745ea66872388890a702",
+    "uv.lock": "3d8723154b259e0f421f80f784c679364e2b4dc58d2baa194e82aaed3293f4be",
+    "optimization_outputs/LightGBM_0503_Leakage_Safe_Blending_and_Robustness_Codex_Prompt.md": "53fda9ba086b73a611e43f1713c85f88a389d7b61df4b578f3fc1c9609c358fb"
+  },
+  "source": {
+    "source/blend.py": "f53d67c6e7ff8f10ad46d07bdcf41892167820db64d3dafce35ebfdd2fddbad9",
+    "source/reporting.py": "03dcaa03a3928bcdba30992fb7b51862d070ad548e5b3a7bdbb0b1f3eee03ca0",
+    "source/run.py": "0e0fd302a29fef7e874461733839ae890bab708a39fa36fe1cfe25c23b260a98"
+  },
+  "test_source": {
+    "tests/test_blending.py": "7178e927ad4d1549529a63d824675ff4f16e6e4656298c6c416006e23f98cfeb"
+  },
+  "plan_sha256": "62abbf2bb1d9cc07399d624a7d3c7f5fad89104a927535b11dcba058bb2f07cf",
+  "environment": {
+    "python": "3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 08:22:19) [Clang 14.0.6 ]",
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "executable": "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/bin/python",
+    "cpu_count": 8,
+    "seed": 0,
+    "threads_cap": 4,
+    "packages": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "lightgbm": "4.7.0",
+      "nbformat": "5.11.1",
+      "nbclient": "0.11.0",
+      "ipykernel": "7.4.0"
+    },
+    "new_downloads": 0
+  },
+  "folds_sha256": "10f044d0565ad56642c3df9821a54f89b28abde54b2b5b8af5ae61cb09169d8f",
+  "scenario": "historical_hypothetical_unit_scenario",
+  "cache_policy": "No model checkpoints or training reused; zero-fit arithmetic recomputed on each run. Prior artifacts trusted only after exact hash verification.",
+  "identity_sha256": "5a795774ee5e7100f710b4dd3b0ee1eae4ad70f4cec666870b55695795f8d4f4"
+}

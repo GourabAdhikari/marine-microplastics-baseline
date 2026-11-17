@@ -1,0 +1,27 @@
+{
+  "inputs": {
+    "data/noaa_microplastics.csv": "5c4634c7c419f8a2c4b03adac4081e869bc59b650d86745ea66872388890a702",
+    "microplastics.py": "134637a2e969cbc586c80c795b95e0b9416372471d95245a28b256e549d5d76b",
+    "microplastics.ipynb": "d267f0b15c224eabd1b0971b854a6cb156a85bcbeaa744c04bb0b269402def83",
+    "optimization_outputs/source/experiment.py": "dcc0da6a23f0371c9c70dc78b8e73f7c3655dfcac5397cb5a43f5a8015e3e32a",
+    "optimization_outputs/frozen_splits.json": "10f044d0565ad56642c3df9821a54f89b28abde54b2b5b8af5ae61cb09169d8f",
+    "optimization_outputs/candidate_registry.json": "e27c505b2902d621fe186724839197c6615eb87062c99b0a80f18bef09c7c2b8",
+    "study_robustness_outputs/locked_selections.json": "327ba130e9bdb2ac77b4d12a57d2e12e2f39843c3608f1335eaac66b66582178",
+    "study_robustness_outputs/all_procedure_oof_predictions.csv": "ecfcfe5750a13a2a204cf6573af9b5b1af0dca0f2cbd3a70693bcbe3448b48a3"
+  },
+  "environment": {
+    "python": "3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 08:22:19) [Clang 14.0.6 ]",
+    "packages": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "lightgbm": "4.7.0",
+      "joblib": "1.6.0"
+    },
+    "threads": 4,
+    "seed": 0
+  },
+  "scenario": "historical_hypothetical_unit_scenario",
+  "audit_code_sha256": "bf36002bc51bd4197adb80361ee7a8e5b7dcff0e5aa260d1a432c659f0593165"
+}

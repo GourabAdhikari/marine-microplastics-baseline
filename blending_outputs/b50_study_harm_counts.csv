@@ -1,0 +1,3 @@
+comparison,studies_MAE_worse,studies_MAE_worse_by_over_0.10,studies_MAE_better,studies_MAE_equal
+B50 vs B0,27,9,45,0
+B50 vs B100,37,18,35,0

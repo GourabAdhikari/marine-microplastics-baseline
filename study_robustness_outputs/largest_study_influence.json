@@ -1,0 +1,47 @@
+{
+  "scenario": "historical_hypothetical_unit_scenario",
+  "study": "https://doi.org/10.1126/science.1192321",
+  "rows": 6135,
+  "row_fraction": 0.36113727336943724,
+  "diagnostic_only": "No exclusion from primary benchmark and no refitting.",
+  "original_C0": {
+    "total_SSE": 34167.70623682302,
+    "largest_SSE_fraction": 0.14836710939665762,
+    "largest_study_R2": -0.5559959335804521,
+    "excluding_largest_R2": 0.42621569179763175,
+    "delta_R2_vs_original_C0_from_largest": 0.0,
+    "delta_R2_vs_original_C0_from_remaining": 0.0,
+    "delta_R2_vs_previously_optimized_from_largest": -0.002901070322317842,
+    "delta_R2_vs_previously_optimized_from_remaining": -0.027849374610641752
+  },
+  "previously_optimized": {
+    "total_SSE": 32175.41649268924,
+    "largest_SSE_fraction": 0.15171230009159786,
+    "largest_study_R2": -0.49830409904859785,
+    "excluding_largest_R2": 0.4617949557231812,
+    "delta_R2_vs_original_C0_from_largest": 0.002901070322317842,
+    "delta_R2_vs_original_C0_from_remaining": 0.027849374610641752,
+    "delta_R2_vs_previously_optimized_from_largest": 0.0,
+    "delta_R2_vs_previously_optimized_from_remaining": 0.0
+  },
+  "S1": {
+    "total_SSE": 31131.644765535224,
+    "largest_SSE_fraction": 0.14977127905455875,
+    "largest_study_R2": -0.43115147517054386,
+    "excluding_largest_R2": 0.4780627964556944,
+    "delta_R2_vs_original_C0_from_largest": 0.006277882409838309,
+    "delta_R2_vs_original_C0_from_remaining": 0.04058289241511438,
+    "delta_R2_vs_previously_optimized_from_largest": 0.0033768120875204677,
+    "delta_R2_vs_previously_optimized_from_remaining": 0.012733517804472629
+  },
+  "S2": {
+    "total_SSE": 30734.074173775178,
+    "largest_SSE_fraction": 0.15170869404567594,
+    "largest_study_R2": -0.43115147517054386,
+    "excluding_largest_R2": 0.4859024102591625,
+    "delta_R2_vs_original_C0_from_largest": 0.006277882409838309,
+    "delta_R2_vs_original_C0_from_remaining": 0.04671928528913226,
+    "delta_R2_vs_previously_optimized_from_largest": 0.0033768120875204677,
+    "delta_R2_vs_previously_optimized_from_remaining": 0.018869910678490507
+  }
+}

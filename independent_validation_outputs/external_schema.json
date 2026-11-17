@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "format": "CSV with exactly these metadata columns plus optional concentration column",
+  "required_columns": [
+    "source_row_id",
+    "study_id",
+    "doi",
+    "accession",
+    "campaign_id",
+    "date",
+    "lat",
+    "lon",
+    "method",
+    "mesh_mm",
+    "mesh_kind",
+    "depth_m",
+    "medium",
+    "unit",
+    "target_type",
+    "scenario"
+  ],
+  "outcome_column": "concentration",
+  "outcome_required_for_evaluation": true,
+  "numeric_columns": [
+    "lat",
+    "lon",
+    "mesh_mm",
+    "depth_m"
+  ],
+  "nullable_columns": [
+    "depth_m",
+    "accession"
+  ],
+  "date_format": "YYYY-MM-DD",
+  "metadata_only_prepare": true,
+  "unit": "pieces/m3",
+  "target_type": "synthetic_particle_count",
+  "scenario": "traceable_synthetic_particle_count_per_m3",
+  "medium": "Ocean water",
+  "mesh_kind": [
+    "net_mesh",
+    "membrane_pore_size"
+  ],
+  "manifest_sidecar": "PATH.manifest.json",
+  "manifest_study_fields": [
+    "study_id",
+    "citation",
+    "source_url",
+    "source_file_sha256",
+    "source_document_path",
+    "source_document_sha256",
+    "original_unit",
+    "volume_calculation_reference",
+    "synthetic_verification_reference",
+    "zero_and_detection_limit_reference",
+    "method_context_reference",
+    "provenance_verified",
+    "independence_reviewed",
+    "method_context_signed",
+    "reviewer",
+    "reviewed_utc",
+    "review_signature",
+    "previously_used_for_tuning",
+    "campaign_aliases",
+    "ancestor_source_ids",
+    "ancestor_dois",
+    "ancestor_accessions"
+  ],
+  "development_review_file": "independent_validation_outputs/development_provenance_review.json",
+  "unknown_columns": "reject",
+  "outcome_values_never_used_for_eligibility": true
+}

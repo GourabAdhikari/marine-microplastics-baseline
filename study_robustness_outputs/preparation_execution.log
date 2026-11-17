@@ -1,0 +1,81 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+Traceback (most recent call last):
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/study_robustness_outputs/source/run.py", line 110, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/study_robustness_outputs/source/run.py", line 79, in main
+    NotebookClient(nb,timeout=1200,kernel_name='study_robustness',resources={'metadata':{'path':str(root)}}).execute()
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gourabadhikari/anaconda3/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/lib/python3.12/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/lib/python3.12/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/lib/python3.12/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+test_status=run_tests(ctx,budget)
+print(json.dumps(test_status,indent=2))
+print('New fit calls this kernel:',budget.calls_this_process)
+print('Original source/data and all three previous output directories unchanged.')
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mAssertionError[39m                            Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[8][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m test_status=run_tests(ctx,budget)
+[32m      2[39m print(json.dumps(test_status,indent=[32m2[39m))
+[32m      3[39m print([33m'New fit calls this kernel:'[39m,budget.calls_this_process)
+[32m      4[39m print([33m'Original source/data and all three previous output directories unchanged.'[39m)
+
+[36mFile [39m[32m~/Desktop/marine-microplastics-baseline/study_robustness_outputs/tests/test_stage4.py:273[39m, in [36mrun_tests[39m[34m(ctx, budget)[39m
+[32m    271[39m require_no_fits=[38;5;28mlen[39m(budget.events())==start
+[32m    272[39m text=stream.getvalue();(ctx.out/[33m'[39m[33mtests.txt[39m[33m'[39m).write_text(text+[33m'[39m[38;5;130;01m\n[39;00m[33mData/provenance assertions:[39m[38;5;130;01m\n[39;00m[33m'[39m+[33m'[39m[38;5;130;01m\n[39;00m[33m'[39m.join([33m'[39m[33mPASS [39m[33m'[39m+c [38;5;28;01mfor[39;00m c [38;5;129;01min[39;00m ctx.checks)+[33m'[39m[38;5;130;01m\n[39;00m[33m'[39m)
+[32m--> [39m[32m273[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m result.wasSuccessful() [38;5;129;01mor[39;00m [38;5;129;01mnot[39;00m require_no_fits:[38;5;28;01mraise[39;00m [38;5;167;01mAssertionError[39;00m(text+[33m'[39m[38;5;130;01m\n[39;00m[33mUnexpected fits: [39m[33m'[39m+[38;5;28mstr[39m([38;5;129;01mnot[39;00m require_no_fits))
+[32m    274[39m status={[33m'[39m[33mtests_run[39m[33m'[39m:result.testsRun,[33m'[39m[33mpassed[39m[33m'[39m:result.testsRun-[38;5;28mlen[39m(result.skipped),[33m'[39m[33mfailures[39m[33m'[39m:[38;5;28mlen[39m(result.failures),[33m'[39m[33merrors[39m[33m'[39m:[38;5;28mlen[39m(result.errors),[33m'[39m[33mskipped[39m[33m'[39m:[38;5;28mlen[39m(result.skipped),
+[32m    275[39m         [33m'[39m[33mdata_provenance_assertions_passed[39m[33m'[39m:[38;5;28mlen[39m(ctx.checks),[33m'[39m[33mnew_fits_during_tests[39m[33m'[39m:[32m0[39m}
+[32m    276[39m (ctx.out/[33m'[39m[33mtests/test_results.json[39m[33m'[39m).write_text(json.dumps(status,indent=[32m2[39m));[38;5;28mprint[39m(text);[38;5;28;01mreturn[39;00m status
+
+[31mAssertionError[39m: test_C0_fallback_zero_errors_and_nonfinite (test_stage4.Stage4Tests.test_C0_fallback_zero_errors_and_nonfinite) ... ok
+test_actual_fitted_preprocessing_training_only (test_stage4.Stage4Tests.test_actual_fitted_preprocessing_training_only) ... ok
+test_audited_inner_predictions_count_all_studies (test_stage4.Stage4Tests.test_audited_inner_predictions_count_all_studies) ... ok
+test_checkpoint_identity_and_corruption_rejection (test_stage4.Stage4Tests.test_checkpoint_identity_and_corruption_rejection) ... ok
+test_exact_oof_alignment_and_coverage (test_stage4.Stage4Tests.test_exact_oof_alignment_and_coverage) ... ok
+test_fit_cap_and_no_post_evaluation_fit_allowed (test_stage4.Stage4Tests.test_fit_cap_and_no_post_evaluation_fit_allowed) ... ok
+test_frozen_screen_and_largest_study_contribution (test_stage4.Stage4Tests.test_frozen_screen_and_largest_study_contribution) ... ok
+test_inclusive_guard_boundaries (test_stage4.Stage4Tests.test_inclusive_guard_boundaries) ... ok
+test_independent_s1_s2_arithmetic_and_order (test_stage4.Stage4Tests.test_independent_s1_s2_arithmetic_and_order) ... ok
+test_independently_recomputed_aggregate_and_fold_metrics (test_stage4.Stage4Tests.test_independently_recomputed_aggregate_and_fold_metrics) ... ok
+test_inner_only_inputs_no_io_and_deterministic (test_stage4.Stage4Tests.test_inner_only_inputs_no_io_and_deterministic) ... ok
+test_metric_missing_values_and_offset_tolerance (test_stage4.Stage4Tests.test_metric_missing_values_and_offset_tolerance) ... ok
+test_original_target_scenario_and_predictor_whitelist (test_stage4.Stage4Tests.test_original_target_scenario_and_predictor_whitelist) ... ok
+test_outer_label_perturbation_does_not_affect_selection_or_fit_identity (test_stage4.Stage4Tests.test_outer_label_perturbation_does_not_affect_selection_or_fit_identity) ... ERROR
+test_paired_study_metrics_and_all_case_subgroup_counts (test_stage4.Stage4Tests.test_paired_study_metrics_and_all_case_subgroup_counts) ... ok
+test_pre_fit_lock_timestamp_hash_and_source (test_stage4.Stage4Tests.test_pre_fit_lock_timestamp_hash_and_source) ... ok
+test_protected_paths_unchanged (test_stage4.Stage4Tests.test_protected_paths_unchanged) ... ok
+test_reuse_only_exact_same_fold_and_configuration (test_stage4.Stage4Tests.test_reuse_only_exact_same_fold_and_configuration) ... ok
+test_s1_lexicographic_ties (test_stage4.Stage4Tests.test_s1_lexicographic_ties) ... ok
+test_s2_band_and_ties (test_stage4.Stage4Tests.test_s2_band_and_ties) ... ok
+
+======================================================================
+ERROR: test_outer_label_perturbation_does_not_affect_selection_or_fit_identity (test_stage4.Stage4Tests.test_outer_label_perturbation_does_not_affect_selection_or_fit_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/study_robustness_outputs/tests/test_stage4.py", line 116, in test_outer_label_perturbation_does_not_affect_selection_or_fit_identity
+    c.y[te]=np.arange(len(te))*1000.+99999.
+    ~~~^^^^
+ValueError: assignment destination is read-only
+
+----------------------------------------------------------------------
+Ran 20 tests in 6.973s
+
+FAILED (errors=1)
+
+Unexpected fits: False
+

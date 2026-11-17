@@ -1,0 +1,10 @@
+{"event": "fit_started", "fold": 1, "candidate": "C5_row_and_feature_subsample", "key": "fce5567df0ecd265605c67ba8c0336e07ae86ae2e473d60e8bae39f69ebebc5f", "utc": "2026-11-17T02:25:58.021519+00:00", "training_rows": 10853, "scenario": "historical_hypothetical_unit_scenario"}
+{"event": "fit_completed", "fold": 1, "key": "fce5567df0ecd265605c67ba8c0336e07ae86ae2e473d60e8bae39f69ebebc5f"}
+{"event": "fit_started", "fold": 2, "candidate": "C5_row_and_feature_subsample", "key": "4c7f57512f815e020e4f17148c489d63df25fa29d2bca724d941ff5da48b99a7", "utc": "2026-11-17T02:26:00.510135+00:00", "training_rows": 14274, "scenario": "historical_hypothetical_unit_scenario"}
+{"event": "fit_completed", "fold": 2, "key": "4c7f57512f815e020e4f17148c489d63df25fa29d2bca724d941ff5da48b99a7"}
+{"event": "fit_started", "fold": 3, "candidate": "C4_feature_subsample", "key": "acd94b6ae84b6b119fbdc2d42da47656b55a63154d0d941123398533d0661a50", "utc": "2026-11-17T02:26:01.249104+00:00", "training_rows": 14276, "scenario": "historical_hypothetical_unit_scenario"}
+{"event": "fit_completed", "fold": 3, "key": "acd94b6ae84b6b119fbdc2d42da47656b55a63154d0d941123398533d0661a50"}
+{"event": "fit_started", "fold": 4, "candidate": "C4_feature_subsample", "key": "079e07422df285bd60433580d6ea26a5d604d6a15a2805f5389b401ad8f40efc", "utc": "2026-11-17T02:26:01.939206+00:00", "training_rows": 14274, "scenario": "historical_hypothetical_unit_scenario"}
+{"event": "fit_completed", "fold": 4, "key": "079e07422df285bd60433580d6ea26a5d604d6a15a2805f5389b401ad8f40efc"}
+{"event": "fit_started", "fold": 5, "candidate": "C4_feature_subsample", "key": "1b18c9d736d6683854595fa3a209fa5392d25c5bc9643b7f9558fa216e26f5c8", "utc": "2026-11-17T02:26:02.561225+00:00", "training_rows": 14275, "scenario": "historical_hypothetical_unit_scenario"}
+{"event": "fit_completed", "fold": 5, "key": "1b18c9d736d6683854595fa3a209fa5392d25c5bc9643b7f9558fa216e26f5c8"}

@@ -1,0 +1,9 @@
+{
+  "tests_run": 20,
+  "passed": 20,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "data_provenance_assertions_passed": 101,
+  "new_fits_during_tests": 0
+}

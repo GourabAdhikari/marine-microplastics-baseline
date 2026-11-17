@@ -1,0 +1,15 @@
+{
+  "raw_exact_duplicate_rows": 0,
+  "eligible_measurement_signature_duplicate_rows": 643,
+  "eligible_same_date_location_method_rows": 2378,
+  "zero_concentration_rows": 4958,
+  "missing_concentration_rows": 0,
+  "missing_depth_rows": 53,
+  "missing_mesh_rows": 0,
+  "non_DOI_rows": 0,
+  "sampling_volume_field_present": false,
+  "polymer_confirmation_field_present": false,
+  "detection_limit_field_present": false,
+  "blank_correction_field_present": false,
+  "interpretation": "Duplicate signatures are flags, not proof of duplicate measurements; no records removed. Zero may mean nondetect, true zero or rounded/blank-adjusted zero; unresolved without source records."
+}

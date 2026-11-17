@@ -1,0 +1,5 @@
+{
+  "matching_serialized_models_found": [],
+  "previous_npz_content": "test row IDs and predictions only; no fitted booster or transformer",
+  "refit_policy": "At most one exact S2 fit per outer fold; held-out predictions must match before training scores are accepted."
+}

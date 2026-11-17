@@ -1,0 +1,54 @@
+{
+  "numeric_min": {
+    "lat": -71.69904,
+    "lon": -179.9942,
+    "year": 1972.0,
+    "month_sin": -1.0,
+    "month_cos": -1.0,
+    "log_mesh": -3.3467874862246565,
+    "log_depth": 0.0
+  },
+  "numeric_max": {
+    "lat": 89.7614,
+    "lon": 179.854333,
+    "year": 2024.0,
+    "month_sin": 1.0,
+    "month_cos": 1.0,
+    "log_mesh": -0.2967086218813386,
+    "log_depth": 8.382518288089635
+  },
+  "known_methods": [
+    "aluminum bucket",
+    "avani net",
+    "bongo net",
+    "ctd rosette sampler",
+    "glass jar",
+    "grab sample",
+    "intake seawater pump",
+    "manta net",
+    "neuston net",
+    "niskin bottle",
+    "plankton net",
+    "pump",
+    "stainless steel bucket",
+    "stainless steel sampler",
+    "steel bucket",
+    "surface water intake",
+    "van dorn sampler"
+  ],
+  "known_families": [
+    "bulk water",
+    "pump",
+    "surface net"
+  ],
+  "feature_names": [
+    "lat",
+    "lon",
+    "year",
+    "month_sin",
+    "month_cos",
+    "log_mesh",
+    "log_depth",
+    "method_family"
+  ]
+}

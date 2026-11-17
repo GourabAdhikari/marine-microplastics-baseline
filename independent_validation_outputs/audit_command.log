@@ -1,0 +1,63 @@
+29,076 records, 96 accessions, 68 organisations
+16,988 records, 73 accessions, 73 publications, 72 studies, 52 organisations
+{
+  "benchmark_verified": true,
+  "historical_references": {
+    "original_C0": {
+      "R2": 0.4726308398591973,
+      "MAE": 0.9963774232101922,
+      "RMSE": 1.418197730643938,
+      "study_macro_MAE": 1.0609421643148442,
+      "study_macro_MSE": 2.1717513685178136,
+      "p90_study_MAE": 1.8133913142735518,
+      "worst_study_MAE": 4.943934893120671,
+      "within_1_log": 0.639392512361667,
+      "mean_fold_R2": -0.07123499211367457
+    },
+    "previously_optimized": {
+      "R2": 0.5033812847921568,
+      "MAE": 1.0093425701092071,
+      "RMSE": 1.376229815682646,
+      "study_macro_MAE": 1.0014113310288615,
+      "study_macro_MSE": 2.0300749795186994,
+      "p90_study_MAE": 1.9012177824893999,
+      "worst_study_MAE": 5.29583611802766,
+      "within_1_log": 0.6100777019072287,
+      "mean_fold_R2": -0.0806762311116378
+    },
+    "S1": {
+      "R2": 0.51949161468415,
+      "MAE": 0.9952826407188045,
+      "RMSE": 1.3537233092716592,
+      "study_macro_MAE": 0.980533171969721,
+      "study_macro_MSE": 1.9591113605945931,
+      "p90_study_MAE": 1.8330193404301562,
+      "worst_study_MAE": 5.2445937804281195,
+      "within_1_log": 0.622203908641394,
+      "mean_fold_R2": -0.05504451714757701
+    },
+    "S2": {
+      "R2": 0.5256280075581679,
+      "MAE": 0.9915469119401223,
+      "RMSE": 1.3450515874438729,
+      "study_macro_MAE": 0.9993536485205501,
+      "study_macro_MSE": 1.9692869886789295,
+      "p90_study_MAE": 1.786402449773061,
+      "worst_study_MAE": 5.1658872956445,
+      "within_1_log": 0.6283258770897104,
+      "mean_fold_R2": -0.037263820042617725
+    }
+  },
+  "provenance": {
+    "Barrows": "unresolved",
+    "Dehm": "unresolved",
+    "historical_corrections": "hypothesis_only",
+    "comparable_concentration_gate": "UNVERIFIED_TARGET_PROVENANCE",
+    "public_source_lookups": 6,
+    "primary_methods_accessible": false,
+    "row_specific_corrections_authorized": 0
+  },
+  "new_fits": 0
+}
+
+STDERR:

@@ -1,0 +1,9 @@
+{
+  "tests_run": 20,
+  "passed": 20,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "actual_model_fits_in_tests": 0,
+  "synthetic_fixtures": "Tiny in-memory unit fixtures only; no empirical external metrics or predictions written."
+}

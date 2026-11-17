@@ -1,0 +1,48 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+{
+  "success": true,
+  "scenario": "historical_hypothetical_unit_scenario",
+  "executed_code_cells": 9,
+  "tests": {
+    "tests_run": 20,
+    "passed": 20,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "data_provenance_assertions_passed": 101,
+    "new_fits_during_tests": 0
+  },
+  "new_fits_started": 5,
+  "new_fits_completed": 5,
+  "failed_fits": 0,
+  "hard_fit_cap": 10,
+  "protected_files_unchanged": true,
+  "protected_paths_verified": 27249,
+  "screening": {
+    "S1": {
+      "passed": true,
+      "conditions": {
+        "pooled_R2_at_least_0.4883812847921568": true,
+        "study_macro_MAE_no_worse": true,
+        "p90_study_MAE_no_worse": true,
+        "worst_study_MAE_no_worse": true
+      },
+      "failed_conditions": [],
+      "interpretation": "Descriptive screen on reused outcomes only; no reselection or promotion authorized."
+    },
+    "S2": {
+      "passed": true,
+      "conditions": {
+        "pooled_R2_at_least_0.4883812847921568": true,
+        "study_macro_MAE_no_worse": true,
+        "p90_study_MAE_no_worse": true,
+        "worst_study_MAE_no_worse": true
+      },
+      "failed_conditions": [],
+      "interpretation": "Descriptive screen on reused outcomes only; no reselection or promotion authorized."
+    }
+  },
+  "report_created": true,
+  "report_path": "study_robustness_outputs/STUDY_ROBUSTNESS_REPORT.md",
+  "stop": true
+}

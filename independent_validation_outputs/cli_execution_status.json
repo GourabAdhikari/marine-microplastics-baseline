@@ -1,0 +1,37 @@
+[
+  {
+    "command": [
+      "--audit"
+    ],
+    "returncode": 0,
+    "log": "audit_command.log"
+  },
+  {
+    "command": [
+      "--prepare-external"
+    ],
+    "returncode": 0,
+    "log": "prepare_external_command.log"
+  },
+  {
+    "command": [
+      "--fit-frozen-research-model"
+    ],
+    "returncode": 0,
+    "log": "fit_frozen_research_model_command.log"
+  },
+  {
+    "command": [
+      "--evaluate-external"
+    ],
+    "returncode": 0,
+    "log": "evaluate_external_command.log"
+  },
+  {
+    "command": [
+      "--tests"
+    ],
+    "returncode": 0,
+    "log": "tests_command.log"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "reproduction_outputs/out_of_fold_predictions.csv": "f35e85d5d6b4291e846806a554b2f09000fc459357667e7b0ff0720a68ea512c",
+  "reproduction_outputs/summary.json": "2dd7fedf7d308a28a8d18a433b0404c4ca111a9ad79a4ee4d75d0ab0efdfb54e",
+  "reproduction_outputs/fold_metrics.csv": "53a89427c800addc5e93c39519002890b5642e555ec675211da8dd6d1041500d",
+  "reproduction_outputs/model_parameters.json": "f7562e973bb969c8c366fdbed5289fb3376ba7cc4a8230d1dd14e75eb2a18e1b",
+  "reproduction_outputs/unit_adjustments.json": "fedf38beb74a639b7123fdd19d1172c28df0a8128f9bb173942f39ad35819550",
+  "reproduction_outputs/input_hashes.json": "976f2255e8241c4d97415f620d546c0a26a69e973b11296e3c32cfde7ec23147",
+  "optimization_outputs/optimized_oof_predictions.csv": "6bca068021726017c8581223ef98f2ae89017965cc03a8851ff10919776816bf",
+  "optimization_outputs/optimization_summary.json": "38f41a2ffff0c2dee4a280a507b262c04354d0411b7a356f1f15cf82969945ba",
+  "optimization_outputs/frozen_splits.json": "10f044d0565ad56642c3df9821a54f89b28abde54b2b5b8af5ae61cb09169d8f",
+  "optimization_outputs/candidate_registry.json": "e27c505b2902d621fe186724839197c6615eb87062c99b0a80f18bef09c7c2b8",
+  "optimization_outputs/checkpoint_identity.json": "87dcc2fad0f20a97d9046beaab81bb3b5e2f4ca55abcb3de045fa151cdc51caf",
+  "optimization_outputs/paired_per_study_metrics.csv": "d996166a1f5009ccfed59ff038292b3e24d0a3e4aa3936cf3f284b9a7723785c",
+  "optimization_outputs/outer_selections.csv": "bee4634be93fad68a213eda6e762feab944cf31d42a0b735039130f4d524b0fd",
+  "optimization_outputs/reproduction_and_integrity_checks.json": "344a5ec0dd005f3f221970f469e9a72643174a97c05d1a0306d724b3bf89032a",
+  "optimization_outputs/fit_log.jsonl": "97f1fb15578c0b057c604c6a0cc3e90d3e05fa948a24dcbd915655490ea2f18f",
+  "optimization_outputs/source/experiment.py": "dcc0da6a23f0371c9c70dc78b8e73f7c3655dfcac5397cb5a43f5a8015e3e32a",
+  "microplastics.py": "134637a2e969cbc586c80c795b95e0b9416372471d95245a28b256e549d5d76b",
+  "microplastics.ipynb": "d267f0b15c224eabd1b0971b854a6cb156a85bcbeaa744c04bb0b269402def83",
+  "data/noaa_microplastics.csv": "5c4634c7c419f8a2c4b03adac4081e869bc59b650d86745ea66872388890a702",
+  "uv.lock": "3d8723154b259e0f421f80f784c679364e2b4dc58d2baa194e82aaed3293f4be",
+  "optimization_outputs/LightGBM_0503_Leakage_Safe_Blending_and_Robustness_Codex_Prompt.md": "53fda9ba086b73a611e43f1713c85f88a389d7b61df4b578f3fc1c9609c358fb"
+}

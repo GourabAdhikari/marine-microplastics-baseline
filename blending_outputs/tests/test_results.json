@@ -1,0 +1,12 @@
+{
+  "unit_integration_tests_run": 18,
+  "passed": 18,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 0,
+  "data_audit_assertions_passed": 46,
+  "lightgbm_fit_calls_in_tests": 0,
+  "not_applicable": [
+    "Actual Stage C model/weight fitting and its outer-label invariance: Stage C did not run. Fixed-blend target invariance and existing outer/inner split checks were tested; new nested split checks apply only if the Stage B gate passes."
+  ]
+}

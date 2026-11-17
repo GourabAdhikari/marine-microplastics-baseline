@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "locked_utc": "2026-11-16T13:28:10.839511+00:00",
+  "candidate": "S2",
+  "primary_endpoint": "study_macro_MAE_log10",
+  "files": {
+    "EXTERNAL_VALIDATION_PROTOCOL.md": "863b511de3119af33e39e295035a4c00e27ebc66eb8a3e5771f3e1faf15d835b",
+    "external_schema.json": "49f9581a1e276bdd03b6409cd0bbb5011dcb6eb98021748dda4e56accfc0213a",
+    "external_data_dictionary.md": "41ec2a6b7efb78acb14f8dcf70206ff8e6cd5ccf55e5ce6adc566853a6ca5420",
+    "source_manifest_template.csv": "d45f47d699dd56e16595a0400ca3288f00b1379b69a6e47fc881cd0887d2e0b1",
+    "research_training_plan.json": "1bee7e4ef9f0232a61423e359b587c993bfcd71851f8f74d9b889a48513c943b"
+  },
+  "historical_data_sha256": "5c4634c7c419f8a2c4b03adac4081e869bc59b650d86745ea66872388890a702",
+  "historical_S2": 0.5256280075581679,
+  "no_external_outcomes_inspected": true,
+  "content_sha256": "19f3090443de03d63dfae71d973375717c0f9e76a786b61afd01b661142574ad"
+}

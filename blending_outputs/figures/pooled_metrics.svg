@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="339" viewBox="0 0 980 339">
+<rect width="100%" height="100%" fill="white"/>
+<text x="12" y="24" font-size="17">Pooled metrics: B50 is predefined, not selected from scores</text>
+<text x="12" y="44" font-size="10">historical_hypothetical_unit_scenario</text>
+<text x="12" y="65" font-size="12">Blue: B0 original | Green: B50 predeclared | Orange: B100 optimized</text>
+<line x1="290.0" x2="290.0" y1="80" y2="294" stroke="#ccc"/>
+<text x="12" y="99" font-size="12">R²</text>
+<circle cx="345.3323619126335" cy="95" r="4" fill="#2967a0"/>
+<circle cx="348.5745535275402" cy="95" r="4" fill="#16806a"/>
+<circle cx="348.9324121093407" cy="95" r="4" fill="#cf5b22"/>
+<text x="12" y="133" font-size="12">MAE</text>
+<circle cx="406.6490028434623" cy="129" r="4" fill="#2967a0"/>
+<circle cx="406.40944097665727" cy="129" r="4" fill="#16806a"/>
+<circle cx="408.1668729017947" cy="129" r="4" fill="#cf5b22"/>
+<text x="12" y="167" font-size="12">RMSE</text>
+<circle cx="456.03281774639106" cy="163" r="4" fill="#2967a0"/>
+<circle cx="451.6145916651083" cy="163" r="4" fill="#16806a"/>
+<circle cx="451.11950345642924" cy="163" r="4" fill="#cf5b22"/>
+<text x="12" y="201" font-size="12">Study-macro MAE</text>
+<circle cx="414.2077978274342" cy="197" r="4" fill="#2967a0"/>
+<circle cx="408.9714795940361" cy="197" r="4" fill="#16806a"/>
+<circle cx="407.2383380830765" cy="197" r="4" fill="#cf5b22"/>
+<text x="12" y="235" font-size="12">P90 study MAE</text>
+<circle cx="502.2993593065204" cy="231" r="4" fill="#2967a0"/>
+<circle cx="499.7140085004724" cy="231" r="4" fill="#16806a"/>
+<circle cx="512.5814770080979" cy="231" r="4" fill="#cf5b22"/>
+<text x="12" y="269" font-size="12">Worst-study MAE</text>
+<circle cx="868.8018294788945" cy="265" r="4" fill="#2967a0"/>
+<circle cx="889.4009147394473" cy="265" r="4" fill="#16806a"/>
+<circle cx="910.0" cy="265" r="4" fill="#cf5b22"/>
+<text x="270.0" y="314" font-size="11">0.000</text>
+<text x="394.0" y="314" font-size="11">1.059</text>
+<text x="518.0" y="314" font-size="11">2.118</text>
+<text x="642.0" y="314" font-size="11">3.178</text>
+<text x="766.0" y="314" font-size="11">4.237</text>
+<text x="890.0" y="314" font-size="11">5.296</text>
+<text x="410" y="334" font-size="12">Metric value (R² dimensionless; errors log10)</text></svg>

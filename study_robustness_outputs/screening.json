@@ -1,0 +1,24 @@
+{
+  "S1": {
+    "passed": true,
+    "conditions": {
+      "pooled_R2_at_least_0.4883812847921568": true,
+      "study_macro_MAE_no_worse": true,
+      "p90_study_MAE_no_worse": true,
+      "worst_study_MAE_no_worse": true
+    },
+    "failed_conditions": [],
+    "interpretation": "Descriptive screen on reused outcomes only; no reselection or promotion authorized."
+  },
+  "S2": {
+    "passed": true,
+    "conditions": {
+      "pooled_R2_at_least_0.4883812847921568": true,
+      "study_macro_MAE_no_worse": true,
+      "p90_study_MAE_no_worse": true,
+      "worst_study_MAE_no_worse": true
+    },
+    "failed_conditions": [],
+    "interpretation": "Descriptive screen on reused outcomes only; no reselection or promotion authorized."
+  }
+}

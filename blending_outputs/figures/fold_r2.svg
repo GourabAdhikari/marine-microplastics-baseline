@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="305" viewBox="0 0 980 305">
+<rect width="100%" height="100%" fill="white"/>
+<text x="12" y="24" font-size="17">All five fold R² values, including negative values</text>
+<text x="12" y="44" font-size="10">historical_hypothetical_unit_scenario</text>
+<text x="12" y="65" font-size="12">Blue: B0 original | Green: B50 predeclared | Orange: B100 optimized</text>
+<line x1="659.8288835648746" x2="659.8288835648746" y1="80" y2="260" stroke="#ccc"/>
+<text x="12" y="99" font-size="12">Fold 1</text>
+<circle cx="290.0" cy="95" r="4" fill="#2967a0"/>
+<circle cx="325.99960731027534" cy="95" r="4" fill="#16806a"/>
+<circle cx="328.37457338640377" cy="95" r="4" fill="#cf5b22"/>
+<text x="12" y="133" font-size="12">Fold 2</text>
+<circle cx="662.1581160074556" cy="129" r="4" fill="#2967a0"/>
+<circle cx="536.0779923729069" cy="129" r="4" fill="#16806a"/>
+<circle cx="348.2167324452317" cy="129" r="4" fill="#cf5b22"/>
+<text x="12" y="167" font-size="12">Fold 3</text>
+<circle cx="860.5131066932265" cy="163" r="4" fill="#2967a0"/>
+<circle cx="890.8811120009095" cy="163" r="4" fill="#16806a"/>
+<circle cx="910.0" cy="163" r="4" fill="#cf5b22"/>
+<text x="12" y="201" font-size="12">Fold 4</text>
+<circle cx="368.697832785809" cy="197" r="4" fill="#2967a0"/>
+<circle cx="547.5927165206099" cy="197" r="4" fill="#16806a"/>
+<circle cx="654.8285093811053" cy="197" r="4" fill="#cf5b22"/>
+<text x="12" y="235" font-size="12">Fold 5</text>
+<circle cx="880.8603418043648" cy="231" r="4" fill="#2967a0"/>
+<circle cx="847.0367295090643" cy="231" r="4" fill="#16806a"/>
+<circle cx="789.4096862587276" cy="231" r="4" fill="#cf5b22"/>
+<text x="270.0" y="280" font-size="11">-0.556</text>
+<text x="394.0" y="280" font-size="11">-0.370</text>
+<text x="518.0" y="280" font-size="11">-0.183</text>
+<text x="642.0" y="280" font-size="11">0.003</text>
+<text x="766.0" y="280" font-size="11">0.190</text>
+<text x="890.0" y="280" font-size="11">0.376</text>
+<text x="410" y="300" font-size="12">R² (each fold uses its own variance)</text></svg>

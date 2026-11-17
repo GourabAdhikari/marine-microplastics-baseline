@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="611" viewBox="0 0 980 611">
+<rect width="100%" height="100%" fill="white"/>
+<text x="12" y="24" font-size="17">Previously harmed studies: post-hoc diagnostic only</text>
+<text x="12" y="44" font-size="10">historical_hypothetical_unit_scenario</text>
+<text x="12" y="65" font-size="12">Blue: B0 original | Green: B50 predeclared | Orange: B100 optimized</text>
+<line x1="290.0" x2="290.0" y1="80" y2="566" stroke="#ccc"/>
+<text x="12" y="99" font-size="12">1. n=69</text>
+<circle cx="309.88758505993115" cy="95" r="4" fill="#2967a0"/>
+<circle cx="336.8505028571881" cy="95" r="4" fill="#16806a"/>
+<circle cx="372.03321530861814" cy="95" r="4" fill="#cf5b22"/>
+<text x="12" y="133" font-size="12">2. n=2</text>
+<circle cx="478.49416554694744" cy="129" r="4" fill="#2967a0"/>
+<circle cx="500.84309928319806" cy="129" r="4" fill="#16806a"/>
+<circle cx="523.1920330194487" cy="129" r="4" fill="#cf5b22"/>
+<text x="12" y="167" font-size="12">3. n=33</text>
+<circle cx="868.8018294788943" cy="163" r="4" fill="#2967a0"/>
+<circle cx="889.4009147394473" cy="163" r="4" fill="#16806a"/>
+<circle cx="910.0" cy="163" r="4" fill="#cf5b22"/>
+<text x="12" y="201" font-size="12">4. n=23</text>
+<circle cx="435.8804152347117" cy="197" r="4" fill="#2967a0"/>
+<circle cx="489.5521914559414" cy="197" r="4" fill="#16806a"/>
+<circle cx="543.2239676771709" cy="197" r="4" fill="#cf5b22"/>
+<text x="12" y="235" font-size="12">5. n=124</text>
+<circle cx="351.7722061883355" cy="231" r="4" fill="#2967a0"/>
+<circle cx="356.2033130220382" cy="231" r="4" fill="#16806a"/>
+<circle cx="365.9432923150085" cy="231" r="4" fill="#cf5b22"/>
+<text x="12" y="269" font-size="12">6. n=57</text>
+<circle cx="418.1009735422972" cy="265" r="4" fill="#2967a0"/>
+<circle cx="459.4562452379441" cy="265" r="4" fill="#16806a"/>
+<circle cx="500.81151693359095" cy="265" r="4" fill="#cf5b22"/>
+<text x="12" y="303" font-size="12">7. n=2530</text>
+<circle cx="385.1178131515759" cy="299" r="4" fill="#2967a0"/>
+<circle cx="396.5341919291179" cy="299" r="4" fill="#16806a"/>
+<circle cx="410.0306767152792" cy="299" r="4" fill="#cf5b22"/>
+<text x="12" y="337" font-size="12">8. n=21</text>
+<circle cx="460.0946180252239" cy="333" r="4" fill="#2967a0"/>
+<circle cx="483.9448828095502" cy="333" r="4" fill="#16806a"/>
+<circle cx="513.860652529644" cy="333" r="4" fill="#cf5b22"/>
+<text x="12" y="371" font-size="12">9. n=663</text>
+<circle cx="360.6717541813398" cy="367" r="4" fill="#2967a0"/>
+<circle cx="367.8023869829844" cy="367" r="4" fill="#16806a"/>
+<circle cx="376.3772704163251" cy="367" r="4" fill="#cf5b22"/>
+<text x="12" y="405" font-size="12">10. n=42</text>
+<circle cx="406.34660465716763" cy="401" r="4" fill="#2967a0"/>
+<circle cx="422.76616737084817" cy="401" r="4" fill="#16806a"/>
+<circle cx="443.2716076589207" cy="401" r="4" fill="#cf5b22"/>
+<text x="12" y="439" font-size="12">11. n=171</text>
+<circle cx="361.5101782598059" cy="435" r="4" fill="#2967a0"/>
+<circle cx="380.48351222671334" cy="435" r="4" fill="#16806a"/>
+<circle cx="412.9058431270056" cy="435" r="4" fill="#cf5b22"/>
+<text x="12" y="473" font-size="12">12. n=680</text>
+<circle cx="378.4288746870369" cy="469" r="4" fill="#2967a0"/>
+<circle cx="385.62412357845847" cy="469" r="4" fill="#16806a"/>
+<circle cx="395.5571604965403" cy="469" r="4" fill="#cf5b22"/>
+<text x="12" y="507" font-size="12">13. n=5</text>
+<circle cx="417.0633211214538" cy="503" r="4" fill="#2967a0"/>
+<circle cx="437.5426827856636" cy="503" r="4" fill="#16806a"/>
+<circle cx="458.0220444498733" cy="503" r="4" fill="#cf5b22"/>
+<text x="12" y="541" font-size="12">14. n=54</text>
+<circle cx="389.5804055058144" cy="537" r="4" fill="#2967a0"/>
+<circle cx="400.21640565181644" cy="537" r="4" fill="#16806a"/>
+<circle cx="414.4374585482385" cy="537" r="4" fill="#cf5b22"/>
+<text x="270.0" y="586" font-size="11">0.000</text>
+<text x="394.0" y="586" font-size="11">1.059</text>
+<text x="518.0" y="586" font-size="11">2.118</text>
+<text x="642.0" y="586" font-size="11">3.178</text>
+<text x="766.0" y="586" font-size="11">4.237</text>
+<text x="890.0" y="586" font-size="11">5.296</text>
+<text x="410" y="606" font-size="12">Study MAE (log10 units)</text></svg>

@@ -1,0 +1,23 @@
+{
+  "scope": "Repository root, data/ and docs/ filenames only; prior result directories contain known development-derived artifacts, not new independent observations.",
+  "files": [
+    {
+      "path": "data/noaa_microplastics.csv",
+      "classification": "development_dataset",
+      "outcomes_read_for_external_selection": false
+    },
+    {
+      "path": "docs/project-synopsis.pdf",
+      "classification": "project_or_secondary_document",
+      "outcomes_read_for_external_selection": false
+    },
+    {
+      "path": "docs/review-paper.pdf",
+      "classification": "project_or_secondary_document",
+      "outcomes_read_for_external_selection": false
+    }
+  ],
+  "explicit_external_file_supplied": false,
+  "independent_dataset_found": false,
+  "limitations": "No internet data acquisition; unknown files are not declared independent by filename. No supplied independent campaign manifest or outcome file."
+}

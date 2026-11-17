@@ -1,0 +1,57 @@
+{
+  "status": "READINESS_COMPLETED",
+  "notebook_code_cells": 9,
+  "tests": {
+    "tests_run": 20,
+    "passed": 20,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "actual_model_fits_in_tests": 0,
+    "synthetic_fixtures": "Tiny in-memory unit fixtures only; no empirical external metrics or predictions written."
+  },
+  "external_status": {
+    "status": "NO_EXTERNAL_DATA",
+    "path": null,
+    "studies": 0,
+    "observations": 0,
+    "targets_read": false,
+    "reason": "No explicitly supplied external observation file exists. Historical/derived OOF artifacts are not independent data."
+  },
+  "model_status": {
+    "status": "NOT_TRAINED",
+    "model_label": "research_only_historical_hypothetical_unit_scenario",
+    "reasons": [
+      "No identified metadata-eligible independent set with resolved target comparability",
+      "development_unit_and_synthetic_provenance_unresolved"
+    ],
+    "new_fits_started": 0,
+    "hard_fit_cap": 25
+  },
+  "new_lightgbm_fits": 0,
+  "independent_R2": null,
+  "independent_R2_status": "NOT AVAILABLE",
+  "protocol_lock_sha256": "fd0b2a8c00ab638201a8519954f293b83de0676219e797ff34f596e1ee3a8fe5",
+  "protocol_content_sha256": "19f3090443de03d63dfae71d973375717c0f9e76a786b61afd01b661142574ad",
+  "integrity": {
+    "unchanged": true,
+    "protected_paths": 27311,
+    "before_sha256": "0f43a701278367a624784ea3cfe5f891c6562fd2835337f57b7d7e0fca67cf10",
+    "after_sha256": "0f43a701278367a624784ea3cfe5f891c6562fd2835337f57b7d7e0fca67cf10"
+  },
+  "report_created": true,
+  "source_sha256": {
+    "source/metrics.py": "df152238cd8ae8366ebf63385ddd439dc1c815a5469f16c8c888e0c90a54efb9",
+    "source/benchmark.py": "cc80179ad11c9692eb6e30d01e2792b25e4faaad9d38d5f0fb7e16368914e9b4",
+    "source/protocol.py": "c3246acbc9926e57166b39500ee4b0748f2697e8084cdfdc642da75530ff8317",
+    "source/evaluation.py": "2e14d50279002ecf1d0845bcea707b5016eebd0f9eb38aff6a816847bfcc6612",
+    "source/model.py": "f6605634cd88ebf6ac94b361d4ad5738c1a510163bcaeedff90fc5323a4f7b89",
+    "source/cli.py": "6f72bc85ec677ff418449bf5463d01b93c3f2e3dc5ccf999c5c8954a402839e4",
+    "source/source_lookup.py": "4c2bed3235b298908436d1641ee8aa8e58eb1dc23ec202058a7847d2df3126eb",
+    "source/run_stage5.py": "ad006a0e23020563820729ddf9c34324645395d7075af89e37fcb417e60d8119",
+    "source/validation_core.py": "43e51ce92f1043f9e76375c284d2be2789b7f05b3360c192363a420701140266",
+    "source/external.py": "ea40d16957581e8e2192c493634924278ba45ca5c9455cc0930586295e63a364",
+    "source/reporting.py": "f7a1a624f6148e44f39fc4b55bd414389132e2ffc78e0d5c842c1f1dac4e585c",
+    "tests/test_readiness.py": "b611ffb64e008fa51ee17b80b906126b6408b95b2fbccab68cdcfe1f3c25f769"
+  }
+}

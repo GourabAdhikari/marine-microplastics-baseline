@@ -1,0 +1,52 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+Executed: /Users/gourabadhikari/Desktop/marine-microplastics-baseline/optimization_outputs/LightGBM_Optimization_EXECUTED.ipynb
+{
+  "scenario": "historical_hypothetical_unit_scenario",
+  "reference_R2": 0.4726308398591973,
+  "rows": 16988,
+  "studies": 72,
+  "original_reproduced_fixed": {
+    "R2": 0.4726308398591973,
+    "MAE": 0.9963774232101922,
+    "RMSE": 1.418197730643938,
+    "study_macro_MAE": 1.0609421643148442,
+    "study_macro_MSE": 2.1717513685178136,
+    "median_study_MAE": 0.8668949492099083,
+    "p90_study_MAE": 1.8133913142735518,
+    "worst_study_MAE": 4.943934893120671,
+    "within_1_log": 0.639392512361667,
+    "mean_fold_R2": -0.07123499211367457
+  },
+  "nested_optimized_procedure": {
+    "R2": 0.5033812847921568,
+    "MAE": 1.0093425701092071,
+    "RMSE": 1.376229815682646,
+    "study_macro_MAE": 1.0014113310288615,
+    "study_macro_MSE": 2.0300749795186994,
+    "median_study_MAE": 0.8316730761924039,
+    "p90_study_MAE": 1.9012177824893999,
+    "worst_study_MAE": 5.29583611802766,
+    "within_1_log": 0.6100777019072287,
+    "mean_fold_R2": -0.0806762311116378
+  },
+  "delta_R2": 0.03075044493295953,
+  "delta_study_macro_MAE": -0.05953083328598274,
+  "study_macro_MAE_change_percent": -5.61112898405991,
+  "studies_MAE_worse": 30,
+  "studies_material_MAE_worse": 14,
+  "actual_completed_fits": {
+    "inner": 120,
+    "outer": 5,
+    "verification": 2
+  },
+  "total_completed_fits": 127,
+  "actual_started_fits": 127,
+  "selected_candidates": {
+    "1": "C7_fewer_trees",
+    "2": "C1_shallow",
+    "3": "C2_conservative",
+    "4": "C4_feature_subsample",
+    "5": "C6_slower"
+  },
+  "tests_passed": 525
+}

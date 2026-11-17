@@ -1,0 +1,6 @@
+outer,candidate,reason,scenario
+1,C7_fewer_trees,Safety gate <= 1.09544615834; nonbaseline must strictly improve C0 R2 0.263321227076. 8 admissible; best R2 0.378952178402; 1 within 0.005; lowest macro MAE then ID chooses C7_fewer_trees.,historical_hypothetical_unit_scenario
+2,C1_shallow,Safety gate <= 1.22841865097; nonbaseline must strictly improve C0 R2 0.290913620079. 8 admissible; best R2 0.487679115043; 1 within 0.005; lowest macro MAE then ID chooses C1_shallow.,historical_hypothetical_unit_scenario
+3,C2_conservative,Safety gate <= 1.21819190462; nonbaseline must strictly improve C0 R2 0.267980076656. 8 admissible; best R2 0.390498805262; 1 within 0.005; lowest macro MAE then ID chooses C2_conservative.,historical_hypothetical_unit_scenario
+4,C4_feature_subsample,Safety gate <= 1.26056626557; nonbaseline must strictly improve C0 R2 0.537392054509. 6 admissible; best R2 0.573672875005; 1 within 0.005; lowest macro MAE then ID chooses C4_feature_subsample.,historical_hypothetical_unit_scenario
+5,C6_slower,Safety gate <= 1.1179849847; nonbaseline must strictly improve C0 R2 0.497098132372. 7 admissible; best R2 0.52957350127; 2 within 0.005; lowest macro MAE then ID chooses C6_slower.,historical_hypothetical_unit_scenario

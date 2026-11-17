@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="365" viewBox="0 0 980 365">
+<rect width="100%" height="100%" fill="white"/>
+<text x="12" y="24" font-size="18">All five fold R²: no negative values hidden</text>
+<text x="12" y="43" font-size="10">historical_hypothetical_unit_scenario</text>
+<text x="12" y="65" font-size="12" fill="#346aaf">original_C0</text>
+<text x="252" y="65" font-size="12" fill="#ca602c">previously_optimized</text>
+<text x="492" y="65" font-size="12" fill="#14816e">S1</text>
+<text x="732" y="65" font-size="12" fill="#8a50a0">S2</text>
+<line x1="594.7652708290623" x2="594.7652708290623" y1="85" y2="315" stroke="#aaa"/>
+<text x="12" y="114" font-size="13">Fold 1</text>
+<circle cx="220.0" cy="99.5" r="4" fill="#346aaf"/>
+<circle cx="258.8867879909184" cy="106.5" r="4" fill="#ca602c"/>
+<circle cx="304.1505565808725" cy="113.5" r="4" fill="#14816e"/>
+<circle cx="304.1505565808725" cy="120.5" r="4" fill="#8a50a0"/>
+<text x="12" y="159" font-size="13">Fold 2</text>
+<circle cx="597.1255933078085" cy="144.5" r="4" fill="#346aaf"/>
+<circle cx="278.9937954313217" cy="151.5" r="4" fill="#ca602c"/>
+<circle cx="278.9937954313217" cy="158.5" r="4" fill="#14816e"/>
+<circle cx="308.90282696009695" cy="165.5" r="4" fill="#8a50a0"/>
+<text x="12" y="204" font-size="13">Fold 3</text>
+<circle cx="798.1281788498029" cy="189.5" r="4" fill="#346aaf"/>
+<circle cx="848.2756113429942" cy="196.5" r="4" fill="#ca602c"/>
+<circle cx="870.0" cy="203.5" r="4" fill="#14816e"/>
+<circle cx="870.0" cy="210.5" r="4" fill="#8a50a0"/>
+<text x="12" y="249" font-size="13">Fold 4</text>
+<circle cx="299.7482725885046" cy="234.5" r="4" fill="#346aaf"/>
+<circle cx="589.6981528496246" cy="241.5" r="4" fill="#ca602c"/>
+<circle cx="589.6981528496246" cy="248.5" r="4" fill="#14816e"/>
+<circle cx="589.6981528496246" cy="255.5" r="4" fill="#8a50a0"/>
+<text x="12" y="294" font-size="13">Fold 5</text>
+<circle cx="818.7470039765611" cy="279.5" r="4" fill="#346aaf"/>
+<circle cx="726.0756870077661" cy="286.5" r="4" fill="#ca602c"/>
+<circle cx="745.4719405576196" cy="293.5" r="4" fill="#14816e"/>
+<circle cx="775.4876977153193" cy="300.5" r="4" fill="#8a50a0"/>
+<text x="205.0" y="345" font-size="12">-0.56</text>
+<text x="335.0" y="345" font-size="12">-0.36</text>
+<text x="465.0" y="345" font-size="12">-0.17</text>
+<text x="595.0" y="345" font-size="12">0.02</text>
+<text x="725.0" y="345" font-size="12">0.22</text>
+<text x="855.0" y="345" font-size="12">0.41</text>
+</svg>

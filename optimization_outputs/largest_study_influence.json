@@ -1,0 +1,63 @@
+{
+  "scenario": "historical_hypothetical_unit_scenario",
+  "study": "https://doi.org/10.1126/science.1192321",
+  "rows": 6135,
+  "row_fraction": 0.36113727336943724,
+  "note": "Exclusion is a descriptive influence diagnostic on existing predictions, not a new benchmark or refit.",
+  "original_reproduced_fixed": {
+    "largest_study_SSE": 5069.363809071581,
+    "total_SSE": 34167.70623682302,
+    "largest_study_SSE_fraction": 0.14836710939665762,
+    "largest_study": {
+      "R2": -0.5559959335804521,
+      "MAE": 0.7279188763418099,
+      "RMSE": 0.9090116442421521,
+      "study_macro_MAE": 0.7279188763418099,
+      "study_macro_MSE": 0.8263021693678209,
+      "median_study_MAE": 0.7279188763418099,
+      "p90_study_MAE": 0.7279188763418099,
+      "worst_study_MAE": 0.7279188763418099,
+      "within_1_log": 0.7242053789731051
+    },
+    "excluding_largest": {
+      "R2": 0.42621569179763175,
+      "MAE": 1.1481320703158335,
+      "RMSE": 1.6374167309773893,
+      "study_macro_MAE": 1.0656326331595347,
+      "study_macro_MSE": 2.1907013572382357,
+      "median_study_MAE": 0.8832068207979903,
+      "p90_study_MAE": 1.8210856594334934,
+      "worst_study_MAE": 4.943934893120671,
+      "within_1_log": 0.5914493688381093
+    }
+  },
+  "nested_optimized_procedure": {
+    "largest_study_SSE": 4881.406442511017,
+    "total_SSE": 32175.41649268924,
+    "largest_study_SSE_fraction": 0.15171230009159786,
+    "largest_study": {
+      "R2": -0.49830409904859785,
+      "MAE": 0.7191734745806383,
+      "RMSE": 0.892000712893738,
+      "study_macro_MAE": 0.7191734745806382,
+      "study_macro_MSE": 0.7956652718029368,
+      "median_study_MAE": 0.7191734745806382,
+      "p90_study_MAE": 0.7191734745806382,
+      "worst_study_MAE": 0.7191734745806382,
+      "within_1_log": 0.7263243683781581
+    },
+    "excluding_largest": {
+      "R2": 0.4617949557231812,
+      "MAE": 1.1733697884882515,
+      "RMSE": 1.58583782404796,
+      "study_macro_MAE": 1.005386512105597,
+      "study_macro_MSE": 2.047461031740048,
+      "median_study_MAE": 0.8350711143948448,
+      "p90_study_MAE": 1.912144079147949,
+      "worst_study_MAE": 5.29583611802766,
+      "within_1_log": 0.5443656131945084
+    }
+  },
+  "largest_contribution_to_global_delta_R2": 0.002901070322317842,
+  "remaining_contribution_to_global_delta_R2": 0.027849374610641752
+}

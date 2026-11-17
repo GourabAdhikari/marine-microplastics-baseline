@@ -1,0 +1,80 @@
+{
+  "targeted_lookups": 6,
+  "cap": 6,
+  "records": [
+    {
+      "id": "barrows_doi",
+      "url": "https://doi.org/10.1016/j.envpol.2018.02.062",
+      "access_utc": "2026-11-16T13:06:49.642352+00:00",
+      "purpose": "Named-study primary-source provenance only; not external-data discovery",
+      "http_status": 200,
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S0269749117349400",
+      "content_type": "text/html;charset=UTF-8",
+      "truncated": false,
+      "response_file": "evidence/barrows_doi_response.txt",
+      "sha256": "741bb186a3923bb06c28d6f877cec8e39d85764a810c9fb952bd77f91ce39508",
+      "bytes": 2718
+    },
+    {
+      "id": "dehm_doi",
+      "url": "https://doi.org/10.1016/j.marpolbul.2020.111239",
+      "access_utc": "2026-11-16T13:06:51.407001+00:00",
+      "purpose": "Named-study primary-source provenance only; not external-data discovery",
+      "http_status": 200,
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S0025326X2030357X",
+      "content_type": "text/html;charset=UTF-8",
+      "truncated": false,
+      "response_file": "evidence/dehm_doi_response.txt",
+      "sha256": "1d45df7e87ddedea4316f3584233ed2ed3d144a6944fbe1f7d34892315ab507a",
+      "bytes": 2718
+    },
+    {
+      "id": "barrows_archive",
+      "url": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:211009",
+      "access_utc": "2026-11-16T13:06:53.311061+00:00",
+      "purpose": "Named-study primary-source provenance only; not external-data discovery",
+      "error": "TimeoutError('The read operation timed out')",
+      "http_status": null,
+      "response_file": "evidence/barrows_archive_response.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "id": "dehm_archive",
+      "url": "https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:294676",
+      "access_utc": "2026-11-16T13:07:19.018995+00:00",
+      "purpose": "Named-study primary-source provenance only; not external-data discovery",
+      "error": "TimeoutError('The read operation timed out')",
+      "http_status": null,
+      "response_file": "evidence/dehm_archive_response.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "id": "barrows_publisher",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0269749117349400",
+      "access_utc": "2026-11-16T13:08:13.413599+00:00",
+      "purpose": "Named-study primary-source provenance only; not external-data discovery",
+      "http_status": 403,
+      "final_url": "https://www.sciencedirect.com/science/article/pii/S0269749117349400",
+      "error": "HTTP Error 403: Forbidden",
+      "content_type": "text/html; charset=UTF-8",
+      "response_file": "evidence/barrows_publisher_response.txt",
+      "sha256": "4971b2a3fe265cb75f59fb4fa5e4adefcb20627a55d44b87653cd7b57dc99b0d",
+      "bytes": 200000
+    },
+    {
+      "id": "dehm_publisher",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0025326X2030357X",
+      "access_utc": "2026-11-16T13:08:13.813751+00:00",
+      "purpose": "Named-study primary-source provenance only; not external-data discovery",
+      "http_status": 403,
+      "final_url": "https://www.sciencedirect.com/science/article/pii/S0025326X2030357X",
+      "error": "HTTP Error 403: Forbidden",
+      "content_type": "text/html; charset=UTF-8",
+      "response_file": "evidence/dehm_publisher_response.txt",
+      "sha256": "4971b2a3fe265cb75f59fb4fa5e4adefcb20627a55d44b87653cd7b57dc99b0d",
+      "bytes": 200000
+    }
+  ]
+}

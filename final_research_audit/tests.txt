@@ -1,0 +1,105 @@
+PASS repository identity
+PASS Stage 4 artifact hash locked_selections.json
+PASS Stage 4 artifact hash selector_eligibility.csv
+PASS Stage 4 artifact hash all_procedure_oof_predictions.csv
+PASS Stage 4 artifact hash summary_metrics.csv
+PASS Stage 4 artifact hash paired_fold_metrics.csv
+PASS Stage 4 artifact hash paired_study_metrics.csv
+PASS Stage 4 artifact hash method_and_study_size_metrics.csv
+PASS Stage 4 artifact hash model_fit_log.jsonl
+PASS Stage 4 artifact hash environment.json
+PASS Stage 4 artifact hash Study_Robustness_EXECUTED.ipynb
+PASS original file hash .gitignore
+PASS original file hash AGENTS.md
+PASS original file hash PROGRESS.md
+PASS original file hash README.md
+PASS original file hash data/noaa_microplastics.csv
+PASS original file hash docs/project-synopsis.pdf
+PASS original file hash docs/review-paper.pdf
+PASS original file hash gamm.R
+PASS original file hash microplastics.ipynb
+PASS original file hash microplastics.py
+PASS original file hash pyproject.toml
+PASS original file hash uv.lock
+PASS core runtime versions exact
+PASS exact 16988 rows and 72 studies
+PASS row IDs unique and aligned
+PASS target, study and scenario identity
+PASS original source-row filtering and raw shape
+PASS exact frozen physical-unit hypotheses and log target
+PASS original GroupKFold memberships reproduced
+PASS original predictor whitelist
+PASS test sizes and coverage once
+PASS no unexpected prior fitted models needing inspection
+PASS fold 1 exact locked rows and disjoint studies
+PASS fold 1 exact cache identity and hashes
+PASS fold 1 cached row IDs
+PASS fold 1 all train/test predictions finite
+PASS fold 1 bitwise held-out agreement with Stage 4
+PASS fold 1 imputer uses training median only
+PASS fold 1 scaler uses training mean/variance only
+PASS fold 1 serialized model reproduces seen predictions
+PASS fold 1 train independently recomputed R2
+PASS fold 1 test independently recomputed R2
+PASS fold 2 exact locked rows and disjoint studies
+PASS fold 2 exact cache identity and hashes
+PASS fold 2 cached row IDs
+PASS fold 2 all train/test predictions finite
+PASS fold 2 bitwise held-out agreement with Stage 4
+PASS fold 2 imputer uses training median only
+PASS fold 2 scaler uses training mean/variance only
+PASS fold 2 serialized model reproduces seen predictions
+PASS fold 2 train independently recomputed R2
+PASS fold 2 test independently recomputed R2
+PASS fold 3 exact locked rows and disjoint studies
+PASS fold 3 exact cache identity and hashes
+PASS fold 3 cached row IDs
+PASS fold 3 all train/test predictions finite
+PASS fold 3 bitwise held-out agreement with Stage 4
+PASS fold 3 imputer uses training median only
+PASS fold 3 scaler uses training mean/variance only
+PASS fold 3 serialized model reproduces seen predictions
+PASS fold 3 train independently recomputed R2
+PASS fold 3 test independently recomputed R2
+PASS fold 4 exact locked rows and disjoint studies
+PASS fold 4 exact cache identity and hashes
+PASS fold 4 cached row IDs
+PASS fold 4 all train/test predictions finite
+PASS fold 4 bitwise held-out agreement with Stage 4
+PASS fold 4 imputer uses training median only
+PASS fold 4 scaler uses training mean/variance only
+PASS fold 4 serialized model reproduces seen predictions
+PASS fold 4 train independently recomputed R2
+PASS fold 4 test independently recomputed R2
+PASS fold 5 exact locked rows and disjoint studies
+PASS fold 5 exact cache identity and hashes
+PASS fold 5 cached row IDs
+PASS fold 5 all train/test predictions finite
+PASS fold 5 bitwise held-out agreement with Stage 4
+PASS fold 5 imputer uses training median only
+PASS fold 5 scaler uses training mean/variance only
+PASS fold 5 serialized model reproduces seen predictions
+PASS fold 5 train independently recomputed R2
+PASS fold 5 test independently recomputed R2
+PASS immutable S2 pooled held-out R2
+PASS original_C0 frozen R2
+PASS original_C0 frozen MAE
+PASS original_C0 frozen RMSE
+PASS original_C0 frozen study_macro_MAE
+PASS previously_optimized frozen R2
+PASS previously_optimized frozen MAE
+PASS previously_optimized frozen RMSE
+PASS previously_optimized frozen study_macro_MAE
+PASS S1 frozen R2
+PASS S1 frozen MAE
+PASS S1 frozen RMSE
+PASS S1 frozen study_macro_MAE
+PASS S2 frozen R2
+PASS S2 frozen MAE
+PASS S2 frozen RMSE
+PASS S2 frozen study_macro_MAE
+PASS original near-0.7 value is displayed random OOF
+PASS original random split definition verified
+PASS only five fresh fits total
+PASS all protected file paths/content unchanged
+104 checks passed; new fits this run: 0.

@@ -1,0 +1,19 @@
+{
+  "python": "3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 08:22:19) [Clang 14.0.6 ]",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "executable": "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/bin/python",
+  "cpu_count": 8,
+  "seed": 0,
+  "threads_cap": 4,
+  "packages": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "lightgbm": "4.7.0",
+    "nbformat": "5.11.1",
+    "nbclient": "0.11.0",
+    "ipykernel": "7.4.0"
+  },
+  "new_downloads": 0
+}

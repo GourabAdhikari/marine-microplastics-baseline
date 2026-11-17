@@ -1,0 +1,24 @@
+{
+  "candidate": "S2 only",
+  "training_scenario": "research_only_historical_hypothetical_unit_scenario",
+  "selection_source": "study_robustness_outputs/source/selection_rules.py",
+  "selection_source_sha256": "921ec094c2ece333d5b6e784764c4c826d200b6f23cb36d0dd0532f89897f8a9",
+  "candidate_registry": "optimization_outputs/candidate_registry.json",
+  "candidate_registry_sha256": "e27c505b2902d621fe186724839197c6615eb87062c99b0a80f18bef09c7c2b8",
+  "inner_cv": "GroupKFold(3), all 72 development studies",
+  "candidate_fits": 24,
+  "full_data_refits": 1,
+  "hard_fit_cap": 25,
+  "threads": 4,
+  "seed": 0,
+  "default": "NOT_TRAINED",
+  "authorization": [
+    "protocol_locked",
+    "identified_external_dataset",
+    "metadata_eligible_no_overlap",
+    "signed_provenance_and_comparability_evidence",
+    "external_outcomes_not_inspected"
+  ],
+  "preprocessing": "Exact original training-only median/scaler/encoder; train-range numeric clipping at inference",
+  "model_selection_external_labels": "forbidden"
+}

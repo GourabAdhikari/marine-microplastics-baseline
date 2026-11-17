@@ -1,0 +1,10 @@
+{
+  "status": "NOT_TRAINED",
+  "model_label": "research_only_historical_hypothetical_unit_scenario",
+  "reasons": [
+    "No identified metadata-eligible independent set with resolved target comparability",
+    "development_unit_and_synthetic_provenance_unresolved"
+  ],
+  "new_fits_started": 0,
+  "hard_fit_cap": 25
+}

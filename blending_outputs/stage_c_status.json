@@ -1,0 +1,9 @@
+{
+  "scenario": "historical_hypothetical_unit_scenario",
+  "status": "skipped_gate_failed",
+  "ran": false,
+  "new_fits_started": 0,
+  "cap": 100,
+  "reason": "Stage B failed: study_macro_MAE_does_not_increase",
+  "partition_checks": "Not needed: mandatory stop at Stage A; no new training partitions used."
+}

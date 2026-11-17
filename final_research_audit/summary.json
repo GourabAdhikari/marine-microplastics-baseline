@@ -1,0 +1,15 @@
+{
+  "scenario": "historical_hypothetical_unit_scenario",
+  "mean_training_R2": 0.7828730309493153,
+  "mean_testing_R2": -0.037263820042617725,
+  "pooled_heldout_R2": 0.5256280075581679,
+  "mean_per_fold_R2_gap": 0.820136850991933,
+  "new_fits_total": 5,
+  "new_fits_this_run": 0,
+  "heldout_predictions_bitwise_identical": true,
+  "original_training_R2": "NOT_AVAILABLE",
+  "original_random_CV_R2_displayed": 0.764,
+  "tests_passed": 104,
+  "protected_paths_verified": 27377,
+  "external_R2": "NOT_AVAILABLE"
+}

@@ -1,0 +1,88 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+Traceback (most recent call last):
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/blending_outputs/source/run.py", line 100, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/blending_outputs/source/run.py", line 79, in main
+    NotebookClient(nb,timeout=900,kernel_name='blending',resources={'metadata':{'path':str(root)}}).execute()
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gourabadhikari/anaconda3/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/lib/python3.12/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/lib/python3.12/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/reproduction_outputs/venv/lib/python3.12/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+test_status=run_suite(analysis)
+assert blocked_fit.call_count==0
+print(json.dumps(test_status,indent=2))
+print('All protected original, reproduction and optimization files remain unchanged.')
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mAssertionError[39m                            Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[8][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m test_status=run_suite(analysis)
+[32m      2[39m [38;5;28;01massert[39;00m blocked_fit.call_count==[32m0[39m
+[32m      3[39m print(json.dumps(test_status,indent=[32m2[39m))
+[32m      4[39m print([33m'All protected original, reproduction and optimization files remain unchanged.'[39m)
+
+[36mFile [39m[32m~/Desktop/marine-microplastics-baseline/blending_outputs/tests/test_blending.py:240[39m, in [36mrun_suite[39m[34m(analysis)[39m
+[32m    238[39m text=stream.getvalue()
+[32m    239[39m (analysis.out/[33m'[39m[33mtests.txt[39m[33m'[39m).write_text(text+[33m'[39m[38;5;130;01m\n[39;00m[33mAdditional data/audit assertions:[39m[38;5;130;01m\n[39;00m[33m'[39m+[33m'[39m[38;5;130;01m\n[39;00m[33m'[39m.join([33m'[39m[33mPASS [39m[33m'[39m+c [38;5;28;01mfor[39;00m c [38;5;129;01min[39;00m analysis.checks)+[33m'[39m[38;5;130;01m\n[39;00m[33m'[39m)
+[32m--> [39m[32m240[39m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m result.wasSuccessful():[38;5;28;01mraise[39;00m [38;5;167;01mAssertionError[39;00m(text)
+[32m    241[39m status={[33m'[39m[33munit_integration_tests_run[39m[33m'[39m:result.testsRun,[33m'[39m[33mpassed[39m[33m'[39m:result.testsRun-[38;5;28mlen[39m(result.skipped),[33m'[39m[33mskipped[39m[33m'[39m:[38;5;28mlen[39m(result.skipped),
+[32m    242[39m         [33m'[39m[33mfailures[39m[33m'[39m:[38;5;28mlen[39m(result.failures),[33m'[39m[33merrors[39m[33m'[39m:[38;5;28mlen[39m(result.errors),[33m'[39m[33mdata_audit_assertions_passed[39m[33m'[39m:[38;5;28mlen[39m(analysis.checks),
+[32m    243[39m         [33m'[39m[33mlightgbm_fit_calls_in_tests[39m[33m'[39m:fit.call_count,
+[32m    244[39m         [33m'[39m[33mnot_applicable[39m[33m'[39m:[[33m'[39m[33mActual Stage C model/weight fitting and its outer-label invariance: Stage C did not run. Fixed blend target invariance and planned split checks were tested.[39m[33m'[39m]}
+[32m    245[39m (analysis.out/[33m'[39m[33mtests/test_results.json[39m[33m'[39m).write_text(json.dumps(status,indent=[32m2[39m))
+
+[31mAssertionError[39m: test_alignment_and_negative_controls (test_blending.BlendingTests.test_alignment_and_negative_controls) ... ok
+test_all_per_fold_and_study_metrics (test_blending.BlendingTests.test_all_per_fold_and_study_metrics) ... FAIL
+test_budget_fail_closed_no_new_lightgbm_fits (test_blending.BlendingTests.test_budget_fail_closed_no_new_lightgbm_fits) ... ok
+test_checkpoint_identity_and_input_hashes (test_blending.BlendingTests.test_checkpoint_identity_and_input_hashes) ... ok
+test_endpoint_equivalence_and_convex_arithmetic (test_blending.BlendingTests.test_endpoint_equivalence_and_convex_arithmetic) ... ok
+test_factor_ten_offset_boundary_inclusive (test_blending.BlendingTests.test_factor_ten_offset_boundary_inclusive) ... ok
+test_gate_predicates_and_failure_controls (test_blending.BlendingTests.test_gate_predicates_and_failure_controls) ... ok
+test_import_is_side_effect_free_and_deterministic (test_blending.BlendingTests.test_import_is_side_effect_free_and_deterministic) ... ok
+test_independent_aggregate_metrics_all_five (test_blending.BlendingTests.test_independent_aggregate_metrics_all_five) ... ok
+test_no_silent_nan_or_missing_case_exclusion (test_blending.BlendingTests.test_no_silent_nan_or_missing_case_exclusion) ... ok
+test_original_preprocessing_training_only_without_model_fits (test_blending.BlendingTests.test_original_preprocessing_training_only_without_model_fits) ... ok
+test_outer_and_existing_inner_study_disjointness (test_blending.BlendingTests.test_outer_and_existing_inner_study_disjointness) ... ok
+test_persisted_prediction_roundtrip_and_strict_references (test_blending.BlendingTests.test_persisted_prediction_roundtrip_and_strict_references) ... FAIL
+test_posthoc_diagnostics_never_enter_weights (test_blending.BlendingTests.test_posthoc_diagnostics_never_enter_weights) ... ok
+test_protected_files (test_blending.BlendingTests.test_protected_files) ... ok
+test_study_macro_is_not_row_weighted (test_blending.BlendingTests.test_study_macro_is_not_row_weighted) ... ok
+test_subgroup_complete_counts_and_deltas (test_blending.BlendingTests.test_subgroup_complete_counts_and_deltas) ... ok
+test_targets_and_units_are_frozen (test_blending.BlendingTests.test_targets_and_units_are_frozen) ... ok
+
+======================================================================
+FAIL: test_all_per_fold_and_study_metrics (test_blending.BlendingTests.test_all_per_fold_and_study_metrics)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/blending_outputs/tests/test_blending.py", line 88, in test_all_per_fold_and_study_metrics
+    self.assertTrue((d.groupby('study').size()==1).any())  # Singletons retained, no undefined R2 demanded at study level.
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: np.False_ is not true
+
+======================================================================
+FAIL: test_persisted_prediction_roundtrip_and_strict_references (test_blending.BlendingTests.test_persisted_prediction_roundtrip_and_strict_references)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/gourabadhikari/Desktop/marine-microplastics-baseline/blending_outputs/tests/test_blending.py", line 225, in test_persisted_prediction_roundtrip_and_strict_references
+    self.assertEqual(len(audit),29)
+AssertionError: 27 != 29
+
+----------------------------------------------------------------------
+Ran 18 tests in 9.183s
+
+FAILED (failures=2)
+
+

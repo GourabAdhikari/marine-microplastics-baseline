@@ -1,0 +1,7 @@
+{
+  "inner_checkpoints_verified": 120,
+  "optimized_outer_checkpoints_verified": 5,
+  "new_fits": 0,
+  "max_metric_difference": 0.0,
+  "provenance": "Exact prior key rebuilt from code/data/splits/configs/versions and training-only labels; inner validation covers every outer-training row once; all study groups counted."
+}

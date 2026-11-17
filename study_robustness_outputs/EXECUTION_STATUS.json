@@ -1,0 +1,174 @@
+{
+  "success": true,
+  "scenario": "historical_hypothetical_unit_scenario",
+  "cells": [
+    {
+      "cell_index": 2,
+      "execution_count": 1,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "stream"
+      ]
+    },
+    {
+      "cell_index": 4,
+      "execution_count": 2,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "stream",
+        "display_data",
+        "stream"
+      ]
+    },
+    {
+      "cell_index": 6,
+      "execution_count": 3,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "stream"
+      ]
+    },
+    {
+      "cell_index": 8,
+      "execution_count": 4,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "display_data",
+        "stream",
+        "display_data"
+      ]
+    },
+    {
+      "cell_index": 10,
+      "execution_count": 5,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "stream",
+        "stream",
+        "stream",
+        "stream",
+        "stream",
+        "stream",
+        "stream",
+        "stream",
+        "stream",
+        "stream",
+        "display_data",
+        "stream"
+      ]
+    },
+    {
+      "cell_index": 12,
+      "execution_count": 6,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "display_data",
+        "stream",
+        "display_data"
+      ]
+    },
+    {
+      "cell_index": 14,
+      "execution_count": 7,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "display_data",
+        "display_data",
+        "display_data",
+        "stream",
+        "display_data"
+      ]
+    },
+    {
+      "cell_index": 16,
+      "execution_count": 8,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "stream"
+      ]
+    },
+    {
+      "cell_index": 18,
+      "execution_count": 9,
+      "executed": true,
+      "errors": [],
+      "output_types": [
+        "display_data",
+        "stream"
+      ]
+    }
+  ],
+  "executed_code_cells": 9,
+  "tests": {
+    "tests_run": 20,
+    "passed": 20,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "data_provenance_assertions_passed": 101,
+    "new_fits_during_tests": 0
+  },
+  "new_fits_started": 5,
+  "new_fits_completed": 5,
+  "failed_fits": 0,
+  "hard_fit_cap": 10,
+  "protected_files_unchanged": true,
+  "protected_paths_verified": 27249,
+  "source_sha256": {
+    "source/run.py": "72c04ef1ef4047734f71132f1209503cf83af6a5dcaea3decb7790c9746908a4",
+    "source/audit.py": "db3e4a6dce22535edf7ef28eaab77e9f796432721c9987f405c4d8391bbd8093",
+    "source/evaluation.py": "bf448c0e37b6c54777a0abd5f1d2b1381a71f44e868217c99b9f356670b04a0c",
+    "source/common.py": "dfd2b65d9f56f8ce33cfa6b589132281a00fb893edd5868dd663e8807b0415b7",
+    "source/fit_budget.py": "ddbf82e36015ff35381997834d0e4575f8481c3ebe342527300fb2033ef9afb3",
+    "source/selection_rules.py": "921ec094c2ece333d5b6e784764c4c826d200b6f23cb36d0dd0532f89897f8a9",
+    "source/reporting.py": "1eaa76d064922433c70bc9a991d828d2c5775198f1cf644ab38567a701bc7a98",
+    "tests/test_stage4.py": "3b890e7461b48ca7676474eeeb75385555ef13fe47212ef89cbe0f5e4c843bbf"
+  },
+  "artifact_sha256": {
+    "locked_selections.json": "327ba130e9bdb2ac77b4d12a57d2e12e2f39843c3608f1335eaac66b66582178",
+    "selector_eligibility.csv": "ea11ad416a8357f44bd39394b0e01ceca9996e14eb986bce12a7d1adb1b5aa35",
+    "all_procedure_oof_predictions.csv": "ecfcfe5750a13a2a204cf6573af9b5b1af0dca0f2cbd3a70693bcbe3448b48a3",
+    "summary_metrics.csv": "5afb53a51a9b654634bfc76576bc61146cda652f4cb755137a1d73d7359efc87",
+    "paired_fold_metrics.csv": "01a06afd26dae7e4f1a7fb7e6235487e8674480d4d5a96b80f471a487758dc6b",
+    "paired_study_metrics.csv": "fa26a368eb203f6e8ba081f81ee823c2c8f3761dfba426fa49daa32410dbaf5d",
+    "method_and_study_size_metrics.csv": "5f68f1a906fd2a338f1ce10565c2c4ae1f4b0cbb9c00e7420fb08bc52c5e36a1",
+    "model_fit_log.jsonl": "c148bd83def23573bc5eec21267aa1bb5c3eb94953d0e94e8a476a4049c870ee",
+    "environment.json": "7d6e593500b167a7652ee7ba677f2b3c580c2c9ff7270072bae3304905ec82c2",
+    "Study_Robustness_EXECUTED.ipynb": "0f8e324960e7296180f060b60477fd31985d3f5764281a76ea9007c267efefc9"
+  },
+  "screening": {
+    "S1": {
+      "passed": true,
+      "conditions": {
+        "pooled_R2_at_least_0.4883812847921568": true,
+        "study_macro_MAE_no_worse": true,
+        "p90_study_MAE_no_worse": true,
+        "worst_study_MAE_no_worse": true
+      },
+      "failed_conditions": [],
+      "interpretation": "Descriptive screen on reused outcomes only; no reselection or promotion authorized."
+    },
+    "S2": {
+      "passed": true,
+      "conditions": {
+        "pooled_R2_at_least_0.4883812847921568": true,
+        "study_macro_MAE_no_worse": true,
+        "p90_study_MAE_no_worse": true,
+        "worst_study_MAE_no_worse": true
+      },
+      "failed_conditions": [],
+      "interpretation": "Descriptive screen on reused outcomes only; no reselection or promotion authorized."
+    }
+  },
+  "report_created": true,
+  "report_path": "study_robustness_outputs/STUDY_ROBUSTNESS_REPORT.md",
+  "stop": true
+}

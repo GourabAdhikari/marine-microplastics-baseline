@@ -1,0 +1,16 @@
+[
+  {
+    "doi": "https://doi.org/10.1016/j.envpol.2018.02.062",
+    "multiplier": 1000000.0,
+    "rows": 1389,
+    "raw_mean": 0.012777537796976242,
+    "adjusted_mean": 12777.537796976241
+  },
+  {
+    "doi": "https://doi.org/10.1016/j.marpolbul.2020.111239",
+    "multiplier": 1000000.0,
+    "rows": 81,
+    "raw_mean": 0.0017629629629629627,
+    "adjusted_mean": 1762.962962962963
+  }
+]

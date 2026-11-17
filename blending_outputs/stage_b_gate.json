@@ -1,0 +1,33 @@
+{
+  "scenario": "historical_hypothetical_unit_scenario",
+  "candidate": "B50",
+  "comparison": "B100",
+  "passed": false,
+  "conditions": {
+    "R2_loss_no_more_than_0.015": true,
+    "study_macro_MAE_does_not_increase": false,
+    "at_least_two_weaknesses_improve": true,
+    "worst_study_MAE_increase_at_most_0.10": true,
+    "no_integrity_issue": true
+  },
+  "weakness_improvements": {
+    "pooled_MAE": true,
+    "p90_study_MAE": true,
+    "within_1_log": true
+  },
+  "deltas_B50_minus_B100": {
+    "R2": -0.0030567103268474005,
+    "MAE": -0.015011405587286974,
+    "RMSE": 0.004228880672793922,
+    "study_macro_MAE": 0.014803924857085482,
+    "study_macro_MSE": 0.014020882308497296,
+    "median_study_MAE": 0.022241799309099197,
+    "p90_study_MAE": -0.10990968462946205,
+    "worst_study_MAE": -0.17595061245349441,
+    "within_1_log": 0.020308453025665196
+  },
+  "failed_conditions": [
+    "study_macro_MAE_does_not_increase"
+  ],
+  "interpretation": "Cost-control screen on previously inspected outer outcomes; not independent confirmation."
+}

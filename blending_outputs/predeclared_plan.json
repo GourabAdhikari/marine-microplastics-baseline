@@ -1,0 +1,39 @@
+{
+  "scenario": "historical_hypothetical_unit_scenario",
+  "weights_optimized": {
+    "B0": 0.0,
+    "B25": 0.25,
+    "B50": 0.5,
+    "B75": 0.75,
+    "B100": 1.0
+  },
+  "main_candidate": "B50",
+  "prediction_scale": "log10(concentration + 0.001)",
+  "gate": {
+    "max_R2_loss": 0.015,
+    "max_study_macro_MAE_increase": 0.0,
+    "min_improvements_of_MAE_p90_coverage": 2,
+    "max_worst_study_MAE_increase": 0.1
+  },
+  "stage_c": {
+    "outer_folds": 5,
+    "inner_folds": 3,
+    "inner_inner_folds": 3,
+    "candidates": 8,
+    "hard_fit_cap": 100,
+    "objective": "Minimize study-macro MAE among weights with pooled inner R2 within 0.015 of maximum; exact ties to B50 then smaller optimized weight. Training-only, nested optimized-procedure selection; never use outer labels.",
+    "budget_policy": "Calculate full upper bound before any fit; skip if over 100. Do not reduce nesting or candidate registry to fit budget."
+  },
+  "diagnostics_only": {
+    "folds": [
+      2,
+      5
+    ],
+    "prior_harmed_studies": "Existing optimization paired per-study table: delta_MAE > 0.10; never used to set weights or gate."
+  },
+  "strict_metric_tolerance": {
+    "rtol": 1e-12,
+    "atol": 1e-12
+  },
+  "stop": "After mandatory outputs and final report; no new phase"
+}

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="300" viewBox="0 0 920 300">
+<rect width="100%" height="100%" fill="white"/>
+<text x="15" y="25" font-size="18">All outer fold R² (including negative values)</text>
+<text x="15" y="47" font-size="10">historical_hypothetical_unit_scenario</text>
+<text x="15" y="66" font-size="12">Blue: original; orange: nested procedure. Lines pair the same observations.</text>
+<line x1="622.8989195789109" x2="622.8989195789109" y1="80" y2="255" stroke="#aaa"/>
+<text x="15" y="104" font-size="12">Fold 1</text>
+<line x1="265.0" x2="302.13668392232626" y1="100" y2="100" stroke="#999"/>
+<circle cx="265.0" cy="100" r="4" fill="#2563ac"/><circle cx="302.13668392232626" cy="100" r="4" fill="#d95c16"/>
+<text x="15" y="136" font-size="12">Fold 2</text>
+<line x1="625.1530154910863" x2="321.3387733340952" y1="132" y2="132" stroke="#999"/>
+<circle cx="625.1530154910863" cy="132" r="4" fill="#2563ac"/><circle cx="321.3387733340952" cy="132" r="4" fill="#d95c16"/>
+<text x="15" y="168" font-size="12">Fold 3</text>
+<line x1="817.1094580902193" x2="865.0" y1="164" y2="164" stroke="#999"/>
+<circle cx="817.1094580902193" cy="164" r="4" fill="#2563ac"/><circle cx="865.0" cy="164" r="4" fill="#d95c16"/>
+<text x="15" y="200" font-size="12">Fold 4</text>
+<line x1="341.1591930185249" x2="618.0598477881665" y1="196" y2="196" stroke="#999"/>
+<circle cx="341.1591930185249" cy="196" r="4" fill="#2563ac"/><circle cx="618.0598477881665" cy="196" r="4" fill="#d95c16"/>
+<text x="15" y="232" font-size="12">Fold 5</text>
+<line x1="836.8003307784177" x2="748.2996963794137" y1="228" y2="228" stroke="#999"/>
+<circle cx="836.8003307784177" cy="228" r="4" fill="#2563ac"/><circle cx="748.2996963794137" cy="228" r="4" fill="#d95c16"/>
+<text x="250.0" y="275" font-size="11">-0.56</text>
+<text x="370.0" y="275" font-size="11">-0.37</text>
+<text x="490.0" y="275" font-size="11">-0.18</text>
+<text x="610.0" y="275" font-size="11">0.00</text>
+<text x="730.0" y="275" font-size="11">0.19</text>
+<text x="850.0" y="275" font-size="11">0.38</text>
+<text x="420" y="295" font-size="12">R² on log10 target</text></svg>

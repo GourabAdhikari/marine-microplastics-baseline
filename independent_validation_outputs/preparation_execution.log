@@ -1,0 +1,44 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+{
+  "status": "READINESS_COMPLETED",
+  "notebook_code_cells": 9,
+  "tests": {
+    "tests_run": 20,
+    "passed": 20,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "actual_model_fits_in_tests": 0,
+    "synthetic_fixtures": "Tiny in-memory unit fixtures only; no empirical external metrics or predictions written."
+  },
+  "external_status": {
+    "status": "NO_EXTERNAL_DATA",
+    "path": null,
+    "studies": 0,
+    "observations": 0,
+    "targets_read": false,
+    "reason": "No explicitly supplied external observation file exists. Historical/derived OOF artifacts are not independent data."
+  },
+  "model_status": {
+    "status": "NOT_TRAINED",
+    "model_label": "research_only_historical_hypothetical_unit_scenario",
+    "reasons": [
+      "No identified metadata-eligible independent set with resolved target comparability",
+      "development_unit_and_synthetic_provenance_unresolved"
+    ],
+    "new_fits_started": 0,
+    "hard_fit_cap": 25
+  },
+  "new_lightgbm_fits": 0,
+  "independent_R2": null,
+  "independent_R2_status": "NOT AVAILABLE",
+  "protocol_lock_sha256": "fd0b2a8c00ab638201a8519954f293b83de0676219e797ff34f596e1ee3a8fe5",
+  "protocol_content_sha256": "19f3090443de03d63dfae71d973375717c0f9e76a786b61afd01b661142574ad",
+  "integrity": {
+    "unchanged": true,
+    "protected_paths": 27311,
+    "before_sha256": "0f43a701278367a624784ea3cfe5f891c6562fd2835337f57b7d7e0fca67cf10",
+    "after_sha256": "0f43a701278367a624784ea3cfe5f891c6562fd2835337f57b7d7e0fca67cf10"
+  },
+  "report_created": false
+}

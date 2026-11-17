@@ -1,0 +1,39 @@
+29,076 records, 96 accessions, 68 organisations
+16,988 records, 73 accessions, 73 publications, 72 studies, 52 organisations
+test_DOI_and_accession_normalization (test_readiness.ReadinessTests.test_DOI_and_accession_normalization) ... ok
+test_all_protected_files_unchanged (test_readiness.ReadinessTests.test_all_protected_files_unchanged) ... ok
+test_default_provenance_and_training_gate_closed (test_readiness.ReadinessTests.test_default_provenance_and_training_gate_closed) ... ok
+test_derived_records_and_campaign_alias_overlap (test_readiness.ReadinessTests.test_derived_records_and_campaign_alias_overlap) ... ok
+test_exact_and_near_duplicate_measurements (test_readiness.ReadinessTests.test_exact_and_near_duplicate_measurements) ... ok
+test_external_groups_link_shared_provenance (test_readiness.ReadinessTests.test_external_groups_link_shared_provenance) ... ok
+test_finite_constant_target_and_offset_metrics (test_readiness.ReadinessTests.test_finite_constant_target_and_offset_metrics) ... ok
+test_fit_cap_and_no_implicit_model_training (test_readiness.ReadinessTests.test_fit_cap_and_no_implicit_model_training) ... ok
+test_frozen_preprocessing_unknown_category_and_clipping (test_readiness.ReadinessTests.test_frozen_preprocessing_unknown_category_and_clipping) ... ok
+test_historical_identity_and_no_reference_change (test_readiness.ReadinessTests.test_historical_identity_and_no_reference_change) ... ok
+test_missing_metadata_unit_and_scenario_mismatch (test_readiness.ReadinessTests.test_missing_metadata_unit_and_scenario_mismatch) ... ok
+test_no_external_data_normal_status_and_no_fake_predictions (test_readiness.ReadinessTests.test_no_external_data_normal_status_and_no_fake_predictions) ... ok
+test_protocol_lock_and_tamper_detection (test_readiness.ReadinessTests.test_protocol_lock_and_tamper_detection) ... ok
+test_public_source_budget_and_honest_unresolved_verdict (test_readiness.ReadinessTests.test_public_source_budget_and_honest_unresolved_verdict) ... ok
+test_repeat_outcome_access_blocked_before_read (test_readiness.ReadinessTests.test_repeat_outcome_access_blocked_before_read) ... ok
+test_study_cluster_bootstrap_not_rows_and_failure_rules (test_readiness.ReadinessTests.test_study_cluster_bootstrap_not_rows_and_failure_rules) ... ok
+test_study_overlap_even_identifier_format_changes (test_readiness.ReadinessTests.test_study_overlap_even_identifier_format_changes) ... ok
+test_target_perturbation_leaves_eligibility_and_features_identical (test_readiness.ReadinessTests.test_target_perturbation_leaves_eligibility_and_features_identical) ... ok
+test_training_only_support_flags_and_missing_depth (test_readiness.ReadinessTests.test_training_only_support_flags_and_missing_depth) ... ok
+test_whole_study_quarantine_no_outcome_based_deletion (test_readiness.ReadinessTests.test_whole_study_quarantine_no_outcome_based_deletion) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 6.141s
+
+OK
+
+{
+  "tests_run": 20,
+  "passed": 20,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "actual_model_fits_in_tests": 0,
+  "synthetic_fixtures": "Tiny in-memory unit fixtures only; no empirical external metrics or predictions written."
+}
+
+STDERR:

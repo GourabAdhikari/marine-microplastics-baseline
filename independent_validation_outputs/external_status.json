@@ -1,0 +1,8 @@
+{
+  "status": "NO_EXTERNAL_DATA",
+  "path": null,
+  "studies": 0,
+  "observations": 0,
+  "targets_read": false,
+  "reason": "No explicitly supplied external observation file exists. Historical/derived OOF artifacts are not independent data."
+}

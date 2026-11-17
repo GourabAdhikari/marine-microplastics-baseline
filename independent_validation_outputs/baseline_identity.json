@@ -1,0 +1,147 @@
+{
+  "scenario": "historical_hypothetical_unit_scenario",
+  "raw_rows": 29076,
+  "raw_columns": 35,
+  "eligible_rows": 16988,
+  "study_count": 72,
+  "target": "log10(concentration + 0.001)",
+  "offset": 0.001,
+  "features": [
+    "lat",
+    "lon",
+    "year",
+    "month_sin",
+    "month_cos",
+    "log_mesh",
+    "log_depth",
+    "method_family"
+  ],
+  "method_family_map": {
+    "neuston net": "surface net",
+    "manta net": "surface net",
+    "plankton net": "surface net",
+    "avani net": "surface net",
+    "bongo net": "surface net",
+    "pump": "pump",
+    "intake seawater pump": "pump",
+    "surface water intake": "pump"
+  },
+  "method_names": [
+    "aluminum bucket",
+    "avani net",
+    "bongo net",
+    "ctd rosette sampler",
+    "glass jar",
+    "grab sample",
+    "intake seawater pump",
+    "manta net",
+    "neuston net",
+    "niskin bottle",
+    "plankton net",
+    "pump",
+    "stainless steel bucket",
+    "stainless steel sampler",
+    "steel bucket",
+    "surface water intake",
+    "van dorn sampler"
+  ],
+  "grouping": "Connected components through shared DOI OR accession, including transitive links; exact historical labels preserved.",
+  "preprocessing": "Training-only median imputer, StandardScaler, dense OneHotEncoder(handle_unknown=ignore); inference numeric clipping to training ranges.",
+  "feature_units": {
+    "lat": "degrees north",
+    "lon": "degrees east",
+    "year": "calendar year",
+    "month": "sin/cos(2*pi*month/12)",
+    "mesh": "log10(mesh_mm)",
+    "depth": "log1p(depth_m)"
+  },
+  "numeric_missing_counts": {
+    "lat": 0,
+    "lon": 0,
+    "year": 0,
+    "month_sin": 0,
+    "month_cos": 0,
+    "log_mesh": 0,
+    "log_depth": 53
+  },
+  "unit_hypotheses": {
+    "https://doi.org/10.1016/j.envpol.2018.02.062": 1000000.0,
+    "https://doi.org/10.1016/j.marpolbul.2020.111239": 1000000.0
+  },
+  "fold_test_sizes": [
+    6135,
+    2714,
+    2712,
+    2714,
+    2713
+  ],
+  "historical_references": {
+    "original_C0": {
+      "R2": 0.4726308398591973,
+      "MAE": 0.9963774232101922,
+      "RMSE": 1.418197730643938,
+      "study_macro_MAE": 1.0609421643148442,
+      "study_macro_MSE": 2.1717513685178136,
+      "p90_study_MAE": 1.8133913142735518,
+      "worst_study_MAE": 4.943934893120671,
+      "within_1_log": 0.639392512361667,
+      "mean_fold_R2": -0.07123499211367457
+    },
+    "previously_optimized": {
+      "R2": 0.5033812847921568,
+      "MAE": 1.0093425701092071,
+      "RMSE": 1.376229815682646,
+      "study_macro_MAE": 1.0014113310288615,
+      "study_macro_MSE": 2.0300749795186994,
+      "p90_study_MAE": 1.9012177824893999,
+      "worst_study_MAE": 5.29583611802766,
+      "within_1_log": 0.6100777019072287,
+      "mean_fold_R2": -0.0806762311116378
+    },
+    "S1": {
+      "R2": 0.51949161468415,
+      "MAE": 0.9952826407188045,
+      "RMSE": 1.3537233092716592,
+      "study_macro_MAE": 0.980533171969721,
+      "study_macro_MSE": 1.9591113605945931,
+      "p90_study_MAE": 1.8330193404301562,
+      "worst_study_MAE": 5.2445937804281195,
+      "within_1_log": 0.622203908641394,
+      "mean_fold_R2": -0.05504451714757701
+    },
+    "S2": {
+      "R2": 0.5256280075581679,
+      "MAE": 0.9915469119401223,
+      "RMSE": 1.3450515874438729,
+      "study_macro_MAE": 0.9993536485205501,
+      "study_macro_MSE": 1.9692869886789295,
+      "p90_study_MAE": 1.786402449773061,
+      "worst_study_MAE": 5.1658872956445,
+      "within_1_log": 0.6283258770897104,
+      "mean_fold_R2": -0.037263820042617725
+    }
+  },
+  "input_sha256": {
+    "data/noaa_microplastics.csv": "5c4634c7c419f8a2c4b03adac4081e869bc59b650d86745ea66872388890a702",
+    "microplastics.py": "134637a2e969cbc586c80c795b95e0b9416372471d95245a28b256e549d5d76b",
+    "microplastics.ipynb": "d267f0b15c224eabd1b0971b854a6cb156a85bcbeaa744c04bb0b269402def83",
+    "gamm.R": "991b1240d3b660c7759866653743717c6f1d573ffc5ff3e5b714d57960b3f271",
+    "uv.lock": "3d8723154b259e0f421f80f784c679364e2b4dc58d2baa194e82aaed3293f4be",
+    "reproduction_outputs/out_of_fold_predictions.csv": "f35e85d5d6b4291e846806a554b2f09000fc459357667e7b0ff0720a68ea512c",
+    "reproduction_outputs/summary.json": "2dd7fedf7d308a28a8d18a433b0404c4ca111a9ad79a4ee4d75d0ab0efdfb54e",
+    "reproduction_outputs/model_parameters.json": "f7562e973bb969c8c366fdbed5289fb3376ba7cc4a8230d1dd14e75eb2a18e1b",
+    "reproduction_outputs/unit_adjustments.json": "fedf38beb74a639b7123fdd19d1172c28df0a8128f9bb173942f39ad35819550",
+    "optimization_outputs/optimized_oof_predictions.csv": "6bca068021726017c8581223ef98f2ae89017965cc03a8851ff10919776816bf",
+    "optimization_outputs/inner_metrics_by_outer_fold.csv": "f6c13f288938caf7086dd121793891f6d6be592943d0caa44c5285201b862c74",
+    "optimization_outputs/candidate_registry.json": "e27c505b2902d621fe186724839197c6615eb87062c99b0a80f18bef09c7c2b8",
+    "optimization_outputs/frozen_splits.json": "10f044d0565ad56642c3df9821a54f89b28abde54b2b5b8af5ae61cb09169d8f",
+    "study_robustness_outputs/all_procedure_oof_predictions.csv": "ecfcfe5750a13a2a204cf6573af9b5b1af0dca0f2cbd3a70693bcbe3448b48a3",
+    "study_robustness_outputs/summary_metrics.csv": "5afb53a51a9b654634bfc76576bc61146cda652f4cb755137a1d73d7359efc87",
+    "study_robustness_outputs/locked_selections.json": "327ba130e9bdb2ac77b4d12a57d2e12e2f39843c3608f1335eaac66b66582178",
+    "study_robustness_outputs/source/selection_rules.py": "921ec094c2ece333d5b6e784764c4c826d200b6f23cb36d0dd0532f89897f8a9",
+    "study_robustness_outputs/verified_prior_checkpoint_hashes.json": "060507a8eb3eb174fca245b6b7e59329c4b74eb67f887a11be013eca36f5ea89"
+  },
+  "prior_checkpoints_verified": 125,
+  "selection_caveat": "S2 was identified after repeated inspection of the same five outer folds. Re-scoring them is not new independent evidence.",
+  "new_model_fits": 0
+}

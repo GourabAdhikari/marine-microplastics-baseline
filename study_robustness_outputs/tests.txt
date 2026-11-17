@@ -1,0 +1,128 @@
+test_C0_fallback_zero_errors_and_nonfinite (test_stage4.Stage4Tests.test_C0_fallback_zero_errors_and_nonfinite) ... ok
+test_actual_fitted_preprocessing_training_only (test_stage4.Stage4Tests.test_actual_fitted_preprocessing_training_only) ... ok
+test_audited_inner_predictions_count_all_studies (test_stage4.Stage4Tests.test_audited_inner_predictions_count_all_studies) ... ok
+test_checkpoint_identity_and_corruption_rejection (test_stage4.Stage4Tests.test_checkpoint_identity_and_corruption_rejection) ... ok
+test_exact_oof_alignment_and_coverage (test_stage4.Stage4Tests.test_exact_oof_alignment_and_coverage) ... ok
+test_fit_cap_and_no_post_evaluation_fit_allowed (test_stage4.Stage4Tests.test_fit_cap_and_no_post_evaluation_fit_allowed) ... ok
+test_frozen_screen_and_largest_study_contribution (test_stage4.Stage4Tests.test_frozen_screen_and_largest_study_contribution) ... ok
+test_inclusive_guard_boundaries (test_stage4.Stage4Tests.test_inclusive_guard_boundaries) ... ok
+test_independent_s1_s2_arithmetic_and_order (test_stage4.Stage4Tests.test_independent_s1_s2_arithmetic_and_order) ... ok
+test_independently_recomputed_aggregate_and_fold_metrics (test_stage4.Stage4Tests.test_independently_recomputed_aggregate_and_fold_metrics) ... ok
+test_inner_only_inputs_no_io_and_deterministic (test_stage4.Stage4Tests.test_inner_only_inputs_no_io_and_deterministic) ... ok
+test_metric_missing_values_and_offset_tolerance (test_stage4.Stage4Tests.test_metric_missing_values_and_offset_tolerance) ... ok
+test_original_target_scenario_and_predictor_whitelist (test_stage4.Stage4Tests.test_original_target_scenario_and_predictor_whitelist) ... ok
+test_outer_label_perturbation_does_not_affect_selection_or_fit_identity (test_stage4.Stage4Tests.test_outer_label_perturbation_does_not_affect_selection_or_fit_identity) ... ok
+test_paired_study_metrics_and_all_case_subgroup_counts (test_stage4.Stage4Tests.test_paired_study_metrics_and_all_case_subgroup_counts) ... ok
+test_pre_fit_lock_timestamp_hash_and_source (test_stage4.Stage4Tests.test_pre_fit_lock_timestamp_hash_and_source) ... ok
+test_protected_paths_unchanged (test_stage4.Stage4Tests.test_protected_paths_unchanged) ... ok
+test_reuse_only_exact_same_fold_and_configuration (test_stage4.Stage4Tests.test_reuse_only_exact_same_fold_and_configuration) ... ok
+test_s1_lexicographic_ties (test_stage4.Stage4Tests.test_s1_lexicographic_ties) ... ok
+test_s2_band_and_ties (test_stage4.Stage4Tests.test_s2_band_and_ties) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 7.325s
+
+OK
+
+Data/provenance assertions:
+PASS prior manifest reproduction_outputs/input_hashes.json
+PASS prior manifest optimization_outputs/input_artifacts.json
+PASS prior manifest optimization_outputs/artifact_checksums.json
+PASS 16988 rows without missing/duplicate OOF IDs
+PASS OOF identical water_row
+PASS OOF identical source_row
+PASS OOF identical study
+PASS OOF identical doi
+PASS OOF identical accession
+PASS OOF identical fold
+PASS OOF identical target_log10
+PASS original prediction copy and scenario exact
+PASS contiguous row order and 72 studies
+PASS C0 and frozen eight models exact
+PASS complete finite inner summaries
+PASS core versions match optimized cache identity
+PASS original optimized code/config/split identity verified
+PASS original preprocessing produces exact frozen targets, groups and methods
+PASS exact feature whitelist, no identifiers or outcomes
+PASS source-row selection preserved
+PASS unit assumptions and offset frozen
+PASS outer test sizes exact
+PASS outer 1 exact membership and no study leakage
+PASS inner 1 original memberships
+PASS inner 1/1 training-only study partitions
+PASS inner 1/2 training-only study partitions
+PASS inner 1/3 training-only study partitions
+PASS outer 2 exact membership and no study leakage
+PASS inner 2 original memberships
+PASS inner 2/1 training-only study partitions
+PASS inner 2/2 training-only study partitions
+PASS inner 2/3 training-only study partitions
+PASS outer 3 exact membership and no study leakage
+PASS inner 3 original memberships
+PASS inner 3/1 training-only study partitions
+PASS inner 3/2 training-only study partitions
+PASS inner 3/3 training-only study partitions
+PASS outer 4 exact membership and no study leakage
+PASS inner 4 original memberships
+PASS inner 4/1 training-only study partitions
+PASS inner 4/2 training-only study partitions
+PASS inner 4/3 training-only study partitions
+PASS outer 5 exact membership and no study leakage
+PASS inner 5 original memberships
+PASS inner 5/1 training-only study partitions
+PASS inner 5/2 training-only study partitions
+PASS inner 5/3 training-only study partitions
+PASS inner outer-1 every training row validated once
+PASS inner metrics exact within 1e-12: 1/C0_original
+PASS inner metrics exact within 1e-12: 1/C1_shallow
+PASS inner metrics exact within 1e-12: 1/C2_conservative
+PASS inner metrics exact within 1e-12: 1/C3_strong_regularization
+PASS inner metrics exact within 1e-12: 1/C4_feature_subsample
+PASS inner metrics exact within 1e-12: 1/C5_row_and_feature_subsample
+PASS inner metrics exact within 1e-12: 1/C6_slower
+PASS inner metrics exact within 1e-12: 1/C7_fewer_trees
+PASS inner outer-2 every training row validated once
+PASS inner metrics exact within 1e-12: 2/C0_original
+PASS inner metrics exact within 1e-12: 2/C1_shallow
+PASS inner metrics exact within 1e-12: 2/C2_conservative
+PASS inner metrics exact within 1e-12: 2/C3_strong_regularization
+PASS inner metrics exact within 1e-12: 2/C4_feature_subsample
+PASS inner metrics exact within 1e-12: 2/C5_row_and_feature_subsample
+PASS inner metrics exact within 1e-12: 2/C6_slower
+PASS inner metrics exact within 1e-12: 2/C7_fewer_trees
+PASS inner outer-3 every training row validated once
+PASS inner metrics exact within 1e-12: 3/C0_original
+PASS inner metrics exact within 1e-12: 3/C1_shallow
+PASS inner metrics exact within 1e-12: 3/C2_conservative
+PASS inner metrics exact within 1e-12: 3/C3_strong_regularization
+PASS inner metrics exact within 1e-12: 3/C4_feature_subsample
+PASS inner metrics exact within 1e-12: 3/C5_row_and_feature_subsample
+PASS inner metrics exact within 1e-12: 3/C6_slower
+PASS inner metrics exact within 1e-12: 3/C7_fewer_trees
+PASS inner outer-4 every training row validated once
+PASS inner metrics exact within 1e-12: 4/C0_original
+PASS inner metrics exact within 1e-12: 4/C1_shallow
+PASS inner metrics exact within 1e-12: 4/C2_conservative
+PASS inner metrics exact within 1e-12: 4/C3_strong_regularization
+PASS inner metrics exact within 1e-12: 4/C4_feature_subsample
+PASS inner metrics exact within 1e-12: 4/C5_row_and_feature_subsample
+PASS inner metrics exact within 1e-12: 4/C6_slower
+PASS inner metrics exact within 1e-12: 4/C7_fewer_trees
+PASS inner outer-5 every training row validated once
+PASS inner metrics exact within 1e-12: 5/C0_original
+PASS inner metrics exact within 1e-12: 5/C1_shallow
+PASS inner metrics exact within 1e-12: 5/C2_conservative
+PASS inner metrics exact within 1e-12: 5/C3_strong_regularization
+PASS inner metrics exact within 1e-12: 5/C4_feature_subsample
+PASS inner metrics exact within 1e-12: 5/C5_row_and_feature_subsample
+PASS inner metrics exact within 1e-12: 5/C6_slower
+PASS inner metrics exact within 1e-12: 5/C7_fewer_trees
+PASS optimized reuse verified fold 1
+PASS optimized reuse verified fold 2
+PASS optimized reuse verified fold 3
+PASS optimized reuse verified fold 4
+PASS optimized reuse verified fold 5
+PASS selection lock immutable on resume
+PASS locked JSON and versioned copy unchanged
+PASS no paths added/removed outside study_robustness_outputs
+PASS all original and prior-phase files byte-identical

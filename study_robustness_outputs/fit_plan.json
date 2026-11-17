@@ -1,0 +1,28 @@
+{
+  "unique_nonreference_fold_configurations": [
+    {
+      "fold": 1,
+      "candidate": "C5_row_and_feature_subsample"
+    },
+    {
+      "fold": 2,
+      "candidate": "C5_row_and_feature_subsample"
+    },
+    {
+      "fold": 3,
+      "candidate": "C4_feature_subsample"
+    },
+    {
+      "fold": 5,
+      "candidate": "C4_feature_subsample"
+    },
+    {
+      "fold": 5,
+      "candidate": "C5_row_and_feature_subsample"
+    }
+  ],
+  "upper_bound_new_fits": 5,
+  "cap": 10,
+  "scenario": "historical_hypothetical_unit_scenario",
+  "locked_selections_sha256": "327ba130e9bdb2ac77b4d12a57d2e12e2f39843c3608f1335eaac66b66582178"
+}

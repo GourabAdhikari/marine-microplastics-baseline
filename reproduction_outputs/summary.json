@@ -1,0 +1,21 @@
+{
+  "raw_rows": 29076,
+  "raw_columns": 35,
+  "modelling_rows": 16988,
+  "studies": 72,
+  "accessions": 73,
+  "publications": 73,
+  "pooled": {
+    "R2": 0.4726308398591973,
+    "MAE": 0.9963774232101922,
+    "RMSE": 1.418197730643938,
+    "within 1 log": 0.639392512361667,
+    "raw MAE": 1093.9747133366286,
+    "raw RMSE": 8638.33742300612,
+    "study MAE": 1.0609421643148442
+  },
+  "fold_mean_R2": -0.07123499211367457,
+  "reported_R2": 0.473,
+  "difference_from_reported": -0.00036916014080268233,
+  "matches_reported_to_3_decimals": true
+}

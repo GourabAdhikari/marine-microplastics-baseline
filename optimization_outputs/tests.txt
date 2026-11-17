@@ -1,0 +1,654 @@
+PASS 16988 rows, 72 studies, raw 29076x35
+PASS baseline exact contiguous row IDs
+PASS exact saved study IDs
+PASS exact saved labels round-trip
+PASS exact original source rows
+PASS fixed outer sizes
+PASS saved folds also match original GroupKFold
+PASS no target or study-derived predictors
+PASS historical unit multipliers and offset frozen
+PASS historical adjustment row counts
+PASS target log10 exact
+PASS no missing/placeholder doi joining groups
+PASS no missing/placeholder accession joining groups
+PASS independent connected-components grouping
+PASS outer test coverage once
+PASS outer 1 disjoint rows and studies
+PASS inner 1/1 train only, disjoint studies and multiple train groups
+PASS inner 1/2 train only, disjoint studies and multiple train groups
+PASS inner 1/3 train only, disjoint studies and multiple train groups
+PASS inner 1 test coverage once
+PASS outer 2 disjoint rows and studies
+PASS inner 2/1 train only, disjoint studies and multiple train groups
+PASS inner 2/2 train only, disjoint studies and multiple train groups
+PASS inner 2/3 train only, disjoint studies and multiple train groups
+PASS inner 2 test coverage once
+PASS outer 3 disjoint rows and studies
+PASS inner 3/1 train only, disjoint studies and multiple train groups
+PASS inner 3/2 train only, disjoint studies and multiple train groups
+PASS inner 3/3 train only, disjoint studies and multiple train groups
+PASS inner 3 test coverage once
+PASS outer 4 disjoint rows and studies
+PASS inner 4/1 train only, disjoint studies and multiple train groups
+PASS inner 4/2 train only, disjoint studies and multiple train groups
+PASS inner 4/3 train only, disjoint studies and multiple train groups
+PASS inner 4 test coverage once
+PASS outer 5 disjoint rows and studies
+PASS inner 5/1 train only, disjoint studies and multiple train groups
+PASS inner 5/2 train only, disjoint studies and multiple train groups
+PASS inner 5/3 train only, disjoint studies and multiple train groups
+PASS inner 5 test coverage once
+PASS baseline saved predictions reproduce reference
+PASS all eight configurations use valid installed parameter names
+PASS registry unchanged across resume
+PASS checkpoint row IDs match 0bcef34d
+PASS checkpoint row IDs match d8ecc47c
+PASS checkpoint row IDs match b5ae29b5
+PASS checkpoint row IDs match 40fdf956
+PASS checkpoint row IDs match 4d1ad745
+PASS checkpoint row IDs match bfacad0f
+PASS checkpoint row IDs match 9d6aef7a
+PASS checkpoint row IDs match 6245d497
+PASS checkpoint row IDs match 1b98a8d5
+PASS checkpoint row IDs match 85617d63
+PASS checkpoint row IDs match c50c0908
+PASS checkpoint row IDs match 7513159e
+PASS checkpoint row IDs match fd8f3fcc
+PASS checkpoint row IDs match 4abeacd3
+PASS checkpoint row IDs match 4ce9f87d
+PASS checkpoint row IDs match 344c5cdd
+PASS checkpoint row IDs match 2d7220d3
+PASS checkpoint row IDs match b1dca715
+PASS checkpoint row IDs match 53bc74a2
+PASS checkpoint row IDs match 7ad2ee82
+PASS checkpoint row IDs match febdf4b6
+PASS checkpoint row IDs match ded34efb
+PASS checkpoint row IDs match 08ee1f9f
+PASS checkpoint row IDs match 160d23d7
+PASS checkpoint row IDs match cf35685e
+PASS checkpoint row IDs match 2eaace21
+PASS checkpoint row IDs match 82c4ebab
+PASS checkpoint row IDs match cab34af5
+PASS checkpoint row IDs match 1ab40a31
+PASS checkpoint row IDs match ce5f9569
+PASS checkpoint row IDs match 12394cae
+PASS checkpoint row IDs match eee71e0e
+PASS checkpoint row IDs match 124c5d3d
+PASS checkpoint row IDs match 6c16f802
+PASS checkpoint row IDs match 06c60ea8
+PASS checkpoint row IDs match 951d9a6a
+PASS checkpoint row IDs match ebc06655
+PASS checkpoint row IDs match bf3d81e9
+PASS checkpoint row IDs match 03dbef25
+PASS checkpoint row IDs match e3f77ff1
+PASS checkpoint row IDs match 1abe2535
+PASS checkpoint row IDs match ad47e0db
+PASS checkpoint row IDs match 247be8af
+PASS checkpoint row IDs match 241ec6bb
+PASS checkpoint row IDs match 52ec815e
+PASS checkpoint row IDs match bfce23d7
+PASS checkpoint row IDs match 25fbef9f
+PASS checkpoint row IDs match a731c563
+PASS checkpoint row IDs match 709d0325
+PASS checkpoint row IDs match 90ea748d
+PASS checkpoint row IDs match 42e2d52f
+PASS checkpoint row IDs match 5c9a7009
+PASS checkpoint row IDs match 00b8bade
+PASS checkpoint row IDs match ed371f5c
+PASS checkpoint row IDs match 94ea41c3
+PASS checkpoint row IDs match 550ffd4b
+PASS checkpoint row IDs match 162734da
+PASS checkpoint row IDs match 877898ad
+PASS checkpoint row IDs match 69b17ff8
+PASS checkpoint row IDs match d8009207
+PASS checkpoint row IDs match 8f14d874
+PASS checkpoint row IDs match 46ca3f0c
+PASS checkpoint row IDs match f0deab18
+PASS checkpoint row IDs match dd86cd8d
+PASS checkpoint row IDs match 62279670
+PASS checkpoint row IDs match f7e2ee3c
+PASS checkpoint row IDs match 31a697f9
+PASS checkpoint row IDs match 423c9eeb
+PASS checkpoint row IDs match 95dbd752
+PASS checkpoint row IDs match d947c680
+PASS checkpoint row IDs match 2d892454
+PASS checkpoint row IDs match 1a3752e2
+PASS checkpoint row IDs match d097a3b8
+PASS checkpoint row IDs match 039f13a9
+PASS checkpoint row IDs match b83f22a3
+PASS checkpoint row IDs match 210dbda5
+PASS checkpoint row IDs match 85556325
+PASS checkpoint row IDs match c8613c69
+PASS checkpoint row IDs match 3cfcebfb
+PASS checkpoint row IDs match dbc86c9c
+PASS checkpoint row IDs match 2edab09a
+PASS checkpoint row IDs match 8b715bf1
+PASS checkpoint row IDs match 055d98a2
+PASS checkpoint row IDs match 8d914adf
+PASS checkpoint row IDs match 32c5def0
+PASS checkpoint row IDs match 570ed7d0
+PASS checkpoint row IDs match 9dc31408
+PASS checkpoint row IDs match 66063dca
+PASS checkpoint row IDs match f5038755
+PASS checkpoint row IDs match 3de800b0
+PASS checkpoint row IDs match 94314849
+PASS checkpoint row IDs match ac8960c9
+PASS checkpoint row IDs match fa2ca6a7
+PASS checkpoint row IDs match fba5ced8
+PASS checkpoint row IDs match 2f3bda91
+PASS checkpoint row IDs match 08650e73
+PASS checkpoint row IDs match 59ca2a40
+PASS checkpoint row IDs match 5ec4d5cd
+PASS checkpoint row IDs match ce1c730e
+PASS checkpoint row IDs match 9b5122b8
+PASS checkpoint row IDs match 93a180a9
+PASS checkpoint row IDs match 0ba86885
+PASS checkpoint row IDs match f8611148
+PASS checkpoint row IDs match 58812b16
+PASS checkpoint row IDs match 97cd3c45
+PASS checkpoint row IDs match 7b77bcba
+PASS checkpoint row IDs match efc88175
+PASS checkpoint row IDs match 5f78cc62
+PASS checkpoint row IDs match 033407e4
+PASS checkpoint row IDs match 5a2989f3
+PASS checkpoint row IDs match 9695aff8
+PASS checkpoint row IDs match 359b98f6
+PASS checkpoint row IDs match e11c11fd
+PASS checkpoint row IDs match d3b0f8f2
+PASS checkpoint row IDs match fc2c1860
+PASS checkpoint row IDs match 0d0a2239
+PASS checkpoint row IDs match 86a17caa
+PASS checkpoint row IDs match cb87228d
+PASS checkpoint row IDs match efdf8bbd
+PASS checkpoint row IDs match ef708fc7
+PASS checkpoint row IDs match 68939a03
+PASS checkpoint row IDs match 18fa4cd4
+PASS checkpoint row IDs match 2b58a239
+PASS checkpoint row IDs match f40dcbe3
+PASS checkpoint row IDs match ea833589
+PASS 16988 rows, 72 studies, raw 29076x35
+PASS baseline exact contiguous row IDs
+PASS exact saved study IDs
+PASS exact saved labels round-trip
+PASS exact original source rows
+PASS fixed outer sizes
+PASS saved folds also match original GroupKFold
+PASS no target or study-derived predictors
+PASS historical unit multipliers and offset frozen
+PASS historical adjustment row counts
+PASS target log10 exact
+PASS no missing/placeholder doi joining groups
+PASS no missing/placeholder accession joining groups
+PASS independent connected-components grouping
+PASS outer test coverage once
+PASS outer 1 disjoint rows and studies
+PASS inner 1/1 train only, disjoint studies and multiple train groups
+PASS inner 1/2 train only, disjoint studies and multiple train groups
+PASS inner 1/3 train only, disjoint studies and multiple train groups
+PASS inner 1 test coverage once
+PASS outer 2 disjoint rows and studies
+PASS inner 2/1 train only, disjoint studies and multiple train groups
+PASS inner 2/2 train only, disjoint studies and multiple train groups
+PASS inner 2/3 train only, disjoint studies and multiple train groups
+PASS inner 2 test coverage once
+PASS outer 3 disjoint rows and studies
+PASS inner 3/1 train only, disjoint studies and multiple train groups
+PASS inner 3/2 train only, disjoint studies and multiple train groups
+PASS inner 3/3 train only, disjoint studies and multiple train groups
+PASS inner 3 test coverage once
+PASS outer 4 disjoint rows and studies
+PASS inner 4/1 train only, disjoint studies and multiple train groups
+PASS inner 4/2 train only, disjoint studies and multiple train groups
+PASS inner 4/3 train only, disjoint studies and multiple train groups
+PASS inner 4 test coverage once
+PASS outer 5 disjoint rows and studies
+PASS inner 5/1 train only, disjoint studies and multiple train groups
+PASS inner 5/2 train only, disjoint studies and multiple train groups
+PASS inner 5/3 train only, disjoint studies and multiple train groups
+PASS inner 5 test coverage once
+PASS baseline saved predictions reproduce reference
+PASS outer1 training-only imputer statistics
+PASS outer1 training-only scaler mean/variance
+PASS outer1 training-only encoder vocab
+PASS outer1 training-only lower/upper clipping
+PASS outer1 unseen family ignored
+PASS outer1 validation transform never refits statistics
+PASS outer2 training-only imputer statistics
+PASS outer2 training-only scaler mean/variance
+PASS outer2 training-only encoder vocab
+PASS outer2 training-only lower/upper clipping
+PASS outer2 unseen family ignored
+PASS outer2 validation transform never refits statistics
+PASS outer3 training-only imputer statistics
+PASS outer3 training-only scaler mean/variance
+PASS outer3 training-only encoder vocab
+PASS outer3 training-only lower/upper clipping
+PASS outer3 unseen family ignored
+PASS outer3 validation transform never refits statistics
+PASS outer4 training-only imputer statistics
+PASS outer4 training-only scaler mean/variance
+PASS outer4 training-only encoder vocab
+PASS outer4 training-only lower/upper clipping
+PASS outer4 unseen family ignored
+PASS outer4 validation transform never refits statistics
+PASS outer5 training-only imputer statistics
+PASS outer5 training-only scaler mean/variance
+PASS outer5 training-only encoder vocab
+PASS outer5 training-only lower/upper clipping
+PASS outer5 unseen family ignored
+PASS outer5 validation transform never refits statistics
+PASS inner1/1 training-only imputer statistics
+PASS inner1/1 training-only scaler mean/variance
+PASS inner1/1 training-only encoder vocab
+PASS inner1/1 training-only lower/upper clipping
+PASS inner1/1 unseen family ignored
+PASS inner1/1 validation transform never refits statistics
+PASS inner1/2 training-only imputer statistics
+PASS inner1/2 training-only scaler mean/variance
+PASS inner1/2 training-only encoder vocab
+PASS inner1/2 training-only lower/upper clipping
+PASS inner1/2 unseen family ignored
+PASS inner1/2 validation transform never refits statistics
+PASS inner1/3 training-only imputer statistics
+PASS inner1/3 training-only scaler mean/variance
+PASS inner1/3 training-only encoder vocab
+PASS inner1/3 training-only lower/upper clipping
+PASS inner1/3 unseen family ignored
+PASS inner1/3 validation transform never refits statistics
+PASS inner2/1 training-only imputer statistics
+PASS inner2/1 training-only scaler mean/variance
+PASS inner2/1 training-only encoder vocab
+PASS inner2/1 training-only lower/upper clipping
+PASS inner2/1 unseen family ignored
+PASS inner2/1 validation transform never refits statistics
+PASS inner2/2 training-only imputer statistics
+PASS inner2/2 training-only scaler mean/variance
+PASS inner2/2 training-only encoder vocab
+PASS inner2/2 training-only lower/upper clipping
+PASS inner2/2 unseen family ignored
+PASS inner2/2 validation transform never refits statistics
+PASS inner2/3 training-only imputer statistics
+PASS inner2/3 training-only scaler mean/variance
+PASS inner2/3 training-only encoder vocab
+PASS inner2/3 training-only lower/upper clipping
+PASS inner2/3 unseen family ignored
+PASS inner2/3 validation transform never refits statistics
+PASS inner3/1 training-only imputer statistics
+PASS inner3/1 training-only scaler mean/variance
+PASS inner3/1 training-only encoder vocab
+PASS inner3/1 training-only lower/upper clipping
+PASS inner3/1 unseen family ignored
+PASS inner3/1 validation transform never refits statistics
+PASS inner3/2 training-only imputer statistics
+PASS inner3/2 training-only scaler mean/variance
+PASS inner3/2 training-only encoder vocab
+PASS inner3/2 training-only lower/upper clipping
+PASS inner3/2 unseen family ignored
+PASS inner3/2 validation transform never refits statistics
+PASS inner3/3 training-only imputer statistics
+PASS inner3/3 training-only scaler mean/variance
+PASS inner3/3 training-only encoder vocab
+PASS inner3/3 training-only lower/upper clipping
+PASS inner3/3 unseen family ignored
+PASS inner3/3 validation transform never refits statistics
+PASS inner4/1 training-only imputer statistics
+PASS inner4/1 training-only scaler mean/variance
+PASS inner4/1 training-only encoder vocab
+PASS inner4/1 training-only lower/upper clipping
+PASS inner4/1 unseen family ignored
+PASS inner4/1 validation transform never refits statistics
+PASS inner4/2 training-only imputer statistics
+PASS inner4/2 training-only scaler mean/variance
+PASS inner4/2 training-only encoder vocab
+PASS inner4/2 training-only lower/upper clipping
+PASS inner4/2 unseen family ignored
+PASS inner4/2 validation transform never refits statistics
+PASS inner4/3 training-only imputer statistics
+PASS inner4/3 training-only scaler mean/variance
+PASS inner4/3 training-only encoder vocab
+PASS inner4/3 training-only lower/upper clipping
+PASS inner4/3 unseen family ignored
+PASS inner4/3 validation transform never refits statistics
+PASS inner5/1 training-only imputer statistics
+PASS inner5/1 training-only scaler mean/variance
+PASS inner5/1 training-only encoder vocab
+PASS inner5/1 training-only lower/upper clipping
+PASS inner5/1 unseen family ignored
+PASS inner5/1 validation transform never refits statistics
+PASS inner5/2 training-only imputer statistics
+PASS inner5/2 training-only scaler mean/variance
+PASS inner5/2 training-only encoder vocab
+PASS inner5/2 training-only lower/upper clipping
+PASS inner5/2 unseen family ignored
+PASS inner5/2 validation transform never refits statistics
+PASS inner5/3 training-only imputer statistics
+PASS inner5/3 training-only scaler mean/variance
+PASS inner5/3 training-only encoder vocab
+PASS inner5/3 training-only lower/upper clipping
+PASS inner5/3 unseen family ignored
+PASS inner5/3 validation transform never refits statistics
+PASS selector rejects unsafe higher R2
+PASS selector rejects lower R2 even with better MAE
+PASS selector prefers lower MAE within 0.005 including C0
+PASS selector uses ID order for exact macro tie
+PASS selector accepts safe clear improvement
+PASS selector respects inclusive 5% safety limit
+PASS checkpoint row IDs match 0bcef34d
+PASS checkpoint row IDs match d8ecc47c
+PASS checkpoint row IDs match b5ae29b5
+PASS checkpoint row IDs match 40fdf956
+PASS checkpoint row IDs match 4d1ad745
+PASS checkpoint row IDs match bfacad0f
+PASS checkpoint row IDs match 9d6aef7a
+PASS checkpoint row IDs match 6245d497
+PASS checkpoint row IDs match 1b98a8d5
+PASS checkpoint row IDs match 85617d63
+PASS checkpoint row IDs match c50c0908
+PASS checkpoint row IDs match 7513159e
+PASS checkpoint row IDs match fd8f3fcc
+PASS checkpoint row IDs match 4abeacd3
+PASS checkpoint row IDs match 4ce9f87d
+PASS checkpoint row IDs match 344c5cdd
+PASS checkpoint row IDs match 2d7220d3
+PASS checkpoint row IDs match b1dca715
+PASS checkpoint row IDs match 53bc74a2
+PASS checkpoint row IDs match 7ad2ee82
+PASS checkpoint row IDs match febdf4b6
+PASS checkpoint row IDs match ded34efb
+PASS checkpoint row IDs match 08ee1f9f
+PASS checkpoint row IDs match 160d23d7
+PASS outer 1 label perturbation leaves selection and reason identical
+PASS outer 1 label perturbation leaves all inner metrics identical
+PASS checkpoint row IDs match cf35685e
+PASS checkpoint row IDs match 2eaace21
+PASS checkpoint row IDs match 82c4ebab
+PASS checkpoint row IDs match cab34af5
+PASS checkpoint row IDs match 1ab40a31
+PASS checkpoint row IDs match ce5f9569
+PASS checkpoint row IDs match 12394cae
+PASS checkpoint row IDs match eee71e0e
+PASS checkpoint row IDs match 124c5d3d
+PASS checkpoint row IDs match 6c16f802
+PASS checkpoint row IDs match 06c60ea8
+PASS checkpoint row IDs match 951d9a6a
+PASS checkpoint row IDs match ebc06655
+PASS checkpoint row IDs match bf3d81e9
+PASS checkpoint row IDs match 03dbef25
+PASS checkpoint row IDs match e3f77ff1
+PASS checkpoint row IDs match 1abe2535
+PASS checkpoint row IDs match ad47e0db
+PASS checkpoint row IDs match 247be8af
+PASS checkpoint row IDs match 241ec6bb
+PASS checkpoint row IDs match 52ec815e
+PASS checkpoint row IDs match bfce23d7
+PASS checkpoint row IDs match 25fbef9f
+PASS checkpoint row IDs match a731c563
+PASS outer 2 label perturbation leaves selection and reason identical
+PASS outer 2 label perturbation leaves all inner metrics identical
+PASS checkpoint row IDs match 709d0325
+PASS checkpoint row IDs match 90ea748d
+PASS checkpoint row IDs match 42e2d52f
+PASS checkpoint row IDs match 5c9a7009
+PASS checkpoint row IDs match 00b8bade
+PASS checkpoint row IDs match ed371f5c
+PASS checkpoint row IDs match 94ea41c3
+PASS checkpoint row IDs match 550ffd4b
+PASS checkpoint row IDs match 162734da
+PASS checkpoint row IDs match 877898ad
+PASS checkpoint row IDs match 69b17ff8
+PASS checkpoint row IDs match d8009207
+PASS checkpoint row IDs match 8f14d874
+PASS checkpoint row IDs match 46ca3f0c
+PASS checkpoint row IDs match f0deab18
+PASS checkpoint row IDs match dd86cd8d
+PASS checkpoint row IDs match 62279670
+PASS checkpoint row IDs match f7e2ee3c
+PASS checkpoint row IDs match 31a697f9
+PASS checkpoint row IDs match 423c9eeb
+PASS checkpoint row IDs match 95dbd752
+PASS checkpoint row IDs match d947c680
+PASS checkpoint row IDs match 2d892454
+PASS checkpoint row IDs match 1a3752e2
+PASS outer 3 label perturbation leaves selection and reason identical
+PASS outer 3 label perturbation leaves all inner metrics identical
+PASS checkpoint row IDs match d097a3b8
+PASS checkpoint row IDs match 039f13a9
+PASS checkpoint row IDs match b83f22a3
+PASS checkpoint row IDs match 210dbda5
+PASS checkpoint row IDs match 85556325
+PASS checkpoint row IDs match c8613c69
+PASS checkpoint row IDs match 3cfcebfb
+PASS checkpoint row IDs match dbc86c9c
+PASS checkpoint row IDs match 2edab09a
+PASS checkpoint row IDs match 8b715bf1
+PASS checkpoint row IDs match 055d98a2
+PASS checkpoint row IDs match 8d914adf
+PASS checkpoint row IDs match 32c5def0
+PASS checkpoint row IDs match 570ed7d0
+PASS checkpoint row IDs match 9dc31408
+PASS checkpoint row IDs match 66063dca
+PASS checkpoint row IDs match f5038755
+PASS checkpoint row IDs match 3de800b0
+PASS checkpoint row IDs match 94314849
+PASS checkpoint row IDs match ac8960c9
+PASS checkpoint row IDs match fa2ca6a7
+PASS checkpoint row IDs match fba5ced8
+PASS checkpoint row IDs match 2f3bda91
+PASS checkpoint row IDs match 08650e73
+PASS outer 4 label perturbation leaves selection and reason identical
+PASS outer 4 label perturbation leaves all inner metrics identical
+PASS checkpoint row IDs match 59ca2a40
+PASS checkpoint row IDs match 5ec4d5cd
+PASS checkpoint row IDs match ce1c730e
+PASS checkpoint row IDs match 9b5122b8
+PASS checkpoint row IDs match 93a180a9
+PASS checkpoint row IDs match 0ba86885
+PASS checkpoint row IDs match f8611148
+PASS checkpoint row IDs match 58812b16
+PASS checkpoint row IDs match 97cd3c45
+PASS checkpoint row IDs match 7b77bcba
+PASS checkpoint row IDs match efc88175
+PASS checkpoint row IDs match 5f78cc62
+PASS checkpoint row IDs match 033407e4
+PASS checkpoint row IDs match 5a2989f3
+PASS checkpoint row IDs match 9695aff8
+PASS checkpoint row IDs match 359b98f6
+PASS checkpoint row IDs match e11c11fd
+PASS checkpoint row IDs match d3b0f8f2
+PASS checkpoint row IDs match fc2c1860
+PASS checkpoint row IDs match 0d0a2239
+PASS checkpoint row IDs match 86a17caa
+PASS checkpoint row IDs match cb87228d
+PASS checkpoint row IDs match efdf8bbd
+PASS checkpoint row IDs match ef708fc7
+PASS outer 5 label perturbation leaves selection and reason identical
+PASS outer 5 label perturbation leaves all inner metrics identical
+PASS outer-label perturbation reused caches, no additional fits
+PASS checkpoint row IDs match 8840db4f
+PASS checkpoint row IDs match 81cea669
+PASS deterministic fixed-slice repeat including subsampling
+PASS optimized exact aligned unique IDs
+PASS optimized same target/study/fold and original predictions
+PASS all optimized and original predictions finite
+PASS scenario labels complete and frozen
+PASS original_reproduced_fixed independently recomputed R2
+PASS original_reproduced_fixed independently recomputed MAE
+PASS original_reproduced_fixed independently recomputed RMSE
+PASS original_reproduced_fixed independently recomputed study_macro_MAE
+PASS original_reproduced_fixed independently recomputed study_macro_MSE
+PASS original_reproduced_fixed independently recomputed median_study_MAE
+PASS original_reproduced_fixed independently recomputed p90_study_MAE
+PASS original_reproduced_fixed independently recomputed worst_study_MAE
+PASS original_reproduced_fixed independently recomputed within_1_log
+PASS original_reproduced_fixed independently recomputed mean_fold_R2
+PASS original_reproduced_fixed fold 1 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed fold 2 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed fold 3 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed fold 4 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed fold 5 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1007/s00128-022-03620-5 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1007/s10661-022-10468-z saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1007/s11356-015-4453-3 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1007/s11356-022-24998-z saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1007/s12665-024-12042-x saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1007/s12665-025-12462-3 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1007/s12665-025-12773-5 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1007/s43217-023-00131-z saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.chemosphere.2022.133980 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.envint.2020.105494 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.envpol.2017.09.058 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.envpol.2018.02.062 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.envpol.2022.120702 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.gr.2021.10.024 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marenvres.2010.10.001 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marenvres.2014.03.017 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marenvres.2016.05.009 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2012.12.021 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2013.11.023 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2014.08.023 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2016.10.031 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2016.12.025 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2016.12.052 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2018.03.011 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2018.12.042 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2019.01.053 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2019.04.023 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2019.07.068 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2019.110572 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2020.111225 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2020.111239 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2020.111361 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2020.111515 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2020.111572 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2021.112210 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2022.113710 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2022.113940 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2022.114179 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2022.114452 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2023.114604 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2024.116153 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.marpolbul.2024.117288 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.scitotenv.2018.09.244 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.scitotenv.2018.12.192 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.scitotenv.2019.01.319 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.scitotenv.2021.147453 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.scitotenv.2022.155958 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1016/j.scitotenv.2022.156259 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1021/es4053076 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1038/s41598-020-64465-8 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1038/s41598-021-85939-3 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1038/s41598-022-17742-7 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1038/s43247-021-00091-0 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1038/srep14947 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1038/srep37551 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1088/1748-9326/abbb4f saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1088/1748-9326/ac5df1 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1126/sciadv.1600582 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1126/science.1192321 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.12681/mms.24899 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1371/journal.pone.0080020 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1371/journal.pone.0080466 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1371/journal.pone.0111913 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1371/journal.pone.0121762 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1371/journal.pone.0161581 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.1371/journal.pone.0243203 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.2989/1814232X.2018.1492969 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.3389/fenvs.2020.582217 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.3389/fenvs.2021.719274 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.3389/fmars.2021.626026 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.3389/fmars.2021.699000 saved MAE and MSE-derived RMSE
+PASS original_reproduced_fixed study https://doi.org/10.3389/fmars.2022.784937 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure independently recomputed R2
+PASS nested_optimized_procedure independently recomputed MAE
+PASS nested_optimized_procedure independently recomputed RMSE
+PASS nested_optimized_procedure independently recomputed study_macro_MAE
+PASS nested_optimized_procedure independently recomputed study_macro_MSE
+PASS nested_optimized_procedure independently recomputed median_study_MAE
+PASS nested_optimized_procedure independently recomputed p90_study_MAE
+PASS nested_optimized_procedure independently recomputed worst_study_MAE
+PASS nested_optimized_procedure independently recomputed within_1_log
+PASS nested_optimized_procedure independently recomputed mean_fold_R2
+PASS nested_optimized_procedure fold 1 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure fold 2 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure fold 3 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure fold 4 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure fold 5 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1007/s00128-022-03620-5 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1007/s10661-022-10468-z saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1007/s11356-015-4453-3 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1007/s11356-022-24998-z saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1007/s12665-024-12042-x saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1007/s12665-025-12462-3 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1007/s12665-025-12773-5 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1007/s43217-023-00131-z saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.chemosphere.2022.133980 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.envint.2020.105494 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.envpol.2017.09.058 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.envpol.2018.02.062 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.envpol.2022.120702 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.gr.2021.10.024 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marenvres.2010.10.001 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marenvres.2014.03.017 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marenvres.2016.05.009 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2012.12.021 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2013.11.023 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2014.08.023 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2016.10.031 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2016.12.025 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2016.12.052 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2018.03.011 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2018.12.042 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2019.01.053 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2019.04.023 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2019.07.068 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2019.110572 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2020.111225 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2020.111239 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2020.111361 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2020.111515 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2020.111572 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2021.112210 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2022.113710 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2022.113940 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2022.114179 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2022.114452 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2023.114604 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2024.116153 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.marpolbul.2024.117288 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.scitotenv.2018.09.244 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.scitotenv.2018.12.192 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.scitotenv.2019.01.319 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.scitotenv.2021.147453 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.scitotenv.2022.155958 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1016/j.scitotenv.2022.156259 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1021/es4053076 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1038/s41598-020-64465-8 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1038/s41598-021-85939-3 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1038/s41598-022-17742-7 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1038/s43247-021-00091-0 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1038/srep14947 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1038/srep37551 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1088/1748-9326/abbb4f saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1088/1748-9326/ac5df1 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1126/sciadv.1600582 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1126/science.1192321 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.12681/mms.24899 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1371/journal.pone.0080020 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1371/journal.pone.0080466 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1371/journal.pone.0111913 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1371/journal.pone.0121762 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1371/journal.pone.0161581 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.1371/journal.pone.0243203 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.2989/1814232X.2018.1492969 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.3389/fenvs.2020.582217 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.3389/fenvs.2021.719274 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.3389/fmars.2021.626026 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.3389/fmars.2021.699000 saved MAE and MSE-derived RMSE
+PASS nested_optimized_procedure study https://doi.org/10.3389/fmars.2022.784937 saved MAE and MSE-derived RMSE
+PASS exact reported delta from reference
+PASS inner bounded fit counts and successful completion
+PASS outer bounded fit counts and successful completion
+PASS verification bounded fit counts and successful completion
+PASS all protected paths byte-identical / symlinks identical
+PASS no new or removed paths outside optimization_outputs
+653 assertions passed.

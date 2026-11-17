@@ -1,0 +1,5 @@
+procedure,reference,studies_worse,studies_worse_over_0_10,studies_better,studies_equal,scenario
+S1,original_C0,30,12,42,0,historical_hypothetical_unit_scenario
+S1,previously_optimized,15,6,26,31,historical_hypothetical_unit_scenario
+S2,original_C0,33,17,39,0,historical_hypothetical_unit_scenario
+S2,previously_optimized,26,10,26,20,historical_hypothetical_unit_scenario

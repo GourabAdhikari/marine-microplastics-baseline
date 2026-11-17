@@ -1,0 +1,71 @@
+test_alignment_and_negative_controls (test_blending.BlendingTests.test_alignment_and_negative_controls) ... ok
+test_all_per_fold_and_study_metrics (test_blending.BlendingTests.test_all_per_fold_and_study_metrics) ... ok
+test_budget_fail_closed_no_new_lightgbm_fits (test_blending.BlendingTests.test_budget_fail_closed_no_new_lightgbm_fits) ... ok
+test_checkpoint_identity_and_input_hashes (test_blending.BlendingTests.test_checkpoint_identity_and_input_hashes) ... ok
+test_endpoint_equivalence_and_convex_arithmetic (test_blending.BlendingTests.test_endpoint_equivalence_and_convex_arithmetic) ... ok
+test_factor_ten_offset_boundary_inclusive (test_blending.BlendingTests.test_factor_ten_offset_boundary_inclusive) ... ok
+test_gate_predicates_and_failure_controls (test_blending.BlendingTests.test_gate_predicates_and_failure_controls) ... ok
+test_import_is_side_effect_free_and_deterministic (test_blending.BlendingTests.test_import_is_side_effect_free_and_deterministic) ... ok
+test_independent_aggregate_metrics_all_five (test_blending.BlendingTests.test_independent_aggregate_metrics_all_five) ... ok
+test_no_silent_nan_or_missing_case_exclusion (test_blending.BlendingTests.test_no_silent_nan_or_missing_case_exclusion) ... ok
+test_original_preprocessing_training_only_without_model_fits (test_blending.BlendingTests.test_original_preprocessing_training_only_without_model_fits) ... ok
+test_outer_and_existing_inner_study_disjointness (test_blending.BlendingTests.test_outer_and_existing_inner_study_disjointness) ... ok
+test_persisted_prediction_roundtrip_and_strict_references (test_blending.BlendingTests.test_persisted_prediction_roundtrip_and_strict_references) ... ok
+test_posthoc_diagnostics_never_enter_weights (test_blending.BlendingTests.test_posthoc_diagnostics_never_enter_weights) ... ok
+test_protected_files (test_blending.BlendingTests.test_protected_files) ... ok
+test_study_macro_is_not_row_weighted (test_blending.BlendingTests.test_study_macro_is_not_row_weighted) ... ok
+test_subgroup_complete_counts_and_deltas (test_blending.BlendingTests.test_subgroup_complete_counts_and_deltas) ... ok
+test_targets_and_units_are_frozen (test_blending.BlendingTests.test_targets_and_units_are_frozen) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 9.299s
+
+OK
+
+Additional data/audit assertions:
+PASS predeclared registry exactly five fixed weights and B50 main
+PASS prior manifest verified: reproduction_outputs/input_hashes.json
+PASS prior manifest verified: optimization_outputs/input_artifacts.json
+PASS prior manifest verified: optimization_outputs/artifact_checksums.json
+PASS exact OOF alignment, finite targets/predictions and scenario
+PASS outer 1 frozen memberships match saved OOF
+PASS outer 2 frozen memberships match saved OOF
+PASS outer 3 frozen memberships match saved OOF
+PASS outer 4 frozen memberships match saved OOF
+PASS outer 5 frozen memberships match saved OOF
+PASS original target/group/family exactly reconstructed without fitting
+PASS original source-row selection exact
+PASS historical multipliers and counts frozen
+PASS study sizes agree with complete evaluation data
+PASS 14 prior harmed studies retained solely for diagnostics
+PASS prior optimized code/splits/config hashes valid
+PASS reference B0 R2 strict tolerance
+PASS reference B0 MAE strict tolerance
+PASS reference B0 RMSE strict tolerance
+PASS reference B0 study_macro_MAE strict tolerance
+PASS reference B0 study_macro_MSE strict tolerance
+PASS reference B0 median_study_MAE strict tolerance
+PASS reference B0 p90_study_MAE strict tolerance
+PASS reference B0 worst_study_MAE strict tolerance
+PASS reference B0 within_1_log strict tolerance
+PASS reference B0 mean_fold_R2 strict tolerance
+PASS reference B100 R2 strict tolerance
+PASS reference B100 MAE strict tolerance
+PASS reference B100 RMSE strict tolerance
+PASS reference B100 study_macro_MAE strict tolerance
+PASS reference B100 study_macro_MSE strict tolerance
+PASS reference B100 median_study_MAE strict tolerance
+PASS reference B100 p90_study_MAE strict tolerance
+PASS reference B100 worst_study_MAE strict tolerance
+PASS reference B100 within_1_log strict tolerance
+PASS reference B100 mean_fold_R2 strict tolerance
+PASS original reproduction additional R2
+PASS original reproduction additional MAE
+PASS original reproduction additional RMSE
+PASS original reproduction additional within 1 log
+PASS original reproduction additional raw MAE
+PASS original reproduction additional raw RMSE
+PASS original reproduction additional study MAE
+PASS all-case study and fold outputs complete
+PASS no new or removed paths outside blending_outputs
+PASS all protected files unchanged including both prior output directories
